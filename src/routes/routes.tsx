@@ -9,9 +9,9 @@ export const routes = [
       { element: <WelcomePage />, index: true },
       { element: <MainPage />, path: '/main' },
       { element: <AuthPage />, path: '/auth' },
+      { element: <NotFoundPage />, path: '*' },
     ],
     element: <RootLayout />,
     path: '/',
   },
-  { element: <NotFoundPage />, path: '*' },
 ];
