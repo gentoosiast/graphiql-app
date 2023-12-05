@@ -20,7 +20,6 @@
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@fontsource/roboto": "^5.0.8",
-    "@hookform/resolvers": "^3.3.2",
     "@mui/icons-material": "^5.14.19",
     "@mui/material": "^5.14.20",
     "@reduxjs/toolkit": "^2.0.1",
@@ -30,8 +29,7 @@
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.48.2",
     "react-redux": "^9.0.1",
-    "react-router-dom": "^6.18.0",
-    "valibot": "^0.22.0"
+    "react-router-dom": "^6.18.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
