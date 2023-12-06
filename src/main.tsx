@@ -6,6 +6,7 @@ import { RouterProvider } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
 import { CssBaseline } from '@mui/material';
 
+import { I18NProvider } from './providers/i18n';
 import { router } from './routes';
 import { store } from './store';
 import theme from './theme';
@@ -13,10 +14,12 @@ import theme from './theme';
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <RouterProvider router={router} />
-      </ThemeProvider>
+      <I18NProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </I18NProvider>
     </Provider>
   </StrictMode>,
 );
