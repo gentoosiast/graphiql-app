@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 
-import type { I18NContextData } from './types';
+import { I18NContext } from '@/contexts/i18n';
 
-import { I18NContext } from './context';
+import type { I18NContextData } from '../../contexts/i18n/types';
 
 export const useI18NContext = (): I18NContextData => {
   const data = useContext(I18NContext);

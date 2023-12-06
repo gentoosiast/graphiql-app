@@ -1,3 +1,2 @@
-export { I18NProvider } from './context';
+export { I18NProvider } from './provider';
 export * from './hooks';
-export * from './enums';

@@ -1,7 +1,8 @@
 import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
-import { I18NLanguage, useI18NContext } from '@/providers/i18n';
+import { I18NLanguage } from '@/config/i18n';
+import { useI18NContext } from '@/providers/i18n';
 
 export const WelcomePage = (): JSX.Element => {
   const { getTranslation, setLanguage } = useI18NContext();
