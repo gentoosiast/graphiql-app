@@ -1,8 +1,8 @@
 import { createContext, useCallback, useMemo, useState } from 'react';
 import type { JSX, ReactNode } from 'react';
 
-import en from '@/assets/translations/en.json';
-import ru from '@/assets/translations/ru.json';
+import en from '@/config/i18n/locales/en.translation.json';
+import ru from '@/config/i18n/locales/ru.translation.json';
 
 import type { I18NContextData } from './types';
 
