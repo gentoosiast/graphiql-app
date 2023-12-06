@@ -1,5 +1,5 @@
-import en from '@/config/i18n/locales/en.translation.json';
-import ru from '@/config/i18n/locales/ru.translation.json';
+import en from './locales/en.translation.json';
+import ru from './locales/ru.translation.json';
 
 export const enum I18NLanguage {
   English = 'en',
