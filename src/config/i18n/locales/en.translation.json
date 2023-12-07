@@ -1,3 +1,23 @@
 {
-  "greeting": "Hello World!"
+  "greeting": "Hello World!",
+  "kate-welcome-name": "Kate Goncharick",
+  "kate-welcome-from": "From Belarus",
+  "kate-welcome-book": "Favorite technical book: Groking algoritms",
+  "kate-welcome-experience": "IT experience: Studying online since summer of 2022. Courses: RSS JavaScript/Front-end",
+  "kate-welcome-pets": "Pets: 2 mine cats and 5 on foster",
+  "kate-welcome-talent": "Hidden talents: massage",
+
+  "ira-welcome-name": "Irina",
+  "ira-welcome-from": "From Russia",
+  "ira-welcome-book": "Favorite technical book: no",
+  "ira-welcome-experience": "IT experience: Courses: RSS JavaScript/Front-end",
+  "ira-welcome-pets": "Pets: no",
+  "ira-welcome-talent": "Hidden talents: no",
+
+  "sergey-welcome-name": "Sergey Koksharov",
+  "sergey-welcome-from": "From Russia",
+  "sergey-welcome-book": "Favorite technical book: no",
+  "sergey-welcome-experience": "IT experience: RSS courses.",
+  "sergey-welcome-pets": "Pets: red cat",
+  "sergey-welcome-talent": "Hidden talents: no"
 }
