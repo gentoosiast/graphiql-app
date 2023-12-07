@@ -12,7 +12,7 @@ type I18NProviderProps = {
 
 export const I18NProvider = ({ children }: I18NProviderProps): JSX.Element => {
   const [language, setLanguage] = useState(DEFAULT_I18N_LANGUAGE);
-  const getTranslation = useCallback(
+  const translate = useCallback(
     (token: string): string => {
       if (token in languageData[language]) {
         return languageData[language][token];
@@ -25,11 +25,11 @@ export const I18NProvider = ({ children }: I18NProviderProps): JSX.Element => {
 
   const initialContextData: I18NContextData = useMemo(
     () => ({
-      getTranslation,
       language,
       setLanguage,
+      translate,
     }),
-    [getTranslation, language],
+    [translate, language],
   );
 
   return <I18NContext.Provider value={initialContextData}>{children}</I18NContext.Provider>;

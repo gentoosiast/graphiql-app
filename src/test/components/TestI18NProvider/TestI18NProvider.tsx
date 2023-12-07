@@ -4,11 +4,11 @@ import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/providers/i18n';
 
 export const TestI18NProvider = (): JSX.Element => {
-  const { getTranslation, language, setLanguage } = useI18NContext();
+  const { language, setLanguage, translate } = useI18NContext();
 
   return (
     <>
-      <h1>Example translation: {getTranslation('greeting')}</h1>
+      <h1>Example translation: {translate('greeting')}</h1>
       <p>Current Language: {language}</p>
       <button onClick={() => setLanguage(I18NLanguage.English)} type="button">
         Switch Language to English

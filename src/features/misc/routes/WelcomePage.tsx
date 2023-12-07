@@ -5,12 +5,12 @@ import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/providers/i18n';
 
 export const WelcomePage = (): JSX.Element => {
-  const { getTranslation, setLanguage } = useI18NContext();
+  const { setLanguage, translate } = useI18NContext();
 
   return (
     <>
       <h1>Welcome</h1>
-      <p>{getTranslation('greeting')}</p>
+      <p>{translate('greeting')}</p>
       <button onClick={() => setLanguage(I18NLanguage.English)} type="button">
         Switch language to EN
       </button>
