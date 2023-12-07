@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { RouterProvider } from 'react-router-dom';
 
 import { ThemeProvider } from '@emotion/react';
+import '@fontsource/oxygen';
 import { CssBaseline } from '@mui/material';
 
 import { I18NProvider } from './providers/i18n';
