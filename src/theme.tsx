@@ -19,10 +19,10 @@ const theme = createTheme({
   },
   typography: {
     h1: {
-      fontFamily: 'Oxygen',
+      fontFamily: 'Philosopher',
     },
     h2: {
-      fontFamily: 'Oxygen',
+      fontFamily: 'Philosopher',
     },
   },
 });
