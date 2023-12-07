@@ -1,16 +1,11 @@
-import type { ReactNode } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
 import type { I18NContextData } from '@/contexts/i18n';
 
 import { DEFAULT_I18N_LANGUAGE, languageData } from '@/config/i18n';
 import { I18NContext } from '@/contexts/i18n/context';
 
-type I18NProviderProps = {
-  children: ReactNode;
-};
-
-export const I18NProvider = ({ children }: I18NProviderProps): JSX.Element => {
+export const I18NProvider = ({ children }: PropsWithChildren): JSX.Element => {
   const [language, setLanguage] = useState(DEFAULT_I18N_LANGUAGE);
   const translate = useCallback(
     (token: string): string => {
