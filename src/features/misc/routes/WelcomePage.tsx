@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { styled } from '@mui/material/styles';
 
+import { I18NLanguage } from '@/config/i18n';
+import { useI18NContext } from '@/providers/i18n';
+
 export const WelcomePage = (): JSX.Element => {
   const WelcomeTitle = styled('h1')(() => ({
     width: 350,
@@ -34,9 +37,19 @@ export const WelcomePage = (): JSX.Element => {
     width: 100,
   }));
 
+  const { setLanguage, translate } = useI18NContext();
+
   return (
     <>
       <WelcomeTitle>Welcome</WelcomeTitle>
+      <p>{translate('greeting')}</p>
+      <button onClick={() => setLanguage(I18NLanguage.English)} type="button">
+        Switch language to EN
+      </button>
+      <button onClick={() => setLanguage(I18NLanguage.Russian)} type="button">
+        Switch language to RU
+      </button>
+
       <nav>
         <Link to="/auth">Sign In / Sign Up Page</Link>
         <Link to="/main">Main Page</Link>
