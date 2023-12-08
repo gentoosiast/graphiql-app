@@ -1,5 +1,4 @@
-const EMAIL_REGEXP =
-  /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+const EMAIL_REGEXP = /^[\w+-]+(?:\.[\w+-]+)*@[\da-z]+(?:[.-][\da-z]+)*\.[a-z]{2,}$/iu;
 
 const PASSWORD_REGEXP = /(?=.*\p{L})(?=.*\d)(?=.*[\p{P}\p{S}\p{M}]).{8,}/u;
 
@@ -31,4 +30,15 @@ function getPasswordRules(
   };
 }
 
-export { getEmailRules, getPasswordRules };
+function getConfirmPasswordRules(
+  password: string,
+  requiredError: string,
+  notMatchError: string,
+): Record<string, unknown> {
+  return {
+    required: requiredError,
+    validate: (value: string) => value === password || notMatchError,
+  };
+}
+
+export { getConfirmPasswordRules, getEmailRules, getPasswordRules };

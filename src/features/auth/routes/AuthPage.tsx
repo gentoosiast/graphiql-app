@@ -7,15 +7,10 @@ import { Button, Container, Stack, Typography } from '@mui/material';
 import { useI18NContext } from '@/providers/i18n';
 
 import { EmailInput, PasswordInput } from '../components';
+import { ConfirmPasswordInput } from '../components/ConfirmPasswordInput';
+import { AuthFormData } from '../types';
 
-export type AuthFormData = {
-  confirmPassword?: string;
-  email: string;
-  password: string;
-  test: string;
-};
-
-export const AuthPage = (): JSX.Element => {
+const AuthPage = (): JSX.Element => {
   const [isLogin, setIsLogin] = useState(true);
 
   const { translate } = useI18NContext();
@@ -30,16 +25,22 @@ export const AuthPage = (): JSX.Element => {
 
   const {
     control,
-    formState: { errors },
+    formState: { isValid },
     handleSubmit,
+    watch,
   } = useForm<AuthFormData>({
+    defaultValues: {
+      confirmPassword: '',
+      email: '',
+      password: '',
+    },
     mode: 'onBlur',
   });
 
-  function onSubmit(): void {
-    const isFormValid = Object.keys(errors).length === 0;
+  const passwordValue = watch('password');
 
-    if (!isFormValid) {
+  function onSubmit(): void {
+    if (!isValid) {
       return;
     }
     navigate('/');
@@ -55,7 +56,8 @@ export const AuthPage = (): JSX.Element => {
           <Stack spacing={2}>
             <EmailInput control={control} />
             <PasswordInput control={control} />
-            <Button size="large" type="submit" variant="contained">
+            {!isLogin && <ConfirmPasswordInput control={control} passwordValue={passwordValue} />}
+            <Button disabled={!isValid} size="large" type="submit" variant="contained">
               {title}
             </Button>
             <Typography align="center">
@@ -70,3 +72,5 @@ export const AuthPage = (): JSX.Element => {
     </>
   );
 };
+
+export { AuthPage };

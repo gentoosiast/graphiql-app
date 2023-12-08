@@ -7,25 +7,30 @@ import { IconButton, InputAdornment, TextField } from '@mui/material';
 import { useI18NContext } from '@/providers/i18n';
 
 import { AuthFormData } from '../../types';
-import { getPasswordRules } from '../../utils/validation-rules';
+import { getConfirmPasswordRules } from '../../utils/validation-rules';
 
-function PasswordInput({ control }: { control: Control<AuthFormData> }): JSX.Element {
+type PasswordInputProps = {
+  control: Control<AuthFormData>;
+  passwordValue: string;
+};
+
+function ConfirmPasswordInput({ control, passwordValue }: PasswordInputProps): JSX.Element {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const { translate } = useI18NContext();
 
-  const label = translate('password');
+  const label = translate('confirmPassword');
 
-  const validationRules = getPasswordRules(
+  const validationRules = getConfirmPasswordRules(
+    passwordValue,
     translate('requiredError'),
-    translate('shortPassword'),
-    translate('weakPassword'),
+    translate('notMatch'),
   );
 
   return (
     <Controller
       control={control}
-      name="password"
+      name="confirmPassword"
       render={({ field, fieldState: { error } }) => (
         <TextField
           {...field}
@@ -59,4 +64,4 @@ function PasswordInput({ control }: { control: Control<AuthFormData> }): JSX.Ele
   );
 }
 
-export { PasswordInput };
+export { ConfirmPasswordInput };

@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 
 import { useI18NContext } from '@/providers/i18n';
 
-import { AuthFormData } from '../../routes/AuthPage';
+import { AuthFormData } from '../../types';
 import { getEmailRules } from '../../utils/validation-rules';
 
 function EmailInput({ control }: { control: Control<AuthFormData> }): JSX.Element {
@@ -17,17 +17,16 @@ function EmailInput({ control }: { control: Control<AuthFormData> }): JSX.Elemen
     <Controller
       control={control}
       name="email"
-      render={({ field: { name, onBlur, onChange }, fieldState: { error } }) => (
+      render={({ field, fieldState: { error } }) => (
         <TextField
+          {...field}
+          aria-invalid={!!error}
           autoComplete={'email'}
-          defaultValue={''}
           error={!!error}
           helperText={error?.message}
           label={emailWord}
-          name={name}
-          onBlur={onBlur}
-          onChange={onChange}
           placeholder={emailWord}
+          required
           size="small"
         />
       )}
