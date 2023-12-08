@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { I18NProvider } from 'src/providers/i18n/provider';
 import { describe, expect, it } from 'vitest';
 
-import { WelcomePage } from '.';
+import { WelcomePage } from './WelcomePage';
 
 describe('Welcome page', () => {
   it('should render welcome page', () => {

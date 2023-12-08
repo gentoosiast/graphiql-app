@@ -42,7 +42,6 @@ export const WelcomePage = (): JSX.Element => {
           San Junipero
         </Typography>
       </Typography>
-      <p>{translate('greeting')}</p>
       <button onClick={() => setLanguage(I18NLanguage.English)} type="button">
         Switch language to EN
       </button>
