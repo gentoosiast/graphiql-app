@@ -1,3 +1,15 @@
 {
-  "greeting": "Hello World!"
+  "greeting": "Hello World!",
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "requiredError": "Field is required",
+  "invalidEmail": "Invalid email",
+  "notMatch": "Passwords do not match",
+  "shortPassword": "Password must be at least 8 characters long",
+  "weakPassword": "Password must contain at least one letter, one digit, one special character",
+  "noAccount": "Don't have an account?",
+  "haveAccount": "Already have an account?"
 }
