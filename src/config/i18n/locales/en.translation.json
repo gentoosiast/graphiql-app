@@ -21,5 +21,17 @@
   "sergey-welcome-book": "Favorite technical book: no",
   "sergey-welcome-experience": "IT experience: RSS courses.",
   "sergey-welcome-pets": "Pets: red cat",
-  "sergey-welcome-talent": "Hidden talents: no"
+  "sergey-welcome-talent": "Hidden talents: no",
+  "signIn": "Sign In",
+  "signUp": "Sign Up",
+  "email": "Email",
+  "password": "Password",
+  "confirmPassword": "Confirm Password",
+  "requiredError": "Field is required",
+  "invalidEmail": "Invalid email",
+  "notMatch": "Passwords do not match",
+  "shortPassword": "Password must be at least 8 characters long",
+  "weakPassword": "Password must contain at least one letter, one digit, one special character",
+  "noAccount": "Don't have an account?",
+  "haveAccount": "Already have an account?"
 }
