@@ -2,6 +2,9 @@ import type { JSX } from 'react';
 
 import { Button, ButtonGroup, Link, Stack } from '@mui/material';
 
+import { GitHubIconSvg } from '../github-icon';
+import { RssIconSvg } from '../rss-icon';
+
 export const Footer = (): JSX.Element => {
   return (
     <footer>
@@ -9,34 +12,47 @@ export const Footer = (): JSX.Element => {
         alignItems="center"
         bgcolor="background.paper"
         direction="row"
-        justifyContent="space-around"
+        justifyContent="center"
         sx={{ minHeight: 60 }}
       >
-        <Link href="https://rs.school/react/">
-          <img alt="RS School logo" src="/rss-logo.svg" style={{ maxHeight: 40 }} />
-        </Link>
-        <ButtonGroup
-          color="primary"
-          orientation="horizontal"
-          size="large"
-          sx={{
-            boxShadow: 'none',
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            maxWidth: 600,
-          }}
-          variant="contained"
-        >
-          <Link href="https://github.com/gentoosiast" sx={{ textDecoration: 'none' }}>
-            <Button sx={{ maxWidth: 200 }}>Sergey</Button>
+        <Stack alignItems="center" direction="row">
+          <Link href="https://rs.school/react/">
+            <Stack alignItems="center" minWidth="200">
+              <RssIconSvg />
+            </Stack>
           </Link>
-          <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
-            <Button sx={{ maxWidth: 200 }}>Irina</Button>
-          </Link>
-          <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
-            <Button sx={{ maxWidth: 200 }}>Kate</Button>
-          </Link>
-        </ButtonGroup>
+          <ButtonGroup
+            color="primary"
+            orientation="horizontal"
+            size="large"
+            sx={{
+              boxShadow: 'none',
+              display: 'flex',
+              justifyContent: 'space-evenly',
+              maxWidth: 600,
+            }}
+            variant="contained"
+          >
+            <Link href="https://github.com/gentoosiast" sx={{ textDecoration: 'none' }}>
+              <Button sx={{ maxWidth: 200 }}>
+                <GitHubIconSvg />
+                Sergey
+              </Button>
+            </Link>
+            <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
+              <Button sx={{ maxWidth: 200 }}>
+                <GitHubIconSvg />
+                Irina
+              </Button>
+            </Link>
+            <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
+              <Button sx={{ maxWidth: 200 }}>
+                <GitHubIconSvg />
+                Kate
+              </Button>
+            </Link>
+          </ButtonGroup>
+        </Stack>
       </Stack>
     </footer>
   );
