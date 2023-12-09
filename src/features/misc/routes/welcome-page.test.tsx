@@ -19,7 +19,7 @@ describe('Welcome page', () => {
     const welcomePageTitle = screen.getByRole('heading', { level: 1 });
     const memberName = screen.getByText('Kate Goncharick');
 
-    expect(welcomePageTitle).toHaveTextContent(/welcome/i);
+    expect(welcomePageTitle).toHaveTextContent(/hello and welcome/i);
     expect(memberName).toBeInTheDocument();
   });
 });
