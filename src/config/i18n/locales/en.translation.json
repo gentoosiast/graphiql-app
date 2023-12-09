@@ -2,6 +2,7 @@
   "greeting": "Hello World!",
   "signIn": "Sign In",
   "signUp": "Sign Up",
+  "signOut": "Sign out",
   "email": "Email",
   "password": "Password",
   "confirmPassword": "Confirm Password",
@@ -11,5 +12,11 @@
   "shortPassword": "Password must be at least 8 characters long",
   "weakPassword": "Password must contain at least one letter, one digit, one special character",
   "noAccount": "Don't have an account?",
-  "haveAccount": "Already have an account?"
+  "haveAccount": "Already have an account?",
+  "registerSuccess": "Account created successfully",
+  "accoutExistsError": "Account already exists",
+  "defaultError": "Something went wrong",
+  "loginSuccess": "You've successfully signed in",
+  "accoutNotFound": "Incorrect email or password",
+  "signOutSuccess": "You've successfully signed out"
 }

@@ -7,6 +7,8 @@ import { ThemeProvider } from '@emotion/react';
 import '@fontsource/philosopher';
 import { CssBaseline } from '@mui/material';
 
+import '@/config/firebase';
+
 import { I18NProvider } from './providers/i18n';
 import { router } from './routes';
 import { store } from './store';
