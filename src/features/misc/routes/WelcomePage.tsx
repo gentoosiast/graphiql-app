@@ -1,8 +1,8 @@
 import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
+import { Card, CardHeader } from '@mui/material';
 import Avatar from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
 import ListItem from '@mui/material/ListItem';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
@@ -12,19 +12,11 @@ import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/providers/i18n';
 
 export const WelcomePage = (): JSX.Element => {
-  const Member = styled('div')(() => ({
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    width: 400,
-  }));
-
   const MemberText = styled('div')(() => ({
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    fontSize: 20,
+    fontSize: 18,
     justifyContent: 'center',
     width: 400,
   }));
@@ -54,61 +46,106 @@ export const WelcomePage = (): JSX.Element => {
         <Link to="/main">Main Page</Link>
       </nav>
 
-      <Stack direction="row" justifyContent="space-around" padding="2">
-        <Member>
-          <Avatar
-            alt="Kate"
-            src="src/assets/img/3.jpg"
-            sx={{ height: 200, margin: 2, marginTop: 5, width: 200 }}
-          />
-          <Badge color="primary" sx={{ fontSize: 28 }}>
-            <p>{translate('kate-welcome-name')}</p>
-          </Badge>
+      <Stack direction="row" justifyContent="space-around">
+        <Card
+          sx={{
+            backgroundColor: 'background.paper',
+            borderRadius: 3,
+            boxShadow: 20,
+            minWidth: 300,
+            padding: 5,
+          }}
+        >
+          <Stack alignItems="center" justifyContent="center">
+            <Avatar
+              alt="Kate"
+              src="src/assets/img/3.jpg"
+              sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
+            />
+          </Stack>
+          <CardHeader color="primary" title={`${translate('kate-welcome-name')}`} />
           <MemberText>
             <ListItem>{translate('kate-welcome-from')}</ListItem>
             <ListItem>{translate('kate-welcome-book')}</ListItem>
             <ListItem>{translate('kate-welcome-experience')}</ListItem>
-            <ListItem>{translate('kate-welcome-pets')}</ListItem>
             <ListItem>{translate('kate-welcome-talent')}</ListItem>
+            <ListItem>{translate('kate-welcome-pets')}</ListItem>
           </MemberText>
-        </Member>
-        <Member>
-          <Avatar
-            alt="Ira"
-            src="src/assets/img/2.jpg"
-            sx={{ height: 200, marginTop: 5, width: 200 }}
-          />
+          <Stack direction="row" justifyContent={'space-evenly'}>
+            <Stack
+              justifyContent="space-between
+          "
+              sx={{ maxWidth: 170 }}
+            >
+              <img alt="varya cat" src="/varya.jpg" />
+            </Stack>
+
+            <Stack
+              justifyContent="space-between
+          "
+              sx={{ maxWidth: 170 }}
+            >
+              <img alt="fania cat" src="/fanya.jpg" />
+            </Stack>
+          </Stack>
+        </Card>
+
+        <Card
+          sx={{
+            backgroundColor: 'background.paper',
+            borderRadius: 3,
+            boxShadow: 20,
+            minWidth: 300,
+            padding: 5,
+          }}
+        >
+          <Stack alignItems="center" justifyContent="center">
+            <Avatar
+              alt="Ira"
+              src="src/assets/img/2.jpg"
+              sx={{ height: 200, marginTop: 1, width: 200 }}
+            />
+          </Stack>
           <MemberText>
-            <Badge color="primary" sx={{ fontSize: 28 }}>
-              <p>{translate('ira-welcome-name')}</p>
-            </Badge>
+            <CardHeader title={`${translate('ira-welcome-name')}`} />
             <ListItem>{translate('ira-welcome-from')}</ListItem>
-            <ListItem>{translate('ira-welcome-book')}</ListItem>
             <ListItem>{translate('ira-welcome-experience')}</ListItem>
-            <ListItem>{translate('ira-welcome-pets')}</ListItem>
             <ListItem>{translate('ira-welcome-talent')}</ListItem>
+            <ListItem>{translate('ira-welcome-pets')}</ListItem>
+            <Stack sx={{ maxWidth: 250 }}>
+              <img alt="murych cat" src="/murych.png" />
+            </Stack>
           </MemberText>
-        </Member>
+        </Card>
       </Stack>
 
       <Stack direction="row" justifyContent="center">
-        <Member>
-          <Avatar
-            alt="Sergey"
-            src="src/assets/img/1.jpg"
-            sx={{ height: 200, marginTop: 5, width: 200 }}
-          />
+        <Card
+          sx={{
+            backgroundColor: 'background.paper',
+            borderRadius: 3,
+            boxShadow: 20,
+            marginTop: 5,
+            minWidth: 300,
+            padding: 5,
+          }}
+        >
+          <Stack alignItems="center" justifyContent="center">
+            <Avatar
+              alt="Sergey"
+              src="src/assets/img/1.jpg"
+              sx={{ height: 200, marginTop: 1, width: 200 }}
+            />
+          </Stack>
           <MemberText>
-            <Badge color="primary" sx={{ fontSize: 28 }}>
-              <p>{translate('sergey-welcome-name')}</p>
-            </Badge>
+            <CardHeader title={`${translate('sergey-welcome-name')}`} />
             <ListItem>{translate('sergey-welcome-from')}</ListItem>
             <ListItem>{translate('sergey-welcome-book')}</ListItem>
             <ListItem>{translate('sergey-welcome-experience')}</ListItem>
-            <ListItem>{translate('sergey-welcome-pets')}</ListItem>
             <ListItem>{translate('sergey-welcome-talent')}</ListItem>
+            <ListItem>{translate('sergey-welcome-pets')}</ListItem>
           </MemberText>
-        </Member>
+        </Card>
       </Stack>
       <Stack alignItems="center" justifyContent="center">
         <Typography color="primary" component="h3" sx={{ margin: 10 }} variant="h3">

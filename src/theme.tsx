@@ -5,6 +5,7 @@ const theme = createTheme({
   palette: {
     background: {
       default: '#2b3238',
+      paper: '#3b4248',
     },
     error: {
       main: red.A400,
