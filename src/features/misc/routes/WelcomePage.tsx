@@ -37,7 +37,7 @@ export const WelcomePage = (): JSX.Element => {
         <Link to="/main">Main Page</Link>
       </nav>
       <Stack alignItems="center" justifyContent="center">
-        <Typography component="h2" sx={{ margin: 3, maxWidth: 500 }} variant="h2">
+        <Typography component="h1" sx={{ margin: 3 }} variant="h2">
           {translate('welcome')}
         </Typography>
 

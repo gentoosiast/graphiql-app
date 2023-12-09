@@ -16,10 +16,10 @@ describe('Welcome page', () => {
       </I18NProvider>,
     );
 
-    const welcomePageTitle = screen.getByRole('heading', { level: 1 });
+    const teamNameTitle = screen.getByRole('heading', { level: 2 });
     const memberName = screen.getByText('Kate Goncharick');
 
-    expect(welcomePageTitle).toHaveTextContent(/hello and welcome/i);
+    expect(teamNameTitle).toHaveTextContent(/san junipero/i);
     expect(memberName).toBeInTheDocument();
   });
 });
