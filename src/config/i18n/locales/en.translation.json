@@ -1,12 +1,12 @@
 {
   "greeting": "Hello World!",
-  "welcome": "Welcome",
-  "team": "team",
+  "welcome": "Hello and welcome",
+  "team-description": "Our team consists of creative, inventive people. Despite the fact that we are different, we still love coding, taking challenges, learning something new and creating high-quality web-sites. Under the guidance of a great teacher Sergey we worked on this project.",
   "kate-welcome-name": "Kate Goncharick",
   "kate-welcome-from": "From: Minsk, Belarus",
   "kate-welcome-book": "Favorite technical book: Groking algoritms",
   "kate-welcome-experience": "IT experience: Studying online since summer of 2022. Courses: RSS JavaScript/Front-end",
-  "kate-welcome-pets": "Pets: 2 mine cats and 5 on foster",
+  "kate-welcome-pets": "Pets: 2 my  girls (Varya and Fanya) and 5 other cats on foster",
   "kate-welcome-talent": "Hidden talents: massage",
 
   "ira-welcome-name": "Irina",

@@ -25,15 +25,6 @@ export const WelcomePage = (): JSX.Element => {
 
   return (
     <>
-      <Typography component="h1" textAlign="center" variant="h2">
-        {translate('welcome')}
-      </Typography>
-      <Typography component="h2" textAlign="center" variant="h2">
-        {translate('team')}
-        <Typography color="primary" component="h2" fontSize="150" variant="h2">
-          San Junipero
-        </Typography>
-      </Typography>
       <button onClick={() => setLanguage(I18NLanguage.English)} type="button">
         Switch language to EN
       </button>
@@ -45,6 +36,18 @@ export const WelcomePage = (): JSX.Element => {
         <Link to="/auth">Sign In / Sign Up Page</Link>
         <Link to="/main">Main Page</Link>
       </nav>
+      <Stack alignItems="center" justifyContent="center">
+        <Typography component="h2" sx={{ margin: 3, maxWidth: 500 }} variant="h2">
+          {translate('welcome')}
+        </Typography>
+
+        <Typography color="primary" component="h2" textAlign="center" variant="h2">
+          San Junipero
+        </Typography>
+        <Typography sx={{ fontSize: 20, margin: 5, width: 600 }}>
+          {translate('team-description')}
+        </Typography>
+      </Stack>
 
       <Stack direction="row" justifyContent="space-around">
         <Card
@@ -59,12 +62,13 @@ export const WelcomePage = (): JSX.Element => {
           <Stack alignItems="center" justifyContent="center">
             <Avatar
               alt="Kate"
-              src="src/assets/img/3.jpg"
+              src="/kate.jpg"
               sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
             />
           </Stack>
-          <CardHeader color="primary" title={`${translate('kate-welcome-name')}`} />
           <MemberText>
+            <CardHeader color="primary" title={`${translate('kate-welcome-name')}`} />
+
             <ListItem>{translate('kate-welcome-from')}</ListItem>
             <ListItem>{translate('kate-welcome-book')}</ListItem>
             <ListItem>{translate('kate-welcome-experience')}</ListItem>
@@ -100,11 +104,7 @@ export const WelcomePage = (): JSX.Element => {
           }}
         >
           <Stack alignItems="center" justifyContent="center">
-            <Avatar
-              alt="Ira"
-              src="src/assets/img/2.jpg"
-              sx={{ height: 200, marginTop: 1, width: 200 }}
-            />
+            <Avatar alt="Ira" src="/2.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
           </Stack>
           <MemberText>
             <CardHeader title={`${translate('ira-welcome-name')}`} />
@@ -131,11 +131,7 @@ export const WelcomePage = (): JSX.Element => {
           }}
         >
           <Stack alignItems="center" justifyContent="center">
-            <Avatar
-              alt="Sergey"
-              src="src/assets/img/1.jpg"
-              sx={{ height: 200, marginTop: 1, width: 200 }}
-            />
+            <Avatar alt="Sergey" src="/1.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
           </Stack>
           <MemberText>
             <CardHeader title={`${translate('sergey-welcome-name')}`} />
@@ -146,21 +142,6 @@ export const WelcomePage = (): JSX.Element => {
             <ListItem>{translate('sergey-welcome-pets')}</ListItem>
           </MemberText>
         </Card>
-      </Stack>
-      <Stack alignItems="center" justifyContent="center">
-        <Typography color="primary" component="h3" sx={{ margin: 10 }} variant="h3">
-          Text about team
-        </Typography>
-        <Typography sx={{ fontSize: 20, width: 600 }}>
-          Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece
-          of classical Latin literature from 45 BC, making it over 2000 years old. Richard
-          McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the
-          more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the
-          cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum
-          comes from sections 1.10.32 and 1.10.33 of (The Extremes of Good and Evil) by Cicero,
-          written in 45 BC. This book is a treatise on the theory of ethics, very popular during the
-          Renaissance. The first line of Lorem Ipsum,
-        </Typography>
       </Stack>
     </>
   );
