@@ -1,10 +1,7 @@
 import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Card, CardHeader } from '@mui/material';
-import Avatar from '@mui/material/Avatar';
-import ListItem from '@mui/material/ListItem';
-import Typography from '@mui/material/Typography';
+import { Avatar, Card, CardHeader, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/system';
 
