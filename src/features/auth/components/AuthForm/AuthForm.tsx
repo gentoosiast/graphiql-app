@@ -1,11 +1,12 @@
 import type { FormEventHandler, JSX } from 'react';
-import { Control, UseFormWatch } from 'react-hook-form';
+import type { Control, UseFormWatch } from 'react-hook-form';
 
 import { Button, Stack, Typography } from '@mui/material';
 
-import { EmailInput, PasswordInput } from '.';
-import { AuthFormData } from '../types';
-import { ConfirmPasswordInput } from './ConfirmPasswordInput';
+import { type AuthFormData } from '../../types';
+import { ConfirmPasswordInput } from '../ConfirmPasswordInput';
+import { EmailInput } from '../EmailInput';
+import { PasswordInput } from '../PasswordInput';
 
 type Props = {
   control: Control<AuthFormData>;

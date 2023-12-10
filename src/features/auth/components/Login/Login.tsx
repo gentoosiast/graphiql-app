@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react';
+import { type Dispatch, type FormEvent, type SetStateAction, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,11 +10,11 @@ import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { useI18NContext } from '@/providers/i18n';
 
-import { AuthFormData } from '../types';
-import { AuthForm } from './AuthForm';
+import { type AuthFormData } from '../../types';
+import { AuthForm } from '../AuthForm';
 
 type Props = {
-  setIsLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
 };
 
 function Login({ setIsLogin }: Props): JSX.Element {
@@ -44,11 +44,11 @@ function Login({ setIsLogin }: Props): JSX.Element {
     mode: 'onBlur',
   });
 
-  function onSubmit(data: AuthFormData): void {
+  function onSubmit({ email, password }: AuthFormData): void {
     if (!isValid) {
       return;
     }
-    signInWithEmailAndPassword(auth, data.email, data.password)
+    signInWithEmailAndPassword(auth, email, password)
       .then(() => {
         setAlertType('success');
         setAlertText(translate('loginSuccess'));
