@@ -30,7 +30,9 @@ export const MainPage = (): JSX.Element => {
         query: state.request,
       });
 
-      dispatch({ payload: response, type: 'setResponse' });
+      const responseJSON = JSON.stringify(response.data, null, 2);
+
+      dispatch({ payload: responseJSON, type: 'setResponse' });
     } catch (error) {
       console.error(error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';

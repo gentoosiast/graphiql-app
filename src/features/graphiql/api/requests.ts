@@ -16,7 +16,7 @@ export const graphQLRequest = async ({
   headers,
   query,
   variables,
-}: GraphQlRequest): Promise<string> => {
+}: GraphQlRequest): Promise<GraphQLResponse> => {
   const response = await axios<GraphQLResponse>({
     data: {
       query,
@@ -30,5 +30,5 @@ export const graphQLRequest = async ({
     url: endpoint,
   });
 
-  return JSON.stringify(response.data.data);
+  return response.data;
 };
