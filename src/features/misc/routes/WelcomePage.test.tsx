@@ -1,8 +1,9 @@
 import { MemoryRouter } from 'react-router-dom';
 
 import { render, screen } from '@testing-library/react';
-import { I18NProvider } from 'src/providers/i18n/provider';
 import { describe, expect, it } from 'vitest';
+
+import { I18NProvider } from '@/providers/i18n/provider';
 
 import { WelcomePage } from './WelcomePage';
 

@@ -8,7 +8,6 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/system';
 
-import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/providers/i18n';
 
 export const WelcomePage = (): JSX.Element => {
@@ -21,17 +20,10 @@ export const WelcomePage = (): JSX.Element => {
     width: 400,
   }));
 
-  const { setLanguage, translate } = useI18NContext();
+  const { translate } = useI18NContext();
 
   return (
     <>
-      <button onClick={() => setLanguage(I18NLanguage.English)} type="button">
-        Switch language to EN
-      </button>
-      <button onClick={() => setLanguage(I18NLanguage.Russian)} type="button">
-        Switch language to RU
-      </button>
-
       <nav>
         <Link to="/auth">Sign In / Sign Up Page</Link>
         <Link to="/main">Main Page</Link>
