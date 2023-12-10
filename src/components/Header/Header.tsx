@@ -39,54 +39,68 @@ export const Header = (): JSX.Element => {
 
   return (
     <>
-      {authState === AuthState.AUTHENTICATED && (
-        <Button onClick={signOutUser} variant="outlined">
-          {translate('signOut')}
-        </Button>
-      )}
-
       <AppBar
         sx={{
           alignItems: 'center',
           backgroundColor: 'primary.main',
           justifyContent: 'center',
-          minHeight: 60,
+          minHeight: '5vh',
           position: 'sticky',
           top: 0,
         }}
       >
-        <Stack direction="row">
-          <ToggleButtonGroup
-            aria-label="Interface Language"
-            exclusive
-            onChange={handleToggleLanguage}
-            value={localLanguage}
+        <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
+          <Button
+            component={RouterLink}
+            sx={{
+              backgroundColor: 'primary.light',
+              color: 'text.secondary',
+              textDecoration: 'none',
+            }}
+            to="/"
           >
-            <ToggleButton
-              aria-label="English"
-              color="secondary"
-              onClick={() => setLanguage(I18NLanguage.English)}
-              value={'en'}
+            {translate('welcomePage')}
+          </Button>
+
+          <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
+            {authState === AuthState.AUTHENTICATED && (
+              <Button
+                onClick={signOutUser}
+                sx={{ backgroundColor: 'primary.light', color: 'text.secondary' }}
+                variant="outlined"
+              >
+                {translate('signOut')}
+              </Button>
+            )}
+            <ToggleButtonGroup
+              aria-label="Interface Language"
+              exclusive
+              onChange={handleToggleLanguage}
+              value={localLanguage}
             >
-              {translate('switchToEN')}
-            </ToggleButton>
-            <ToggleButton
-              aria-label="Russian"
-              color="secondary"
-              onClick={() => setLanguage(I18NLanguage.Russian)}
-              value={'ru'}
-            >
-              {translate('switchToRU')}
-            </ToggleButton>
-          </ToggleButtonGroup>
+              <ToggleButton
+                aria-label="English"
+                onClick={() => setLanguage(I18NLanguage.English)}
+                sx={{
+                  color: 'text.secondary',
+                }}
+                value={'en'}
+              >
+                {translate('switchToEN')}
+              </ToggleButton>
+              <ToggleButton
+                aria-label="Russian"
+                onClick={() => setLanguage(I18NLanguage.Russian)}
+                sx={{
+                  color: 'text.secondary',
+                }}
+                value={'ru'}
+              >
+                {translate('switchToRU')}
+              </ToggleButton>
+            </ToggleButtonGroup>
+          </Stack>
         </Stack>
-        <Button
-          component={RouterLink}
-          sx={{ backgroundColor: 'primary.main', color: 'secondary.main', textDecoration: 'none' }}
-          to="/"
-        >
-          {translate('welcomePage')}
-        </Button>
       </AppBar>
 
       <Snackbar autoHideDuration={3000} onClose={() => setAlertType(null)} open={!!alertType}>

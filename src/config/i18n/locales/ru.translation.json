@@ -39,8 +39,8 @@
   "noAccount": "Еще нет аккаунта?",
   "haveAccount": "Уже есть аккаунт?",
 
-  "switchToEN": "Переключить на АНГЛ",
-  "switchToRU": "Переключить на РУС",
+  "switchToEN": "АНГЛ",
+  "switchToRU": "РУС",
 
   "registerSuccess": "Аккаунт создан успешно",
   "accoutExistsError": "Аккаунт уже существует",
