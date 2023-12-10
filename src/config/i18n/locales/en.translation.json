@@ -11,5 +11,7 @@
   "shortPassword": "Password must be at least 8 characters long",
   "weakPassword": "Password must contain at least one letter, one digit, one special character",
   "noAccount": "Don't have an account?",
-  "haveAccount": "Already have an account?"
+  "haveAccount": "Already have an account?",
+  "switchToEN": "Switch language to EN",
+  "switchToRU": "Switch language to RU"
 }
