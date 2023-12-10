@@ -1,23 +1,19 @@
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Alert, Button, Snackbar, TextField } from '@mui/material';
-import Stack from '@mui/material/Stack';
+import { Alert, Button, Snackbar, Stack, TextField } from '@mui/material';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import { AuthState, useAuth } from '@/features/auth';
 
 import { graphQLRequest } from '../api/requests';
+import { useMainPageReducer } from '../hooks/useMainPageReducer';
 
 export const MainPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { authState } = useAuth();
-  const [endpoint, setEndpoint] = useState('https://graphql.anilist.co');
-  const [request, setRequest] = useState('');
-  const [response, setResponse] = useState('');
-  const [isNotificationVisible, setIsNotificationVisible] = useState(false);
-  const [notification, setNotification] = useState('');
+  const [state, dispatch] = useMainPageReducer();
 
   useEffect(() => {
     if (authState === AuthState.NOT_AUTHENTICATED) {
@@ -26,33 +22,37 @@ export const MainPage = (): JSX.Element => {
   }, [authState, navigate]);
 
   const handleSendRequest = async (): Promise<void> => {
-    console.log(endpoint);
-    console.log(request);
+    console.log(state.endpoint);
+    console.log(state.request);
     try {
       const response = await graphQLRequest({
-        endpoint,
-        query: request,
+        endpoint: state.endpoint,
+        query: state.request,
       });
-      setResponse(response);
+
+      dispatch({ payload: response, type: 'setResponse' });
     } catch (error) {
       console.error(error);
-      setResponse('');
-      setNotification((error as Error).message);
-      setIsNotificationVisible(true);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+
+      dispatch({ payload: errorMessage, type: 'setError' });
     }
   };
 
   const handleSnackbarClose = (): void => {
-    setIsNotificationVisible(false);
+    dispatch({
+      payload: { message: '', severity: 'info' },
+      type: 'setNotification',
+    });
   };
 
   return (
     <>
       <TextField
         label="GraphQL endpoint"
-        onChange={(e) => setEndpoint(e.target.value)}
+        onChange={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
         placeholder="GraphQL endpoint"
-        value={endpoint}
+        value={state.endpoint}
       />
       <Button onClick={() => void handleSendRequest()}>Send Request</Button>
       <Stack direction="row" spacing={2}>
@@ -60,11 +60,11 @@ export const MainPage = (): JSX.Element => {
           data-color-mode="dark"
           language="graphql"
           minHeight={440}
-          onChange={(e) => setRequest(e.target.value)}
+          onChange={(e) => dispatch({ payload: e.target.value, type: 'setRequest' })}
           placeholder="GraphQL query"
           rows={20}
           style={{ width: '100%' }}
-          value={request}
+          value={state.request}
         />
         <CodeEditor
           data-color-mode="dark"
@@ -74,12 +74,16 @@ export const MainPage = (): JSX.Element => {
           readOnly
           rows={20}
           style={{ width: '100%' }}
-          value={response}
+          value={state.response}
         />
       </Stack>
-      <Snackbar autoHideDuration={5000} onClose={handleSnackbarClose} open={isNotificationVisible}>
+      <Snackbar
+        autoHideDuration={5000}
+        onClose={handleSnackbarClose}
+        open={state.notificationText.length > 0}
+      >
         <Alert onClick={handleSnackbarClose} severity="error">
-          {notification}
+          {state.notificationText}
         </Alert>
       </Snackbar>
     </>
