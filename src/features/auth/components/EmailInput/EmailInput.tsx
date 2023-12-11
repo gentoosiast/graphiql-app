@@ -3,7 +3,7 @@ import { Control, Controller } from 'react-hook-form';
 
 import TextField from '@mui/material/TextField';
 
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 import { AuthFormData } from '../../types';
 import { getEmailRules } from '../../utils/validation-rules';

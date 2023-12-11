@@ -6,8 +6,8 @@ import { Alert, Button, Snackbar } from '@mui/material';
 import { signOut } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
+import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
-import { useI18NContext } from '@/providers/i18n';
 
 export const Header = (): JSX.Element => {
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);

@@ -9,7 +9,7 @@ import { FirebaseError } from 'firebase/app';
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 import { type AuthFormData } from '../../types';
 import { AuthForm } from '../AuthForm';

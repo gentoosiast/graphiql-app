@@ -5,7 +5,7 @@ import { Control, Controller } from 'react-hook-form';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 import { AuthFormData } from '../../types';
 import { getConfirmPasswordRules } from '../../utils/validation-rules';
