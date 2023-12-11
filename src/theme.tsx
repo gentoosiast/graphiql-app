@@ -12,6 +12,7 @@ const theme = createTheme({
     },
     mode: 'dark',
     primary: {
+      dark: '#ccc',
       light: '#ff8ebc',
       main: '#ea4c87',
     },

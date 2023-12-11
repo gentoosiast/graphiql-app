@@ -1,7 +1,15 @@
 import { type JSX, MouseEvent, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
-import { Alert, AppBar, Button, Snackbar, ToggleButton, ToggleButtonGroup } from '@mui/material';
+import {
+  Alert,
+  AppBar,
+  Button,
+  Snackbar,
+  ToggleButton,
+  ToggleButtonGroup,
+  useScrollTrigger,
+} from '@mui/material';
 import { Stack } from '@mui/system';
 import { signOut } from 'firebase/auth';
 
@@ -40,76 +48,76 @@ export const Header = (): JSX.Element => {
   }
 
   return (
-    <>
-      <AppBar
-        sx={{
-          alignItems: 'center',
-          backgroundColor: 'primary.main',
-          justifyContent: 'center',
-          minHeight: '5vh',
-          position: 'sticky',
-          top: 0,
-        }}
-      >
-        <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
-          <Button
-            component={RouterLink}
-            sx={{
-              backgroundColor: 'primary.light',
-              color: 'text.secondary',
-              textDecoration: 'none',
-            }}
-            to="/"
-          >
-            {translate('welcomePage')}
-          </Button>
+    <AppBar
+      sx={{
+        alignItems: 'center',
+        backgroundColor: useScrollTrigger() ? 'background.paper' : 'primary.main',
+        justifyContent: 'center',
+        minHeight: '5vh',
+        position: 'sticky',
+        top: 0,
+      }}
+    >
+      <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
+        <Button
+          component={RouterLink}
+          sx={{
+            backgroundColor: 'text.primary',
+            color: 'primary.main',
+            textDecoration: 'none',
+          }}
+          to="/"
+        >
+          {translate('welcomePage')}
+        </Button>
 
-          <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
-            {authState === AuthState.AUTHENTICATED && (
-              <Button
-                onClick={signOutUser}
-                sx={{ backgroundColor: 'primary.light', color: 'text.secondary' }}
-                variant="outlined"
-              >
-                {translate('signOut')}
-              </Button>
-            )}
-            <ToggleButtonGroup
-              aria-label="Interface Language"
-              exclusive
-              onChange={handleToggleLanguage}
-              value={localLanguage}
+        <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
+          {authState === AuthState.AUTHENTICATED && (
+            <Button
+              onClick={signOutUser}
+              sx={{ backgroundColor: 'text.primary', color: 'primary.main' }}
+              variant="outlined"
             >
-              <ToggleButton
-                aria-label="English"
-                onClick={() => setLanguage(I18NLanguage.English)}
-                sx={{
-                  color: 'text.secondary',
-                }}
-                value={'en'}
-              >
-                {translate('switchToEN')}
-              </ToggleButton>
-              <ToggleButton
-                aria-label="Russian"
-                onClick={() => setLanguage(I18NLanguage.Russian)}
-                sx={{
-                  color: 'text.secondary',
-                }}
-                value={'ru'}
-              >
-                {translate('switchToRU')}
-              </ToggleButton>
-            </ToggleButtonGroup>
-          </Stack>
+              {translate('signOut')}
+            </Button>
+          )}
+          <ToggleButtonGroup
+            aria-label="Interface Language"
+            exclusive
+            onChange={handleToggleLanguage}
+            sx={{ backgroundColor: 'primary.main' }}
+            value={localLanguage}
+          >
+            <ToggleButton
+              aria-label="English"
+              onClick={() => setLanguage(I18NLanguage.English)}
+              sx={{
+                backgroundColor: 'text.primary',
+                color: 'primary.main',
+              }}
+              value={'en'}
+            >
+              {translate('switchToEN')}
+            </ToggleButton>
+            <ToggleButton
+              aria-label="Russian"
+              onClick={() => setLanguage(I18NLanguage.Russian)}
+              sx={{
+                backgroundColor: 'text.primary',
+                color: 'primary.main',
+              }}
+              value={'ru'}
+            >
+              {translate('switchToRU')}
+            </ToggleButton>
+          </ToggleButtonGroup>
         </Stack>
-      </AppBar>
-
+      </Stack>
       <Snackbar autoHideDuration={3000} onClose={() => setAlertType(null)} open={!!alertType}>
         <Alert severity={alertType || 'success'} sx={{ width: '100%' }}>
           {alertText}
         </Alert>
       </Snackbar>
-    </>
+    </AppBar>
   );
 };

@@ -49,11 +49,7 @@ export const WelcomePage = (): JSX.Element => {
           }}
         >
           <Stack alignItems="center" justifyContent="center">
-            <Avatar
-              alt="Kate"
-              src="/kate.jpg"
-              sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
-            />
+            <Avatar alt="Kate" src="/kate.jpg" sx={{ minHeight: 200, minWidth: 200, mt: 1 }} />
           </Stack>
           <MemberText>
             <CardHeader color="primary" title={`${translate('kate-welcome-name')}`} />
