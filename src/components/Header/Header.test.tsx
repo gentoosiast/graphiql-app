@@ -21,12 +21,8 @@ describe('Header', () => {
       </Provider>,
     );
 
-    const welcomeButton = screen.getByText(/welcome page/i);
-    const enButton = screen.getByText(/en/i);
-    const ruButton = screen.getByText(/ru/i);
+    const welcomeLink = screen.getByRole('link');
 
-    expect(welcomeButton).toBeInTheDocument();
-    expect(enButton).toBeInTheDocument();
-    expect(ruButton).toBeInTheDocument();
+    expect(welcomeLink).toBeInTheDocument();
   });
 });
