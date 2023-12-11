@@ -17,7 +17,7 @@ type Props = {
   watch?: UseFormWatch<AuthFormData>;
 };
 
-function AuthForm(props: Props): JSX.Element {
+const AuthForm = (props: Props): JSX.Element => {
   const { control, isLogin, isValid, submit, title, watch } = props;
 
   return (
@@ -39,6 +39,6 @@ function AuthForm(props: Props): JSX.Element {
       </form>
     </>
   );
-}
+};
 
 export { AuthForm };

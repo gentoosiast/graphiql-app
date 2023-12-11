@@ -17,7 +17,7 @@ type Props = {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
 };
 
-function Register({ setIsLogin }: Props): JSX.Element {
+const Register = ({ setIsLogin }: Props): JSX.Element => {
   const navigate = useNavigate();
 
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
@@ -45,7 +45,7 @@ function Register({ setIsLogin }: Props): JSX.Element {
     mode: 'onBlur',
   });
 
-  function onSubmit({ email, password }: AuthFormData): void {
+  const onSubmit = ({ email, password }: AuthFormData): void => {
     if (!isValid) {
       return;
     }
@@ -64,7 +64,7 @@ function Register({ setIsLogin }: Props): JSX.Element {
         }
         setAlertType('error');
       });
-  }
+  };
 
   return (
     <>
@@ -89,6 +89,6 @@ function Register({ setIsLogin }: Props): JSX.Element {
       </Snackbar>
     </>
   );
-}
+};
 
 export { Register };

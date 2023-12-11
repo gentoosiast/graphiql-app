@@ -9,7 +9,7 @@ import { useI18NContext } from '@/providers/i18n';
 import { AuthFormData } from '../../types';
 import { getPasswordRules } from '../../utils/validation-rules';
 
-function PasswordInput({ control }: { control: Control<AuthFormData> }): JSX.Element {
+const PasswordInput = ({ control }: { control: Control<AuthFormData> }): JSX.Element => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const { translate } = useI18NContext();
@@ -57,6 +57,6 @@ function PasswordInput({ control }: { control: Control<AuthFormData> }): JSX.Ele
       rules={validationRules}
     />
   );
-}
+};
 
 export { PasswordInput };

@@ -17,7 +17,7 @@ export const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  function signOutUser(): void {
+  const signOutUser = (): void => {
     signOut(auth)
       .then(() => {
         setAlertType('success');
@@ -29,7 +29,7 @@ export const Header = (): JSX.Element => {
         setAlertText(translate('defaultError'));
         console.error(error);
       });
-  }
+  };
 
   return (
     <>

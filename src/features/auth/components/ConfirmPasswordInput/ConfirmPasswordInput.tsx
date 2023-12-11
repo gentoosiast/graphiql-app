@@ -14,7 +14,7 @@ type PasswordInputProps = {
   passwordValue: string;
 };
 
-function ConfirmPasswordInput({ control, passwordValue }: PasswordInputProps): JSX.Element {
+const ConfirmPasswordInput = ({ control, passwordValue }: PasswordInputProps): JSX.Element => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const { translate } = useI18NContext();
@@ -62,6 +62,6 @@ function ConfirmPasswordInput({ control, passwordValue }: PasswordInputProps): J
       rules={validationRules}
     />
   );
-}
+};
 
 export { ConfirmPasswordInput };
