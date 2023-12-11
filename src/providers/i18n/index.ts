@@ -1,2 +1,2 @@
-export { I18NProvider } from './provider';
+export { I18NProvider } from './I18NProvider';
 export * from './hooks';
