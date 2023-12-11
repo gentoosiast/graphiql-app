@@ -12,18 +12,14 @@ const theme = createTheme({
     },
     mode: 'dark',
     primary: {
-      dark: '#ccc',
       light: '#ff8ebc',
       main: '#ea4c87',
     },
     secondary: {
       main: '#19857b',
     },
-    text: {
-      primary: '#fff',
-      secondary: '#000',
-    },
   },
+
   typography: {
     h1: {
       fontFamily: 'Philosopher',

@@ -1,13 +1,15 @@
-import { type JSX, MouseEvent, useState } from 'react';
+import { type JSX, useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
+import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import {
   Alert,
   AppBar,
   Button,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
   Snackbar,
-  ToggleButton,
-  ToggleButtonGroup,
   useScrollTrigger,
 } from '@mui/material';
 import { Stack } from '@mui/system';
@@ -18,6 +20,8 @@ import { I18NLanguage } from '@/config/i18n';
 import { AuthState, useAuth } from '@/features/auth';
 import { useI18NContext } from '@/providers/i18n';
 
+import { FaviconSvg } from '../favicon';
+
 export const Header = (): JSX.Element => {
   const { language, setLanguage, translate } = useI18NContext();
   const [localLanguage, setLocalLanguage] = useState<string>(language);
@@ -27,7 +31,8 @@ export const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const handleToggleLanguage = (_: MouseEvent<HTMLElement>, nextLanguage: string): void => {
+  const handleToggleLanguage = (event: SelectChangeEvent): void => {
+    const nextLanguage = event.target.value;
     if (nextLanguage !== null) {
       setLocalLanguage(nextLanguage);
     }
@@ -59,58 +64,50 @@ export const Header = (): JSX.Element => {
       }}
     >
       <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
-        <Button
-          component={RouterLink}
+        <Stack
+          alignItems="center"
+          borderRadius={20}
+          justifyContent="center"
           sx={{
-            backgroundColor: 'text.primary',
-            color: 'primary.main',
-            textDecoration: 'none',
+            ':hover': {
+              opacity: 1,
+            },
+            opacity: 0.8,
           }}
-          to="/"
+          width="10%"
         >
-          {translate('welcomePage')}
-        </Button>
+          <RouterLink to="/">
+            <FaviconSvg />
+          </RouterLink>
+        </Stack>
 
-        <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
+        <Stack direction={'row'} justifyContent={'space-between'} width={'40%'}>
           {authState === AuthState.AUTHENTICATED && (
             <Button
+              color="inherit"
               onClick={signOutUser}
-              sx={{ backgroundColor: 'text.primary', color: 'primary.main' }}
+              sx={{ backgroundColor: 'primary.light' }}
               variant="outlined"
             >
               {translate('signOut')}
             </Button>
           )}
-          <ToggleButtonGroup
-            aria-label="Interface Language"
-            exclusive
-            onChange={handleToggleLanguage}
-            sx={{ backgroundColor: 'primary.main' }}
-            value={localLanguage}
-          >
-            <ToggleButton
-              aria-label="English"
-              onClick={() => setLanguage(I18NLanguage.English)}
-              sx={{
-                backgroundColor: 'text.primary',
-                color: 'primary.main',
+
+          <Select label={localLanguage} onChange={handleToggleLanguage} value={localLanguage}>
+            <MenuItem
+              onClick={() => {
+                setLanguage(I18NLanguage.English);
               }}
               value={'en'}
             >
-              {translate('switchToEN')}
-            </ToggleButton>
-            <ToggleButton
-              aria-label="Russian"
-              onClick={() => setLanguage(I18NLanguage.Russian)}
-              sx={{
-                backgroundColor: 'text.primary',
-                color: 'primary.main',
-              }}
-              value={'ru'}
-            >
-              {translate('switchToRU')}
-            </ToggleButton>
-          </ToggleButtonGroup>
+              <TranslateOutlinedIcon />
+              en
+            </MenuItem>
+            <MenuItem onClick={() => setLanguage(I18NLanguage.Russian)} value={'ru'}>
+              <TranslateOutlinedIcon />
+              ru
+            </MenuItem>
+          </Select>
         </Stack>
       </Stack>
       <Snackbar autoHideDuration={3000} onClose={() => setAlertType(null)} open={!!alertType}>
