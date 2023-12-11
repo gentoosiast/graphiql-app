@@ -1,10 +1,13 @@
 import type { JSX } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { Avatar, Card, CardHeader, ListItem, Typography } from '@mui/material';
+import { Avatar, Box, Button, Card, CardHeader, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/system';
+import { onAuthStateChanged } from 'firebase/auth';
 
+import { auth } from '@/config/firebase';
 import { useI18NContext } from '@/providers/i18n';
 
 export const WelcomePage = (): JSX.Element => {
@@ -18,13 +21,37 @@ export const WelcomePage = (): JSX.Element => {
   }));
 
   const { translate } = useI18NContext();
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
+  useEffect(() => onAuthStateChanged(auth, (user) => setIsUserLoggedIn(!!user)), []);
 
   return (
     <>
       <nav>
-        <Link to="/auth">Sign In / Sign Up Page</Link>
-        <Link to="/main">Main Page</Link>
+        <Box
+          flexDirection={'row'}
+          sx={{ backgroundColor: 'background.paper', fontSize: 20, textAlign: 'center' }}
+        >
+          <Button
+            component={RouterLink}
+            sx={{ textDecoration: 'none' }}
+            to="/auth"
+            variant="outlined"
+          >
+            Sign In / Sign Up Page
+          </Button>
+          {isUserLoggedIn && (
+            <Button
+              component={RouterLink}
+              sx={{ textDecoration: 'none' }}
+              to="/main"
+              variant="outlined"
+            >
+              Main Page
+            </Button>
+          )}
+        </Box>
       </nav>
+
       <Stack alignItems="center" justifyContent="center">
         <Typography component="h1" sx={{ margin: 3 }} variant="h2">
           {translate('welcome')}
