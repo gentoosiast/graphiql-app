@@ -11,8 +11,8 @@ import { AuthState, useAuth } from '@/features/auth';
 import { useI18NContext } from '@/providers/i18n';
 
 export const Header = (): JSX.Element => {
-  const { setLanguage, translate } = useI18NContext();
-  const [localLanguage, setLocalLanguage] = useState('EN');
+  const { language, setLanguage, translate } = useI18NContext();
+  const [localLanguage, setLocalLanguage] = useState<string>(language);
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
   const [alertText, setAlertText] = useState('');
   const { authState } = useAuth();

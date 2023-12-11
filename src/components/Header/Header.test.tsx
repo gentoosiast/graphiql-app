@@ -9,7 +9,7 @@ import { store } from '@/store';
 
 import { Header } from '.';
 
-describe('Footer', () => {
+describe('Header', () => {
   it('should render header', () => {
     render(
       <Provider store={store}>
