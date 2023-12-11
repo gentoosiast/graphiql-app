@@ -1,4 +1,5 @@
-import { type Dispatch, type FormEvent, type SetStateAction, useState } from 'react';
+import type { Dispatch, FormEvent, JSX, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 

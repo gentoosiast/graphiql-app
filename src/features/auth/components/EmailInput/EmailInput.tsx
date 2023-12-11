@@ -1,4 +1,4 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 import TextField from '@mui/material/TextField';

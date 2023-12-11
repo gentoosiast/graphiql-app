@@ -1,4 +1,5 @@
-import { type JSX, useState } from 'react';
+import type { JSX } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Alert, Button, Snackbar } from '@mui/material';

@@ -1,4 +1,5 @@
-import { type JSX, useEffect } from 'react';
+import type { JSX } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { AuthState, useAuth } from '@/features/auth';

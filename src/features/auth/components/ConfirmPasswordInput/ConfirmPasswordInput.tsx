@@ -1,4 +1,5 @@
-import { JSX, useState } from 'react';
+import type { JSX } from 'react';
+import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
