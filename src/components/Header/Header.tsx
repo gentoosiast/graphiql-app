@@ -20,7 +20,9 @@ export const Header = (): JSX.Element => {
   const navigate = useNavigate();
 
   const handleToggleLanguage = (_: MouseEvent<HTMLElement>, nextLanguage: string): void => {
-    setLocalLanguage(nextLanguage);
+    if (nextLanguage !== null) {
+      setLocalLanguage(nextLanguage);
+    }
   };
 
   function signOutUser(): void {
