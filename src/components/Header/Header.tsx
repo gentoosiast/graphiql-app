@@ -18,18 +18,18 @@ export const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  const signOutUser = (): void => {
-    signOut(auth)
-      .then(() => {
-        setAlertType('success');
-        setAlertText(translate('signOutSuccess'));
-        setTimeout(() => navigate('/'), 2000);
-      })
-      .catch((error) => {
-        setAlertType('error');
-        setAlertText(translate('defaultError'));
-        console.error(error);
-      });
+  const signOutUser = async (): Promise<void> => {
+    try {
+      await signOut(auth);
+
+      setAlertType('success');
+      setAlertText(translate('signOutSuccess'));
+      setTimeout(() => navigate('/'), 2000);
+    } catch (error) {
+      setAlertType('error');
+      setAlertText(translate('defaultError'));
+      console.error(error);
+    }
   };
 
   return (
@@ -38,7 +38,7 @@ export const Header = (): JSX.Element => {
         <h1>Header</h1>
 
         {authState === AuthState.AUTHENTICATED && (
-          <Button onClick={signOutUser} variant="outlined">
+          <Button onClick={() => void signOutUser()} variant="outlined">
             {translate('signOut')}
           </Button>
         )}

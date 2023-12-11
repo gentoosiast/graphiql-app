@@ -45,25 +45,26 @@ const Login = ({ setIsLogin }: Props): JSX.Element => {
     mode: 'onBlur',
   });
 
-  const onSubmit = ({ email, password }: AuthFormData): void => {
+  const onSubmit = async ({ email, password }: AuthFormData): Promise<void> => {
     if (!isValid) {
       return;
     }
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setAlertType('success');
-        setAlertText(translate('loginSuccess'));
-        setTimeout(() => navigate('/main'), 2000);
-      })
-      .catch((err) => {
-        if (err instanceof FirebaseError && err.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
-          setAlertText(translate('accoutNotFound'));
-        } else {
-          setAlertText(translate('defaultError'));
-          console.error(err);
-        }
-        setAlertType('error');
-      });
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      setAlertType('success');
+      setAlertText(translate('loginSuccess'));
+      setTimeout(() => navigate('/main'), 2000);
+    } catch (err) {
+      if (err instanceof FirebaseError && err.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
+        setAlertText(translate('accoutNotFound'));
+      } else {
+        setAlertText(translate('defaultError'));
+        console.error(err);
+      }
+      setAlertType('error');
+    }
   };
 
   return (
