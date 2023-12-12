@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { I18NProvider } from '@/providers/i18n';
 import { renderWithProviders } from '@/test/render-with-providers';
 
-import { AuthPage } from '.';
+import { AuthPage } from './AuthPage';
 
 describe('AuthForm', () => {
   it('should render login form', () => {
@@ -18,10 +18,12 @@ describe('AuthForm', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    expect(screen.getByRole('heading', { name: /Sign In/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /sign in/i })).toBeInTheDocument();
   });
 
   it('should switch to the register form upon clicking on "Sign up"', async () => {
+    const user = userEvent.setup();
+
     renderWithProviders(
       <MemoryRouter>
         <I18NProvider>
@@ -29,8 +31,8 @@ describe('AuthForm', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    await userEvent.click(screen.getByRole('button', { name: /Sign up/i }));
+    await user.click(screen.getByRole('button', { name: /sign up/i }));
 
-    expect(await screen.findByRole('heading', { name: /Sign up/i })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: /sign up/i })).toBeInTheDocument();
   });
 });

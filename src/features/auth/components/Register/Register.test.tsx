@@ -9,9 +9,9 @@ import { I18NProvider } from '@/providers/i18n';
 import { Register } from './Register';
 
 describe('Register', () => {
-  const user = userEvent.setup();
-
   it('should validate email', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -19,9 +19,10 @@ describe('Register', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    const emailInput = screen.getByPlaceholderText(/Email/i);
-    const passwordInput = screen.getByPlaceholderText(/^Password$/i);
+    const emailInput = screen.getByPlaceholderText(/email/i);
+    const passwordInput = screen.getByPlaceholderText(/^password$/i);
 
+    await user.clear(emailInput);
     await user.type(emailInput, 'test');
     await user.click(passwordInput);
 
@@ -29,6 +30,8 @@ describe('Register', () => {
   });
 
   it('should validate password', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -36,9 +39,10 @@ describe('Register', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    const passwordInput = screen.getByPlaceholderText(/^Password$/i);
-    const emailInput = await screen.findByPlaceholderText(/Email/i);
+    const passwordInput = screen.getByPlaceholderText(/^password$/i);
+    const emailInput = screen.getByPlaceholderText(/email/i);
 
+    await user.clear(passwordInput);
     await user.type(passwordInput, 'test');
     await user.click(emailInput);
 
@@ -56,7 +60,9 @@ describe('Register', () => {
     ).toBeInTheDocument();
   });
 
-  it('should required password confirmation', async () => {
+  it('should require password confirmation', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -64,8 +70,11 @@ describe('Register', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    const passwordInput = screen.getByPlaceholderText(/^Password$/i);
-    const confirmPasswordInput = screen.getByPlaceholderText(/^Confirm password$/i);
+    const passwordInput = screen.getByPlaceholderText(/^password$/i);
+    const confirmPasswordInput = screen.getByPlaceholderText(/^confirm password$/i);
+
+    await user.clear(passwordInput);
+    await user.clear(confirmPasswordInput);
 
     await user.type(passwordInput, 'some password');
     await user.type(confirmPasswordInput, 'another password');
@@ -76,6 +85,8 @@ describe('Register', () => {
   });
 
   it('button to toggle password visibility should work', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -83,8 +94,7 @@ describe('Register', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-
-    const confirmPasswordInput = screen.getByPlaceholderText<HTMLInputElement>(/Confirm password/i);
+    const confirmPasswordInput = screen.getByPlaceholderText<HTMLInputElement>(/confirm password/i);
     const visibilityButton = screen.getAllByLabelText(/toggle password visibility/i)[1];
 
     expect(confirmPasswordInput.type).toBe('password');

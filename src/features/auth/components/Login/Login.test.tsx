@@ -9,9 +9,9 @@ import { I18NProvider } from '@/providers/i18n';
 import { Login } from './Login';
 
 describe('Login', () => {
-  const user = userEvent.setup();
-
   it('should validate email', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -19,16 +19,19 @@ describe('Login', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    const emailInput = screen.getByPlaceholderText(/Email/i);
-    const passwordInput = screen.getByPlaceholderText(/Password/i);
+    const emailInput = screen.getByPlaceholderText(/email/i);
+    const passwordInput = screen.getByPlaceholderText(/password/i);
 
-    await userEvent.type(emailInput, 'test');
+    await user.clear(emailInput);
+    await user.type(emailInput, 'test');
     await user.click(passwordInput);
 
     expect(await screen.findByText('Invalid email')).toBeInTheDocument();
   });
 
   it('should validate password', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -36,17 +39,18 @@ describe('Login', () => {
         </I18NProvider>
       </MemoryRouter>,
     );
-    const passwordInput = screen.getByPlaceholderText(/Password/i);
-    const emailInput = await screen.findByPlaceholderText(/Email/i);
+    const passwordInput = screen.getByPlaceholderText(/password/i);
+    const emailInput = await screen.findByPlaceholderText(/email/i);
 
-    await userEvent.type(passwordInput, 'test');
+    await user.clear(passwordInput);
+    await user.type(passwordInput, 'test');
     await user.click(emailInput);
 
     expect(
       await screen.findByText('Password must be at least 8 characters long'),
     ).toBeInTheDocument();
 
-    await userEvent.type(passwordInput, '123456789');
+    await user.type(passwordInput, '123456789');
     await user.click(emailInput);
 
     expect(
@@ -57,6 +61,8 @@ describe('Login', () => {
   });
 
   it('button to toggle password visibility should work', async () => {
+    const user = userEvent.setup();
+
     render(
       <MemoryRouter>
         <I18NProvider>
@@ -65,7 +71,7 @@ describe('Login', () => {
       </MemoryRouter>,
     );
 
-    const passwordInput = screen.getByPlaceholderText<HTMLInputElement>(/Password/i);
+    const passwordInput = screen.getByPlaceholderText<HTMLInputElement>(/password/i);
     const visibilityButton = screen.getByLabelText(/toggle password visibility/i);
 
     expect(passwordInput.type).toBe('password');
