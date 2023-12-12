@@ -4,7 +4,7 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 
-import { I18NProvider } from '@/providers/i18n/provider';
+import { I18NProvider } from '@/providers/i18n';
 
 import { Login } from './Login';
 
