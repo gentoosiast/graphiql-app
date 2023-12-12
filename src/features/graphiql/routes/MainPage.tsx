@@ -2,13 +2,18 @@ import type { JSX } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Alert, Button, Snackbar, Stack, TextField } from '@mui/material';
+import SendIcon from '@mui/icons-material/Send';
+import { Alert, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import { AuthState, useAuth } from '@/features/auth';
 
 import { graphQLRequest } from '../api/requests';
+import { PrettifyIcon, RequestTabbar } from '../components';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
+import { prettify } from '../utils/prettify';
+
+import 'hack-font/build/web/hack.css';
 
 export const MainPage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -48,37 +53,65 @@ export const MainPage = (): JSX.Element => {
     });
   };
 
+  const handlePrettify = (): void => {
+    dispatch({ payload: prettify(state.request), type: 'setRequest' });
+  };
+
   return (
     <>
-      <TextField
-        label="GraphQL endpoint"
-        onChange={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
-        placeholder="GraphQL endpoint"
-        value={state.endpoint}
-      />
-      <Button onClick={() => void handleSendRequest()}>Send Request</Button>
-      <Stack direction="row" spacing={2}>
-        <CodeEditor
-          data-color-mode="dark"
-          language="graphql"
-          minHeight={440}
-          onChange={(e) => dispatch({ payload: e.target.value, type: 'setRequest' })}
-          placeholder="GraphQL query"
-          rows={20}
-          style={{ width: '100%' }}
-          value={state.request}
-        />
-        <CodeEditor
-          data-color-mode="dark"
-          language="json"
-          minHeight={440}
-          placeholder="GraphQL Response"
-          readOnly
-          rows={20}
-          style={{ width: '100%' }}
-          value={state.response}
-        />
-      </Stack>
+      <Container maxWidth="xl">
+        <Stack direction={{ sm: 'row', xs: 'column' }} spacing={{ sm: 2, xs: 1 }}>
+          <Stack spacing={1} sx={{ width: '100%' }}>
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{ alignItems: 'center', justifyContent: 'center' }}
+            >
+              <TextField
+                label="GraphQL endpoint"
+                onChange={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
+                placeholder="GraphQL endpoint"
+                sx={{ width: '100%' }}
+                value={state.endpoint}
+              />
+              <IconButton aria-label="Prettify query" color="default" onClick={handlePrettify}>
+                <PrettifyIcon />
+              </IconButton>
+              <Fab
+                aria-label="Send request"
+                color="primary"
+                onClick={() => void handleSendRequest()}
+                size="small"
+              >
+                <SendIcon />
+              </Fab>
+            </Stack>
+
+            <CodeEditor
+              data-color-mode="dark"
+              language="graphql"
+              minHeight={440}
+              onChange={(e) => dispatch({ payload: e.target.value, type: 'setRequest' })}
+              placeholder="GraphQL Query"
+              rows={20}
+              style={{ fontFamily: 'Hack, monospace', width: '100%' }}
+              value={state.request}
+            />
+
+            <RequestTabbar />
+          </Stack>
+          <CodeEditor
+            data-color-mode="dark"
+            language="json"
+            minHeight={440}
+            placeholder="GraphQL Response"
+            readOnly
+            rows={20}
+            style={{ fontFamily: 'Hack, monospace', width: '100%' }}
+            value={state.response}
+          />
+        </Stack>
+      </Container>
       <Snackbar
         autoHideDuration={5000}
         onClose={handleSnackbarClose}
