@@ -1,4 +1,5 @@
-import { type JSX, useState } from 'react';
+import { useState } from 'react';
+import type { JSX } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
@@ -59,29 +60,19 @@ export const Header = (): JSX.Element => {
         backgroundColor: useScrollTrigger() ? 'background.paper' : 'primary.main',
         justifyContent: 'center',
         minHeight: '5vh',
+        padding: 1,
         position: 'sticky',
         top: 0,
       }}
     >
       <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
-        <Stack
-          alignItems="center"
-          borderRadius={20}
-          justifyContent="center"
-          sx={{
-            ':hover': {
-              opacity: 1,
-            },
-            opacity: 0.8,
-          }}
-          width="10%"
-        >
+        <Stack alignItems="center" borderRadius={20} justifyContent="center" width="10%">
           <RouterLink to="/">
             <FaviconSvg />
           </RouterLink>
         </Stack>
 
-        <Stack direction={'row'} justifyContent={'space-between'} width={'40%'}>
+        <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
           {authState === AuthState.AUTHENTICATED && (
             <Button
               color="inherit"

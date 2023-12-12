@@ -4,7 +4,12 @@ export const FaviconSvg = (): JSX.Element => (
   <SvgIcon
     component={'svg'}
     sx={{
-      ':hover': { fill: 'background.default' },
+      ':hover circle': {
+        fill: '#fff',
+      },
+      ':hover path': {
+        fill: '#ff8ebc',
+      },
       borderRadius: 30,
       minHeight: 60,
       minWidth: 70,
