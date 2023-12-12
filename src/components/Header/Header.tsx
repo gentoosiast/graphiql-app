@@ -1,12 +1,13 @@
-import { type JSX, useState } from 'react';
+import type { JSX } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Alert, Button, Snackbar } from '@mui/material';
 import { signOut } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
+import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
-import { useI18NContext } from '@/providers/i18n';
 
 export const Header = (): JSX.Element => {
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
@@ -17,19 +18,19 @@ export const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  function signOutUser(): void {
-    signOut(auth)
-      .then(() => {
-        setAlertType('success');
-        setAlertText(translate('signOutSuccess'));
-        setTimeout(() => navigate('/'), 2000);
-      })
-      .catch((error) => {
-        setAlertType('error');
-        setAlertText(translate('defaultError'));
-        console.error(error);
-      });
-  }
+  const signOutUser = async (): Promise<void> => {
+    try {
+      await signOut(auth);
+
+      setAlertType('success');
+      setAlertText(translate('signOutSuccess'));
+      setTimeout(() => navigate('/'), 2000);
+    } catch (error) {
+      setAlertType('error');
+      setAlertText(translate('defaultError'));
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -37,7 +38,7 @@ export const Header = (): JSX.Element => {
         <h1>Header</h1>
 
         {authState === AuthState.AUTHENTICATED && (
-          <Button onClick={signOutUser} variant="outlined">
+          <Button onClick={() => void signOutUser()} variant="outlined">
             {translate('signOut')}
           </Button>
         )}

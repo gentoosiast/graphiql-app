@@ -5,7 +5,7 @@ import { Avatar, Card, CardHeader, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/system';
 
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 export const WelcomePage = (): JSX.Element => {
   const MemberText = styled('div')(() => ({
