@@ -9,7 +9,7 @@ type UseAuth = {
   email: string;
 };
 
-function useAuth(): UseAuth {
+const useAuth = (): UseAuth => {
   const email = useSelector((state: RootState) => state.user.email);
   const authState = useSelector((state: RootState) => state.user.authState);
 
@@ -17,6 +17,6 @@ function useAuth(): UseAuth {
     authState,
     email,
   };
-}
+};
 
 export { useAuth };

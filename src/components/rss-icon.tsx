@@ -1,3 +1,5 @@
+import type { JSX } from 'react';
+
 import { SvgIcon } from '@mui/material';
 
 export const RssIconSvg = (): JSX.Element => (

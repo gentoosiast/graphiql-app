@@ -1,4 +1,5 @@
-import { type JSX, useEffect } from 'react';
+import type { JSX } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Outlet } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { removeUser, setUser } from '@/store';
 
-function PageContent(): JSX.Element {
+const PageContent = (): JSX.Element => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,6 +27,6 @@ function PageContent(): JSX.Element {
       <Outlet />
     </Box>
   );
-}
+};
 
 export { PageContent };

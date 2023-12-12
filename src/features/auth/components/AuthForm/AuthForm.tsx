@@ -3,7 +3,8 @@ import type { Control, UseFormWatch } from 'react-hook-form';
 
 import { Button, Stack, Typography } from '@mui/material';
 
-import { type AuthFormData } from '../../types';
+import type { AuthFormData } from '../../types';
+
 import { ConfirmPasswordInput } from '../ConfirmPasswordInput';
 import { EmailInput } from '../EmailInput';
 import { PasswordInput } from '../PasswordInput';
@@ -17,7 +18,7 @@ type Props = {
   watch?: UseFormWatch<AuthFormData>;
 };
 
-function AuthForm(props: Props): JSX.Element {
+const AuthForm = (props: Props): JSX.Element => {
   const { control, isLogin, isValid, submit, title, watch } = props;
 
   return (
@@ -39,6 +40,6 @@ function AuthForm(props: Props): JSX.Element {
       </form>
     </>
   );
-}
+};
 
 export { AuthForm };
