@@ -1,4 +1,3 @@
-
 import { MemoryRouter } from 'react-router-dom';
 
 import { screen } from '@testing-library/react';
@@ -12,11 +11,11 @@ import { Header } from '.';
 describe('Header', () => {
   it('should render header', () => {
     renderWithProviders(
-        <I18NProvider>
-          <MemoryRouter>
-            <Header />
-          </MemoryRouter>
-        </I18NProvider>
+      <I18NProvider>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </I18NProvider>,
     );
 
     const welcomeLink = screen.getByRole('link');

@@ -3,16 +3,7 @@ import type { JSX } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
-import {
-  Alert,
-  AppBar,
-  Button,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  Snackbar,
-  useScrollTrigger,
-} from '@mui/material';
+import { Alert, AppBar, Button, MenuItem, Select, Snackbar, useScrollTrigger } from '@mui/material';
 import { Stack } from '@mui/system';
 import { signOut } from 'firebase/auth';
 
@@ -25,19 +16,11 @@ import { FaviconSvg } from '../favicon';
 
 export const Header = (): JSX.Element => {
   const { language, setLanguage, translate } = useI18NContext();
-  const [localLanguage, setLocalLanguage] = useState<string>(language);
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
   const [alertText, setAlertText] = useState('');
   const { authState } = useAuth();
 
   const navigate = useNavigate();
-
-  const handleToggleLanguage = (event: SelectChangeEvent): void => {
-    const nextLanguage = event.target.value;
-    if (nextLanguage !== null) {
-      setLocalLanguage(nextLanguage);
-    }
-  };
 
   function signOutUser(): void {
     signOut(auth)
@@ -84,19 +67,22 @@ export const Header = (): JSX.Element => {
             </Button>
           )}
 
-          <Select label={localLanguage} onChange={handleToggleLanguage} value={localLanguage}>
+          <Select label={language} value={language}>
             <MenuItem
               onClick={() => {
                 setLanguage(I18NLanguage.English);
               }}
-              value={'en'}
+              value={I18NLanguage.English}
             >
-              <TranslateOutlinedIcon />
-              en
+              <TranslateOutlinedIcon sx={{ margin: 0.5 }} />
+              {I18NLanguage.English}
             </MenuItem>
-            <MenuItem onClick={() => setLanguage(I18NLanguage.Russian)} value={'ru'}>
-              <TranslateOutlinedIcon />
-              ru
+            <MenuItem
+              onClick={() => setLanguage(I18NLanguage.Russian)}
+              value={I18NLanguage.Russian}
+            >
+              <TranslateOutlinedIcon sx={{ margin: 0.5 }} />
+              {I18NLanguage.Russian}
             </MenuItem>
           </Select>
         </Stack>
