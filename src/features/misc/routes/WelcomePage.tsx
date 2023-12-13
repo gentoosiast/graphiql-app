@@ -1,16 +1,16 @@
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Avatar, Box, Button, Card, CardHeader, ListItem, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Stack } from '@mui/system';
-import { onAuthStateChanged } from 'firebase/auth';
 
-import { auth } from '@/config/firebase';
 import { useI18NContext } from '@/contexts/i18n';
+import { AuthState, useAuth } from '@/features/auth';
 
 export const WelcomePage = (): JSX.Element => {
+  const { authState } = useAuth();
+
   const MemberText = styled('div')(() => ({
     alignItems: 'center',
     display: 'flex',
@@ -21,25 +21,25 @@ export const WelcomePage = (): JSX.Element => {
   }));
 
   const { translate } = useI18NContext();
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-  useEffect(() => onAuthStateChanged(auth, (user) => setIsUserLoggedIn(!!user)), []);
 
   return (
     <>
       <nav>
         <Box
           flexDirection={'row'}
-          sx={{ backgroundColor: 'background.paper', fontSize: 20, textAlign: 'center' }}
+          sx={{ backgroundColor: 'background.paper', fontSize: 22, textAlign: 'center' }}
         >
-          <Button
-            component={RouterLink}
-            sx={{ textDecoration: 'none' }}
-            to="/auth"
-            variant="outlined"
-          >
-            Sign In / Sign Up Page
-          </Button>
-          {isUserLoggedIn && (
+          {authState === AuthState.NOT_AUTHENTICATED && (
+            <Button
+              component={RouterLink}
+              sx={{ textDecoration: 'none' }}
+              to="/auth"
+              variant="outlined"
+            >
+              Sign In / Sign Up
+            </Button>
+          )}
+          {authState === AuthState.AUTHENTICATED && (
             <Button
               component={RouterLink}
               sx={{ textDecoration: 'none' }}
