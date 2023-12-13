@@ -1,10 +1,11 @@
-import { JSX, useState } from 'react';
+import type { JSX } from 'react';
+import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 import { AuthFormData } from '../../types';
 import { getConfirmPasswordRules } from '../../utils/validation-rules';
@@ -14,7 +15,7 @@ type PasswordInputProps = {
   passwordValue: string;
 };
 
-function ConfirmPasswordInput({ control, passwordValue }: PasswordInputProps): JSX.Element {
+const ConfirmPasswordInput = ({ control, passwordValue }: PasswordInputProps): JSX.Element => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const { translate } = useI18NContext();
@@ -62,6 +63,6 @@ function ConfirmPasswordInput({ control, passwordValue }: PasswordInputProps): J
       rules={validationRules}
     />
   );
-}
+};
 
 export { ConfirmPasswordInput };

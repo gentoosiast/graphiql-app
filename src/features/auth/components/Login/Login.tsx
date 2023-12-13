@@ -1,4 +1,5 @@
-import { type Dispatch, type FormEvent, type SetStateAction, useState } from 'react';
+import type { Dispatch, FormEvent, JSX, SetStateAction } from 'react';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,7 +9,7 @@ import { FirebaseError } from 'firebase/app';
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 import { type AuthFormData } from '../../types';
 import { AuthForm } from '../AuthForm';
@@ -17,7 +18,7 @@ type Props = {
   setIsLogin: Dispatch<SetStateAction<boolean>>;
 };
 
-function Login({ setIsLogin }: Props): JSX.Element {
+const Login = ({ setIsLogin }: Props): JSX.Element => {
   const navigate = useNavigate();
 
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
@@ -44,26 +45,27 @@ function Login({ setIsLogin }: Props): JSX.Element {
     mode: 'onBlur',
   });
 
-  function onSubmit({ email, password }: AuthFormData): void {
+  const onSubmit = async ({ email, password }: AuthFormData): Promise<void> => {
     if (!isValid) {
       return;
     }
-    signInWithEmailAndPassword(auth, email, password)
-      .then(() => {
-        setAlertType('success');
-        setAlertText(translate('loginSuccess'));
-        setTimeout(() => navigate('/main'), 2000);
-      })
-      .catch((err) => {
-        if (err instanceof FirebaseError && err.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
-          setAlertText(translate('accoutNotFound'));
-        } else {
-          setAlertText(translate('defaultError'));
-          console.error(err);
-        }
-        setAlertType('error');
-      });
-  }
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      setAlertType('success');
+      setAlertText(translate('loginSuccess'));
+      setTimeout(() => navigate('/main'), 2000);
+    } catch (err) {
+      if (err instanceof FirebaseError && err.code === AuthErrorCodes.INVALID_IDP_RESPONSE) {
+        setAlertText(translate('accoutNotFound'));
+      } else {
+        setAlertText(translate('defaultError'));
+        console.error(err);
+      }
+      setAlertType('error');
+    }
+  };
 
   return (
     <>
@@ -88,6 +90,6 @@ function Login({ setIsLogin }: Props): JSX.Element {
       </Snackbar>
     </>
   );
-}
+};
 
 export { Login };

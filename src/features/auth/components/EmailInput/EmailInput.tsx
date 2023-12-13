@@ -1,14 +1,14 @@
-import { JSX } from 'react';
+import type { JSX } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
 import TextField from '@mui/material/TextField';
 
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 import { AuthFormData } from '../../types';
 import { getEmailRules } from '../../utils/validation-rules';
 
-function EmailInput({ control }: { control: Control<AuthFormData> }): JSX.Element {
+const EmailInput = ({ control }: { control: Control<AuthFormData> }): JSX.Element => {
   const { translate } = useI18NContext();
 
   const emailWord = translate('email');
@@ -33,6 +33,6 @@ function EmailInput({ control }: { control: Control<AuthFormData> }): JSX.Elemen
       rules={getEmailRules(translate('requiredError'), translate('invalidEmail'))}
     />
   );
-}
+};
 
 export { EmailInput };

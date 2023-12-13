@@ -8,7 +8,7 @@ import { Stack } from '@mui/system';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 export const WelcomePage = (): JSX.Element => {
   const MemberText = styled('div')(() => ({

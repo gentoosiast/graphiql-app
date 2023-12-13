@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 import { TestI18NProvider } from '@/test/components';
 
-import { I18NProvider } from './provider';
+import { I18NProvider } from './I18NProvider';
 
 describe('I18NProvider', () => {
   it('should use English language by default', () => {

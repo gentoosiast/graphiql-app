@@ -18,17 +18,17 @@ interface RenderResult extends RenderOptions {
   store: AppStore;
 }
 
-export function renderWithProviders(
+export const renderWithProviders = (
   ui: ReactElement,
   {
     preloadedState = {},
     store = setupStore(preloadedState),
     ...renderOptions
   }: ExtendedRenderOptions = {},
-): RenderResult {
-  function Wrapper({ children }: PropsWithChildren): JSX.Element {
+): RenderResult => {
+  const Wrapper = ({ children }: PropsWithChildren): JSX.Element => {
     return <Provider store={store}>{children}</Provider>;
-  }
+  };
 
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
-}
+};
