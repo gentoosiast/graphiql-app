@@ -1,15 +1,16 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
 import { I18NProvider } from '@/providers/i18n/I18NProvider';
+import { renderWithProviders } from '@/test/render-with-providers';
 
 import { WelcomePage } from './WelcomePage';
 
 describe('Welcome page', () => {
   it('should render welcome page', () => {
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MemoryRouter>
           <WelcomePage />
