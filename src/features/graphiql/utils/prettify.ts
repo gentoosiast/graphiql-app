@@ -7,13 +7,16 @@ export const prettify = (query: string, indentSize = 2): string => {
     .map((line) => line.trim())
     .filter((line) => line.length > 0)
     .map((line) => {
+      let indentModifier = 0;
+
       if (line.includes('}')) {
         indentLevel--;
       } else if (line.includes('{')) {
         indentLevel++;
+        indentModifier = -1;
       }
 
-      return `${' '.repeat(indentLevel * indentSize)}${line}`;
+      return `${' '.repeat((indentLevel + indentModifier) * indentSize)}${line}`;
     })
     .join('\n');
 };
