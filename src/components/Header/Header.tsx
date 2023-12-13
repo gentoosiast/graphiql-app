@@ -9,8 +9,8 @@ import { signOut } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
 import { I18NLanguage } from '@/config/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
-import { useI18NContext } from '@/providers/i18n';
 
 import { FaviconSvg } from '../favicon';
 
@@ -22,19 +22,19 @@ export const Header = (): JSX.Element => {
 
   const navigate = useNavigate();
 
-  function signOutUser(): void {
-    signOut(auth)
-      .then(() => {
-        setAlertType('success');
-        setAlertText(translate('signOutSuccess'));
-        setTimeout(() => navigate('/'), 2000);
-      })
-      .catch((error) => {
-        setAlertType('error');
-        setAlertText(translate('defaultError'));
-        console.error(error);
-      });
-  }
+  const signOutUser = async (): Promise<void> => {
+    try {
+      await signOut(auth);
+
+      setAlertType('success');
+      setAlertText(translate('signOutSuccess'));
+      setTimeout(() => navigate('/'), 2000);
+    } catch (error) {
+      setAlertType('error');
+      setAlertText(translate('defaultError'));
+      console.error(error);
+    }
+  };
 
   return (
     <AppBar
@@ -59,7 +59,7 @@ export const Header = (): JSX.Element => {
           {authState === AuthState.AUTHENTICATED && (
             <Button
               color="inherit"
-              onClick={signOutUser}
+              onClick={() => void signOutUser()}
               sx={{ backgroundColor: 'primary.light' }}
               variant="outlined"
             >

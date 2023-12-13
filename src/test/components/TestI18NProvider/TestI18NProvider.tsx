@@ -1,7 +1,7 @@
 import type { JSX } from 'react';
 
 import { I18NLanguage } from '@/config/i18n';
-import { useI18NContext } from '@/providers/i18n';
+import { useI18NContext } from '@/contexts/i18n';
 
 export const TestI18NProvider = (): JSX.Element => {
   const { language, setLanguage, translate } = useI18NContext();

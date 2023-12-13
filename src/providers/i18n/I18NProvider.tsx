@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import { PropsWithChildren, useCallback, useMemo, useState } from 'react';
 
 import type { I18NContextData } from '@/contexts/i18n';
