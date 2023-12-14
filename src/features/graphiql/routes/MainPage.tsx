@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import SendIcon from '@mui/icons-material/Send';
-import { Alert, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
+import { Alert, Box, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
 import CodeEditor from '@uiw/react-textarea-code-editor';
 
 import { AuthState, useAuth } from '@/features/auth';
@@ -29,6 +29,7 @@ export const MainPage = (): JSX.Element => {
   const handleSendRequest = async (): Promise<void> => {
     console.log(state.endpoint);
     console.log(state.request);
+
     try {
       const response = await graphQLRequest({
         endpoint: state.endpoint,
@@ -87,18 +88,29 @@ export const MainPage = (): JSX.Element => {
               </Fab>
             </Stack>
 
-            <CodeEditor
-              data-color-mode="dark"
-              language="graphql"
-              minHeight={440}
-              onChange={(e) => dispatch({ payload: e.target.value, type: 'setRequest' })}
-              placeholder="GraphQL Query"
-              rows={20}
-              style={{ fontFamily: 'Hack, monospace', width: '100%' }}
-              value={state.request}
+            <Box
+              sx={{
+                height: '440px',
+                overflow: 'auto',
+              }}
+            >
+              <CodeEditor
+                data-color-mode="dark"
+                language="graphql"
+                minHeight={440}
+                onChange={(e) => dispatch({ payload: e.target.value, type: 'setRequest' })}
+                placeholder="GraphQL Query"
+                style={{
+                  fontFamily: 'Hack, monospace',
+                  width: '100%',
+                }}
+                value={state.request}
+              />
+            </Box>
+            <RequestTabbar
+              onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
+              onVariablesChange={(value) => dispatch({ payload: value, type: 'setVariables' })}
             />
-
-            <RequestTabbar />
           </Stack>
           <CodeEditor
             data-color-mode="dark"
@@ -106,8 +118,12 @@ export const MainPage = (): JSX.Element => {
             minHeight={440}
             placeholder="GraphQL Response"
             readOnly
-            rows={20}
-            style={{ fontFamily: 'Hack, monospace', width: '100%' }}
+            style={{
+              fontFamily: 'Hack, monospace',
+              height: '440px',
+              overflow: 'auto',
+              width: '100%',
+            }}
             value={state.response}
           />
         </Stack>

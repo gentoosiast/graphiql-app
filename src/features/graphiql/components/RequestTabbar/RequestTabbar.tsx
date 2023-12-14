@@ -1,29 +1,132 @@
 import { useState } from 'react';
 import type { JSX, SyntheticEvent } from 'react';
 
+import { json } from '@codemirror/lang-json';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
+import Collapse from '@mui/material/Collapse';
+import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
+import CodeMirror from '@uiw/react-codemirror';
 
-export const RequestTabbar = (): JSX.Element => {
-  const [value, setValue] = useState('variables');
+import 'hack-font/build/web/hack.css';
 
-  const handleChange = (_: SyntheticEvent, newValue: string): void => {
-    setValue(newValue);
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+function CustomTabPanel(props: TabPanelProps): JSX.Element {
+  const { children, index, value, ...other } = props;
+
+  return (
+    <div
+      aria-hidden={value !== index}
+      aria-labelledby={`simple-tab-${index}`}
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      role="tabpanel"
+      {...other}
+    >
+      {children}
+    </div>
+  );
+}
+
+function a11yProps(index: number): Record<string, string> {
+  return {
+    'aria-controls': `simple-tabpanel-${index}`,
+    id: `simple-tab-${index}`,
+  };
+}
+
+type Props = {
+  onHeadersChange: (code: string) => void;
+  onVariablesChange: (code: string) => void;
+};
+
+export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JSX.Element => {
+  const [currentTabIdx, setCurrentTabIdx] = useState(0);
+  const [isTabbarOpen, setIsTabbarOpen] = useState(false);
+  const [variablesCode, setVariablesCode] = useState('');
+  const [headersCode, setHeadersCode] = useState('');
+  const theme = tokyoNightStormInit({
+    settings: {
+      fontFamily: 'Hack, monospace',
+    },
+  });
+
+  const handleTabChange = (_: SyntheticEvent, newValue: number): void => {
+    if (!isTabbarOpen) {
+      setIsTabbarOpen(true);
+    }
+    setCurrentTabIdx(newValue);
+  };
+
+  const handleVariablesChange = (newValue: string): void => {
+    setVariablesCode(newValue);
+    onVariablesChange(newValue);
+  };
+
+  const handleHeadersChange = (newValue: string): void => {
+    setHeadersCode(newValue);
+    onHeadersChange(newValue);
   };
 
   return (
     <Box sx={{ width: '100%' }}>
-      <Tabs
-        aria-label="secondary tabs example"
-        indicatorColor="secondary"
-        onChange={handleChange}
-        textColor="secondary"
-        value={value}
+      <Collapse in={isTabbarOpen}>
+        <CustomTabPanel index={0} value={currentTabIdx}>
+          <CodeMirror
+            extensions={[json()]}
+            height="150px"
+            onChange={handleVariablesChange}
+            placeholder="Variables (in JSON format)"
+            style={{ fontSize: 12 }}
+            theme={theme}
+            value={variablesCode}
+          />
+        </CustomTabPanel>
+        <CustomTabPanel index={1} value={currentTabIdx}>
+          <CodeMirror
+            extensions={[json()]}
+            height="150px"
+            onChange={handleHeadersChange}
+            placeholder="Headers (in JSON format)"
+            style={{ fontSize: 12 }}
+            theme={theme}
+            value={headersCode}
+          />
+        </CustomTabPanel>
+      </Collapse>
+      <Box
+        sx={{
+          alignItems: 'center',
+          display: 'flex',
+          justifyContent: 'space-between',
+        }}
       >
-        <Tab label="Variables" value="variables" />
-        <Tab label="Headers" value="headers" />
-      </Tabs>
+        <Tabs
+          aria-label="secondary tabs example"
+          indicatorColor="secondary"
+          onChange={handleTabChange}
+          textColor="secondary"
+          value={currentTabIdx}
+        >
+          <Tab label="Variables" {...a11yProps(0)} onClick={() => setIsTabbarOpen(true)} />
+          <Tab label="Headers" {...a11yProps(1)} onClick={() => setIsTabbarOpen(true)} />
+        </Tabs>
+        <IconButton
+          aria-label={isTabbarOpen ? 'collapse tab bar' : 'expand tab bar'}
+          onClick={() => setIsTabbarOpen(!isTabbarOpen)}
+        >
+          {isTabbarOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+        </IconButton>
+      </Box>
     </Box>
   );
 };
