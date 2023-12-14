@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import type { JSX } from 'react';
+import type { JSX, MouseEvent } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
-import { Alert, AppBar, Button, MenuItem, Select, Snackbar, useScrollTrigger } from '@mui/material';
+import { Alert, AppBar, Button, Menu, MenuItem, Snackbar, useScrollTrigger } from '@mui/material';
 import { Stack } from '@mui/system';
 import { signOut } from 'firebase/auth';
 
@@ -15,12 +15,26 @@ import { AuthState, useAuth } from '@/features/auth';
 import { FaviconSvg } from '../favicon';
 
 export const Header = (): JSX.Element => {
+  const navigate = useNavigate();
   const { language, setLanguage, translate } = useI18NContext();
+  const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
   const [alertText, setAlertText] = useState('');
   const { authState } = useAuth();
 
-  const navigate = useNavigate();
+  const isLanguageMenuOpen = Boolean(anchorEl);
+
+  const handleLanguageButtonClick = (event: MouseEvent<HTMLButtonElement>): void => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleLanguageMenuClose = (lang?: I18NLanguage): void => {
+    if (lang) {
+      setLanguage(lang);
+    }
+
+    setAnchorEl(null);
+  };
 
   const signOutUser = async (): Promise<void> => {
     try {
@@ -67,24 +81,43 @@ export const Header = (): JSX.Element => {
             </Button>
           )}
 
-          <Select label={language} value={language}>
+          <Button
+            aria-controls={isLanguageMenuOpen ? 'language-menu' : undefined}
+            aria-expanded={isLanguageMenuOpen ? 'true' : undefined}
+            aria-haspopup="true"
+            aria-label="select UI language"
+            id="language-button"
+            onClick={handleLanguageButtonClick}
+            startIcon={<TranslateOutlinedIcon />}
+            variant="contained"
+          >
+            {language}
+          </Button>
+          <Menu
+            MenuListProps={{
+              'aria-labelledby': 'language-button',
+            }}
+            anchorEl={anchorEl}
+            disableScrollLock={true}
+            id="language-menu"
+            onClose={() => handleLanguageMenuClose()}
+            open={isLanguageMenuOpen}
+          >
             <MenuItem
               onClick={() => {
-                setLanguage(I18NLanguage.English);
+                handleLanguageMenuClose(I18NLanguage.English);
               }}
-              value={I18NLanguage.English}
             >
-              <TranslateOutlinedIcon sx={{ margin: 0.5 }} />
-              {I18NLanguage.English}
+              English
             </MenuItem>
             <MenuItem
-              onClick={() => setLanguage(I18NLanguage.Russian)}
-              value={I18NLanguage.Russian}
+              onClick={() => {
+                handleLanguageMenuClose(I18NLanguage.Russian);
+              }}
             >
-              <TranslateOutlinedIcon sx={{ margin: 0.5 }} />
-              {I18NLanguage.Russian}
+              Russian
             </MenuItem>
-          </Select>
+          </Menu>
         </Stack>
       </Stack>
       <Snackbar autoHideDuration={3000} onClose={() => setAlertType(null)} open={!!alertType}>
