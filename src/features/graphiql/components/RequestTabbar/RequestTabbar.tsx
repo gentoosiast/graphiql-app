@@ -16,12 +16,12 @@ import { CustomTabPanel } from '../CustomTabPanel';
 
 import 'hack-font/build/web/hack.css';
 
-function a11yProps(index: number): Record<string, string> {
+const a11yProps = (index: number): Record<string, string> => {
   return {
     'aria-controls': `simple-tabpanel-${index}`,
     id: `simple-tab-${index}`,
   };
-}
+};
 
 type Props = {
   onHeadersChange: (code: string) => void;
