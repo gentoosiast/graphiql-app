@@ -78,54 +78,56 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
-      <Collapse in={isTabbarOpen}>
-        <CustomTabPanel index={0} value={currentTabIdx}>
-          <CodeMirror
-            extensions={[json()]}
-            height="150px"
-            onChange={handleVariablesChange}
-            placeholder="Variables (in JSON format)"
-            style={{ fontSize: 12 }}
-            theme={theme}
-            value={variablesCode}
-          />
-        </CustomTabPanel>
-        <CustomTabPanel index={1} value={currentTabIdx}>
-          <CodeMirror
-            extensions={[json()]}
-            height="150px"
-            onChange={handleHeadersChange}
-            placeholder="Headers (in JSON format)"
-            style={{ fontSize: 12 }}
-            theme={theme}
-            value={headersCode}
-          />
-        </CustomTabPanel>
-      </Collapse>
-      <Box
-        sx={{
-          alignItems: 'center',
-          display: 'flex',
-          justifyContent: 'space-between',
-        }}
-      >
-        <Tabs
-          aria-label="secondary tabs example"
-          indicatorColor="secondary"
-          onChange={handleTabChange}
-          textColor="secondary"
-          value={currentTabIdx}
+    <Box sx={{ position: 'relative', width: '100%' }}>
+      <Box sx={{ bottom: '15px', left: 0, position: 'absolute', width: '100%' }}>
+        <Collapse in={isTabbarOpen}>
+          <CustomTabPanel index={0} value={currentTabIdx}>
+            <CodeMirror
+              extensions={[json()]}
+              height="150px"
+              onChange={handleVariablesChange}
+              placeholder="Variables (in JSON format)"
+              style={{ fontSize: 12 }}
+              theme={theme}
+              value={variablesCode}
+            />
+          </CustomTabPanel>
+          <CustomTabPanel index={1} value={currentTabIdx}>
+            <CodeMirror
+              extensions={[json()]}
+              height="150px"
+              onChange={handleHeadersChange}
+              placeholder="Headers (in JSON format)"
+              style={{ fontSize: 12 }}
+              theme={theme}
+              value={headersCode}
+            />
+          </CustomTabPanel>
+        </Collapse>
+        <Box
+          sx={{
+            alignItems: 'center',
+            display: 'flex',
+            justifyContent: 'space-between',
+          }}
         >
-          <Tab label="Variables" {...a11yProps(0)} onClick={() => setIsTabbarOpen(true)} />
-          <Tab label="Headers" {...a11yProps(1)} onClick={() => setIsTabbarOpen(true)} />
-        </Tabs>
-        <IconButton
-          aria-label={isTabbarOpen ? 'collapse tab bar' : 'expand tab bar'}
-          onClick={() => setIsTabbarOpen(!isTabbarOpen)}
-        >
-          {isTabbarOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-        </IconButton>
+          <Tabs
+            aria-label="secondary tabs example"
+            indicatorColor="secondary"
+            onChange={handleTabChange}
+            textColor="secondary"
+            value={currentTabIdx}
+          >
+            <Tab label="Variables" {...a11yProps(0)} onClick={() => setIsTabbarOpen(true)} />
+            <Tab label="Headers" {...a11yProps(1)} onClick={() => setIsTabbarOpen(true)} />
+          </Tabs>
+          <IconButton
+            aria-label={isTabbarOpen ? 'collapse tab bar' : 'expand tab bar'}
+            onClick={() => setIsTabbarOpen(!isTabbarOpen)}
+          >
+            {isTabbarOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          </IconButton>
+        </Box>
       </Box>
     </Box>
   );
