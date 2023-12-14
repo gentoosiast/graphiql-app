@@ -27,16 +27,45 @@ export const WelcomePage = (): JSX.Element => {
       <nav>
         <Box
           flexDirection={'row'}
-          sx={{ backgroundColor: 'background.paper', fontSize: 22, textAlign: 'center' }}
+          sx={{ backgroundColor: 'primary.light', fontSize: 22, padding: 2, textAlign: 'right' }}
         >
           {authState === AuthState.NOT_AUTHENTICATED && (
             <Button
               component={RouterLink}
-              sx={{ textDecoration: 'none' }}
+              state={{ whichComponentToShow: 'sign in' }}
+              sx={{
+                ':hover': {
+                  backgroundColor: 'background.paper',
+                },
+                backgroundColor: 'primary.main',
+                border: 1,
+                color: 'primary.contrastText',
+                margin: 0.7,
+                padding: 2,
+                textDecoration: 'none',
+              }}
               to="/auth"
-              variant="outlined"
             >
-              Sign In / Sign Up
+              Sign In
+            </Button>
+          )}
+          {authState === AuthState.NOT_AUTHENTICATED && (
+            <Button
+              component={RouterLink}
+              state={{ whichComponentToShow: 'sign up' }}
+              sx={{
+                ':hover': {
+                  backgroundColor: 'background.paper',
+                },
+                backgroundColor: 'primary.main',
+                border: 1,
+                color: 'primary.contrastText',
+                padding: 2,
+                textDecoration: 'none',
+              }}
+              to="/auth"
+            >
+              Sign Up
             </Button>
           )}
           {authState === AuthState.AUTHENTICATED && (
