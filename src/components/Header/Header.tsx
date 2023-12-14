@@ -115,7 +115,7 @@ export const Header = (): JSX.Element => {
                 handleLanguageMenuClose(I18NLanguage.Russian);
               }}
             >
-              Russian
+              Русский
             </MenuItem>
           </Menu>
         </Stack>
