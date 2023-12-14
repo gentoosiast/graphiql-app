@@ -2,10 +2,13 @@ import type { JSX } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { json } from '@codemirror/lang-json';
 import SendIcon from '@mui/icons-material/Send';
 import { Alert, Box, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
-import CodeEditor from '@uiw/react-textarea-code-editor';
+import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
+import CodeMirror from '@uiw/react-codemirror';
 import { isAxiosError } from 'axios';
+import { graphql } from 'cm6-graphql';
 
 import { AuthState, useAuth } from '@/features/auth';
 
@@ -20,6 +23,12 @@ export const MainPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { authState } = useAuth();
   const [state, dispatch] = useMainPageReducer();
+
+  const theme = tokyoNightStormInit({
+    settings: {
+      fontFamily: 'Hack, monospace',
+    },
+  });
 
   useEffect(() => {
     if (authState === AuthState.NOT_AUTHENTICATED) {
@@ -118,17 +127,15 @@ export const MainPage = (): JSX.Element => {
                 overflow: 'auto',
               }}
             >
-              <CodeEditor
-                data-color-mode="dark"
-                language="graphql"
-                minHeight={440}
-                onChange={(e) => dispatch({ payload: e.target.value, type: 'setRequest' })}
+              <CodeMirror
+                extensions={[graphql()]}
+                height="440px"
+                onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
                 placeholder="GraphQL Query"
-                style={{
-                  fontFamily: 'Hack, monospace',
-                  width: '100%',
-                }}
+                style={{ fontSize: 12 }}
+                theme={theme}
                 value={state.request}
+                width="100%"
               />
             </Box>
             <RequestTabbar
@@ -136,18 +143,13 @@ export const MainPage = (): JSX.Element => {
               onVariablesChange={handleSetVariables}
             />
           </Stack>
-          <CodeEditor
-            data-color-mode="dark"
-            language="json"
-            minHeight={440}
+          <CodeMirror
+            editable={false}
+            extensions={[json()]}
+            height="440px"
             placeholder="GraphQL Response"
-            readOnly
-            style={{
-              fontFamily: 'Hack, monospace',
-              height: '440px',
-              overflow: 'auto',
-              width: '100%',
-            }}
+            style={{ fontSize: 12 }}
+            theme={theme}
             value={state.response}
           />
         </Stack>
