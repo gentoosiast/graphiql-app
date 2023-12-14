@@ -12,30 +12,9 @@ import Tabs from '@mui/material/Tabs';
 import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
 import CodeMirror from '@uiw/react-codemirror';
 
+import { CustomTabPanel } from '../CustomTabPanel';
+
 import 'hack-font/build/web/hack.css';
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function CustomTabPanel(props: TabPanelProps): JSX.Element {
-  const { children, index, value, ...other } = props;
-
-  return (
-    <div
-      aria-hidden={value !== index}
-      aria-labelledby={`simple-tab-${index}`}
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      role="tabpanel"
-      {...other}
-    >
-      {children}
-    </div>
-  );
-}
 
 function a11yProps(index: number): Record<string, string> {
   return {
