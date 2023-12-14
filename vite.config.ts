@@ -13,7 +13,15 @@ export default defineConfig({
   test: {
     coverage: {
       all: true,
-      exclude: ['src/test/**/*', '**/types.ts', '**/*.d.ts', '**/index.ts', 'src/main.tsx'],
+      exclude: [
+        'src/test/**/*',
+        '**/types.ts',
+        '**/*.d.ts',
+        '**/index.ts',
+        'src/main.tsx',
+        'src/config/**/*',
+        'src/theme.tsx',
+      ],
       include: ['src/**/*'],
       provider: 'v8',
       reporter: ['text'],
