@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import SendIcon from '@mui/icons-material/Send';
 import { Alert, Box, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
 import CodeEditor from '@uiw/react-textarea-code-editor';
+import { isAxiosError } from 'axios';
 
 import { AuthState, useAuth } from '@/features/auth';
 
@@ -34,16 +35,25 @@ export const MainPage = (): JSX.Element => {
       const response = await graphQLRequest({
         endpoint: state.endpoint,
         query: state.request,
+        variables: state.variables,
       });
 
       const responseJSON = JSON.stringify(response.data, null, 2);
 
       dispatch({ payload: responseJSON, type: 'setResponse' });
     } catch (error) {
-      console.error(error);
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-      dispatch({ payload: errorMessage, type: 'setError' });
+      if (isAxiosError(error)) {
+        const errorJSON = JSON.stringify(error.response?.data, null, 2);
+
+        dispatch({
+          payload: { errorMessage, errorResponse: errorJSON },
+          type: 'setError',
+        });
+      } else {
+        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
+      }
     }
   };
 
@@ -56,6 +66,20 @@ export const MainPage = (): JSX.Element => {
 
   const handlePrettify = (): void => {
     dispatch({ payload: prettify(state.request), type: 'setRequest' });
+  };
+
+  const handleSetVariables = (variables: string): void => {
+    try {
+      const parsedVariables: unknown = JSON.parse(variables);
+
+      if (parsedVariables && typeof parsedVariables === 'object') {
+        dispatch({ payload: parsedVariables, type: 'setVariables' });
+      } else {
+        throw new Error('Impossible to parse provided GraphQL variables');
+      }
+    } catch {
+      dispatch({ payload: {}, type: 'setVariables' });
+    }
   };
 
   return (
@@ -109,7 +133,7 @@ export const MainPage = (): JSX.Element => {
             </Box>
             <RequestTabbar
               onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
-              onVariablesChange={(value) => dispatch({ payload: value, type: 'setVariables' })}
+              onVariablesChange={handleSetVariables}
             />
           </Stack>
           <CodeEditor

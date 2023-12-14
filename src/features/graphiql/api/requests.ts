@@ -4,7 +4,7 @@ type GraphQlRequest = {
   endpoint: string;
   headers?: Record<string, string>;
   query: string;
-  variables?: Record<string, string>;
+  variables?: object;
 };
 
 type GraphQLResponse = {
@@ -20,7 +20,7 @@ export const graphQLRequest = async ({
   const response = await axios<GraphQLResponse>({
     data: {
       query,
-      variables,
+      variables: variables ?? {},
     },
     headers: {
       'content-type': 'application/json',

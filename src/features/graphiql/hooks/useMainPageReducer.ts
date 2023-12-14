@@ -4,13 +4,13 @@ import { useReducer } from 'react';
 import type { Dispatch } from 'react';
 
 type MainPageAction =
+  | { payload: { errorMessage: string; errorResponse: string }; type: 'setError' }
   | { payload: { message: string; severity: AlertColor }; type: 'setNotification' }
+  | { payload: object; type: 'setVariables' }
   | { payload: string; type: 'setEndpoint' }
-  | { payload: string; type: 'setError' }
   | { payload: string; type: 'setHeaders' }
   | { payload: string; type: 'setRequest' }
-  | { payload: string; type: 'setResponse' }
-  | { payload: string; type: 'setVariables' };
+  | { payload: string; type: 'setResponse' };
 
 type MainPageState = {
   endpoint: string;
@@ -19,7 +19,7 @@ type MainPageState = {
   notificationText: string;
   request: string;
   response: string;
-  variables: string;
+  variables: object;
 };
 
 const initialState: MainPageState = {
@@ -29,7 +29,7 @@ const initialState: MainPageState = {
   notificationText: '',
   request: '',
   response: '',
-  variables: '{}',
+  variables: {},
 };
 
 const reducer = (state: MainPageState, action: MainPageAction): MainPageState => {
@@ -58,8 +58,8 @@ const reducer = (state: MainPageState, action: MainPageAction): MainPageState =>
       return {
         ...state,
         notificationSeverity: 'error',
-        notificationText: action.payload,
-        response: '',
+        notificationText: action.payload.errorMessage,
+        response: action.payload.errorResponse,
       };
     }
 
