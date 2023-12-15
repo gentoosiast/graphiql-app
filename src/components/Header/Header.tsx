@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import type { JSX, MouseEvent } from 'react';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import { Alert, AppBar, Button, Menu, MenuItem, Snackbar, useScrollTrigger } from '@mui/material';
@@ -12,7 +12,7 @@ import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
 
-import { FaviconSvg } from '../favicon';
+import { LogoLink } from '../LogoLink';
 
 export const Header = (): JSX.Element => {
   const navigate = useNavigate();
@@ -64,9 +64,7 @@ export const Header = (): JSX.Element => {
     >
       <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
         <Stack alignItems="center" borderRadius={20} justifyContent="center" width="10%">
-          <RouterLink to="/">
-            <FaviconSvg />
-          </RouterLink>
+          <LogoLink />
         </Stack>
 
         <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
