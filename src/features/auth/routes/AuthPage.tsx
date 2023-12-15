@@ -1,14 +1,17 @@
 import type { JSX } from 'react';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Login } from '../components/Login';
 import { Register } from '../components/Register';
 import { AuthState } from '../enums';
 import { useAuth } from '../hooks/use-auth';
+import { getFormMode } from '../utils/get-form-mode';
 
 const AuthPage = (): JSX.Element => {
-  const [isLogin, setIsLogin] = useState(true);
+  const location = useLocation();
+  const formMode = getFormMode(location.state);
+  const [isLogin, setIsLogin] = useState(formMode === 'login');
 
   const { authState } = useAuth();
 

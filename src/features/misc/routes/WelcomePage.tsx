@@ -22,7 +22,12 @@ export const WelcomePage = (): JSX.Element => {
   return (
     <>
       <nav>
-        <Link to="/auth">Sign In / Sign Up Page</Link>
+        <Link state={{ formMode: 'login' }} to="/auth">
+          Sign In
+        </Link>
+        <Link state={{ formMode: 'register' }} to="/auth">
+          Sign Up
+        </Link>
         <Link to="/main">Main Page</Link>
       </nav>
       <Stack alignItems="center" justifyContent="center">
