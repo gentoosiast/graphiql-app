@@ -15,7 +15,7 @@ const PageContent = (): JSX.Element => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        dispatch(setUser({ email: String(user.email) }));
+        dispatch(setUser({ email: user.email ?? '' }));
       } else {
         dispatch(removeUser());
       }
