@@ -95,7 +95,7 @@ export const MainPage = (): JSX.Element => {
     <>
       <Container maxWidth="xl">
         <Stack direction={{ sm: 'row', xs: 'column' }} spacing={{ sm: 2, xs: 1 }}>
-          <Stack spacing={1} sx={{ width: '100%' }}>
+          <Stack spacing={1} sx={{ height: '440px', position: 'relative', width: '100%' }}>
             <Stack
               direction="row"
               spacing={1}
@@ -122,10 +122,10 @@ export const MainPage = (): JSX.Element => {
             </Stack>
             <CodeMirror
               extensions={[graphql()]}
-              height="440px"
+              height="100%"
               onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
               placeholder="GraphQL Query"
-              style={{ fontSize: 12 }}
+              style={{ fontSize: 12, height: '100%' }}
               theme={theme}
               value={state.request}
               width="100%"
@@ -135,15 +135,18 @@ export const MainPage = (): JSX.Element => {
               onVariablesChange={handleSetVariables}
             />
           </Stack>
-          <CodeMirror
-            editable={false}
-            extensions={[json()]}
-            height="440px"
-            placeholder="GraphQL Response"
-            style={{ fontSize: 12 }}
-            theme={theme}
-            value={state.response}
-          />
+          <Stack sx={{ width: '100%' }}>
+            <CodeMirror
+              editable={false}
+              extensions={[json()]}
+              height="440px"
+              placeholder="GraphQL Response"
+              style={{ fontSize: 12 }}
+              theme={theme}
+              value={state.response}
+              width="100%"
+            />
+          </Stack>
         </Stack>
       </Container>
       <Snackbar
