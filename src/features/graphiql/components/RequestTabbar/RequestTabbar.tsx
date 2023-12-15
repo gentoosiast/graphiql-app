@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import type { JSX, SyntheticEvent } from 'react';
 
-import { json } from '@codemirror/lang-json';
+import { json, jsonParseLinter } from '@codemirror/lang-json';
+import { lintGutter, linter } from '@codemirror/lint';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
@@ -61,7 +62,7 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
       <Collapse in={isTabbarOpen}>
         <CustomTabPanel index={0} value={currentTabIdx}>
           <CodeMirror
-            extensions={[json()]}
+            extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
             height="150px"
             onChange={handleVariablesChange}
             placeholder="Variables (in JSON format)"
@@ -72,7 +73,7 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
         </CustomTabPanel>
         <CustomTabPanel index={1} value={currentTabIdx}>
           <CodeMirror
-            extensions={[json()]}
+            extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
             height="150px"
             onChange={handleHeadersChange}
             placeholder="Headers (in JSON format)"
