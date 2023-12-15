@@ -3,12 +3,17 @@
 ## RS School React 2023 Q4
 
 <!-- PROJECT LOGO -->
-
-![logo](public/small-favicon.svg)
+<div style='text-align: center'>
+  <img src='public/small-favicon.svg'>
+</div>
 
 GraphiQL is a playground/IDE for graphQL requests. After login, you can choose any endpoint, construct a request, prettify your code and get a formatted response. Add some variables and headers? No problem! Use variables/headers tabs for it. And don't forget to check out documentation of chosen api in special section.
 
-![welcome page](public/screenshot-for-readme.jpg)
+<div style="display: flex; justify-content: center; gap: 40px">
+  <img src="public/1.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%">
+  <img src="public/2.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%">
+  <img src="public/kate.jpg" alt="Kate" width="150px" height="150px" style="border-radius: 50%">
+</div>
 
 ## Team project by [Sergey](https://github.com/gentoosiast), [Irina](https://github.com/Irina-Grebennikova), and [Kate](https://github.com/KateGoncharik)
 
@@ -48,9 +53,9 @@ To get a local copy - follow these simple steps.
 
 1. Clone the repo
 
-   ```sh
-   git clone <https://github.com/gentoosiast/graphiql-app>
-   ```
+```sh
+  git clone <https://github.com/gentoosiast/graphiql-app>
+```
 
 2. Install NPM packages
 
