@@ -2,8 +2,8 @@ import type { JSX } from 'react';
 
 import { Button, ButtonGroup, Link, Stack } from '@mui/material';
 
-import { GitHubIconSvg } from '../github-icon';
-import { RssIconSvg } from '../rss-icon';
+import { GitHubIcon } from '../GitHubIcon';
+import { RssIcon } from '../RSSIcon';
 
 export const Footer = (): JSX.Element => {
   return (
@@ -18,7 +18,7 @@ export const Footer = (): JSX.Element => {
         <Stack alignItems="center" direction="row">
           <Link href="https://rs.school/react/">
             <Stack alignItems="center" minWidth="200">
-              <RssIconSvg />
+              <RssIcon />
             </Stack>
           </Link>
           <ButtonGroup
@@ -35,19 +35,19 @@ export const Footer = (): JSX.Element => {
           >
             <Link href="https://github.com/gentoosiast" sx={{ textDecoration: 'none' }}>
               <Button sx={{ maxWidth: 200 }}>
-                <GitHubIconSvg />
+                <GitHubIcon />
                 Sergey
               </Button>
             </Link>
             <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
               <Button sx={{ maxWidth: 200 }}>
-                <GitHubIconSvg />
+                <GitHubIcon />
                 Irina
               </Button>
             </Link>
             <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
               <Button sx={{ maxWidth: 200 }}>
-                <GitHubIconSvg />
+                <GitHubIcon />
                 Kate
               </Button>
             </Link>
