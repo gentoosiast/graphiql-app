@@ -7,7 +7,7 @@ import { Box } from '@mui/system';
 import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
-import { removeUser, setUser } from '@/store';
+import { removeUser, setUser } from '@/features/users';
 
 const PageContent = (): JSX.Element => {
   const dispatch = useDispatch();
