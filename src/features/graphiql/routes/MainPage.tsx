@@ -43,6 +43,7 @@ export const MainPage = (): JSX.Element => {
     try {
       const response = await graphQLRequest({
         endpoint: state.endpoint,
+        headers: state.headers,
         query: state.request,
         variables: state.variables,
       });
@@ -75,6 +76,21 @@ export const MainPage = (): JSX.Element => {
 
   const handlePrettify = (): void => {
     dispatch({ payload: prettify(state.request), type: 'setRequest' });
+  };
+
+  const handleSetHeaders = (headers: string): void => {
+    try {
+      const parsedHeaders: unknown = JSON.parse(headers);
+
+      if (parsedHeaders && typeof parsedHeaders === 'object') {
+        console.log(JSON.stringify(parsedHeaders));
+        dispatch({ payload: parsedHeaders, type: 'setHeaders' });
+      } else {
+        throw new Error('Impossible to parse provided GraphQL headers');
+      }
+    } catch {
+      dispatch({ payload: {}, type: 'setHeaders' });
+    }
   };
 
   const handleSetVariables = (variables: string): void => {
@@ -131,7 +147,7 @@ export const MainPage = (): JSX.Element => {
               width="100%"
             />
             <RequestTabbar
-              onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
+              onHeadersChange={handleSetHeaders}
               onVariablesChange={handleSetVariables}
             />
           </Stack>

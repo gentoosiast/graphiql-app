@@ -6,15 +6,15 @@ import type { Dispatch } from 'react';
 type MainPageAction =
   | { payload: { errorMessage: string; errorResponse: string }; type: 'setError' }
   | { payload: { message: string; severity: AlertColor }; type: 'setNotification' }
+  | { payload: object; type: 'setHeaders' }
   | { payload: object; type: 'setVariables' }
   | { payload: string; type: 'setEndpoint' }
-  | { payload: string; type: 'setHeaders' }
   | { payload: string; type: 'setRequest' }
   | { payload: string; type: 'setResponse' };
 
 type MainPageState = {
   endpoint: string;
-  headers: string;
+  headers: object;
   notificationSeverity: AlertColor;
   notificationText: string;
   request: string;
@@ -24,7 +24,7 @@ type MainPageState = {
 
 const initialState: MainPageState = {
   endpoint: 'https://graphql.anilist.co',
-  headers: '{}',
+  headers: {},
   notificationSeverity: 'info',
   notificationText: '',
   request: '',
@@ -64,7 +64,6 @@ const reducer = (state: MainPageState, action: MainPageAction): MainPageState =>
     }
 
     case 'setHeaders': {
-      console.log('set headers');
       return { ...state, headers: action.payload };
     }
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 type GraphQlRequest = {
   endpoint: string;
-  headers?: Record<string, string>;
+  headers?: object;
   query: string;
   variables?: object;
 };
@@ -23,8 +23,8 @@ export const graphQLRequest = async ({
       variables: variables ?? {},
     },
     headers: {
-      'content-type': 'application/json',
       ...headers,
+      'content-type': 'application/json',
     },
     method: 'post',
     url: endpoint,
