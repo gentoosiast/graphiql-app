@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { json } from '@codemirror/lang-json';
 import SendIcon from '@mui/icons-material/Send';
-import { Alert, Box, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
+import { Alert, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
 import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
 import CodeMirror from '@uiw/react-codemirror';
 import { isAxiosError } from 'axios';
@@ -120,24 +120,16 @@ export const MainPage = (): JSX.Element => {
                 <SendIcon />
               </Fab>
             </Stack>
-
-            <Box
-              sx={{
-                height: '440px',
-                overflow: 'auto',
-              }}
-            >
-              <CodeMirror
-                extensions={[graphql()]}
-                height="440px"
-                onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
-                placeholder="GraphQL Query"
-                style={{ fontSize: 12 }}
-                theme={theme}
-                value={state.request}
-                width="100%"
-              />
-            </Box>
+            <CodeMirror
+              extensions={[graphql()]}
+              height="440px"
+              onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
+              placeholder="GraphQL Query"
+              style={{ fontSize: 12 }}
+              theme={theme}
+              value={state.request}
+              width="100%"
+            />
             <RequestTabbar
               onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
               onVariablesChange={handleSetVariables}
