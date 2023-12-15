@@ -1,6 +1,7 @@
 {
   "greeting": "Hello World!",
   "welcome": "Hello and welcome",
+  "welcomePage": "Welcome page",
   "team-description": "Our team consists of creative, inventive people. Despite the fact that we are different, we still love coding, taking challenges, learning something new and creating high-quality web-sites. Under the guidance of a great teacher Sergey we worked on this project.",
   "kate-welcome-name": "Kate Goncharick",
   "kate-welcome-from": "From: Minsk, Belarus",
@@ -34,6 +35,7 @@
   "weakPassword": "Password must contain at least one letter, one digit, one special character",
   "noAccount": "Don't have an account?",
   "haveAccount": "Already have an account?",
+
   "registerSuccess": "Account created successfully",
   "accoutExistsError": "Account already exists",
   "defaultError": "Something went wrong",
