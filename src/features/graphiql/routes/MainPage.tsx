@@ -110,8 +110,12 @@ export const MainPage = (): JSX.Element => {
   return (
     <>
       <Container maxWidth="xl">
-        <Stack direction={{ sm: 'row', xs: 'column' }} spacing={{ sm: 2, xs: 1 }}>
-          <Stack spacing={1} sx={{ height: '440px', position: 'relative', width: '100%' }}>
+        <Stack
+          direction={{ sm: 'row', xs: 'column' }}
+          spacing={{ sm: 2, xs: 1 }}
+          sx={{ height: '600px' }}
+        >
+          <Stack spacing={1} sx={{ height: '100%', position: 'relative', width: '100%' }}>
             <Stack
               direction="row"
               spacing={1}
@@ -151,13 +155,13 @@ export const MainPage = (): JSX.Element => {
               onVariablesChange={handleSetVariables}
             />
           </Stack>
-          <Stack sx={{ width: '100%' }}>
+          <Stack sx={{ height: '100%', width: '100%' }}>
             <CodeMirror
               editable={false}
               extensions={[json()]}
-              height="440px"
+              height="100%"
               placeholder="GraphQL Response"
-              style={{ fontSize: 12 }}
+              style={{ fontSize: 12, height: '100%' }}
               theme={theme}
               value={state.response}
               width="100%"
