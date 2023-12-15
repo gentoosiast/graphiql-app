@@ -2,7 +2,7 @@ import type { Store } from '@reduxjs/toolkit';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import userReducer from './slices/user-slice';
+import userReducer from '@/features/users';
 
 const rootReducer = combineReducers({ user: userReducer });
 

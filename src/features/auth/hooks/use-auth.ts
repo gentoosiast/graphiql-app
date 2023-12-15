@@ -1,6 +1,4 @@
-import { useSelector } from 'react-redux';
-
-import { RootState } from '@/store';
+import { useAppSelector } from '@/store';
 
 import { AuthState } from '../enums';
 
@@ -10,8 +8,8 @@ type UseAuth = {
 };
 
 const useAuth = (): UseAuth => {
-  const email = useSelector((state: RootState) => state.user.email);
-  const authState = useSelector((state: RootState) => state.user.authState);
+  const email = useAppSelector((state) => state.user.email);
+  const authState = useAppSelector((state) => state.user.authState);
 
   return {
     authState,
