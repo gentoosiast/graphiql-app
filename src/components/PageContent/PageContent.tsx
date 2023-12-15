@@ -20,7 +20,7 @@ const PageContent = (): JSX.Element => {
         dispatch(removeUser());
       }
     });
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [dispatch]);
 
   return (
     <Box component="main" sx={{ flexGrow: 1 }}>
