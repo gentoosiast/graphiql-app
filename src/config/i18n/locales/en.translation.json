@@ -36,9 +36,6 @@
   "noAccount": "Don't have an account?",
   "haveAccount": "Already have an account?",
 
-  "switchToEN": "EN",
-  "switchToRU": "RU",
-
   "registerSuccess": "Account created successfully",
   "accoutExistsError": "Account already exists",
   "defaultError": "Something went wrong",
