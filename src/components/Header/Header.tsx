@@ -12,7 +12,7 @@ import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
 
-import { LogoLink } from '../LogoLink';
+import { LogoLink } from '../LogoLink/';
 
 export const Header = (): JSX.Element => {
   const navigate = useNavigate();
