@@ -4,15 +4,15 @@
 
 <!-- PROJECT LOGO -->
 <div style='text-align: center'>
-  <img src='/small-logo.svg'>
+  <img src='public/small-logo.svg'>
 </div>
 
 GraphiQL is a playground/IDE for graphQL requests. After login, you can choose any endpoint, construct a request, prettify your code and get a formatted response. Add some variables and headers? No problem! Use variables/headers tabs for it. And don't forget to check out documentation of chosen api in special section.
 
 <div style="display: flex; justify-content: center; padding: 5px; flex-wrap: wrap;">
-  <img src="/1.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
-  <img src="/2.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
-  <img src="/kate.jpg" alt="Kate" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="public/1.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="public/2.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="public/kate.jpg" alt="Kate" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
 </div>
 
 ## Team project by [Sergey](https://github.com/gentoosiast), [Irina](https://github.com/Irina-Grebennikova), and [Kate](https://github.com/KateGoncharik)
