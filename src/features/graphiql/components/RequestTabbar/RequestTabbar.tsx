@@ -59,7 +59,7 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
 
   return (
     <Box sx={{ bottom: 0, left: 0, position: 'absolute', width: '100%' }}>
-      <Collapse in={isTabbarOpen}>
+      <Collapse in={isTabbarOpen} sx={{ borderBlockStart: '1px solid #555' }}>
         <CustomTabPanel index={0} value={currentTabIdx}>
           <CodeMirror
             extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
