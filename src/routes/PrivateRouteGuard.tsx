@@ -6,7 +6,7 @@ import { Box } from '@mui/system';
 
 import { AuthState, useAuth } from '@/features/auth';
 
-export const PrivateRoute = ({ children }: PropsWithChildren): ReactNode => {
+export const PrivateRouteGuard = ({ children }: PropsWithChildren): ReactNode => {
   const { authState } = useAuth();
 
   if (authState === AuthState.PENDING) {

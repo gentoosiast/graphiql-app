@@ -1,7 +1,9 @@
-import { PrivateRoute, RootLayout } from '@/components';
+import { RootLayout } from '@/components';
 import { AuthPage } from '@/features/auth/';
 import { MainPage } from '@/features/graphiql';
 import { NotFoundPage, WelcomePage } from '@/features/misc';
+
+import { PrivateRouteGuard } from './PrivateRouteGuard';
 
 export const routes = [
   {
@@ -9,9 +11,9 @@ export const routes = [
       { element: <WelcomePage />, index: true },
       {
         element: (
-          <PrivateRoute>
+          <PrivateRouteGuard>
             <MainPage />
-          </PrivateRoute>
+          </PrivateRouteGuard>
         ),
         path: '/main',
       },
