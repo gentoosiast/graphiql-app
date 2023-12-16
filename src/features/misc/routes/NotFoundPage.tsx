@@ -4,11 +4,14 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button, Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 
+import { useI18NContext } from '@/contexts/i18n';
+
 export const NotFoundPage = (): JSX.Element => {
+  const { translate } = useI18NContext();
   return (
     <Box padding={'2%'}>
       <Typography align="center" component={'h1'} variant="h1">
-        Oh.. Hello?
+        {translate('ohHello')}
       </Typography>
 
       <Stack flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
@@ -16,7 +19,7 @@ export const NotFoundPage = (): JSX.Element => {
         <img alt="cat on the table taking a shower" src="/not-found.jpg" width={'30%'} />
       </Stack>
       <Typography align="center" component={'h4'} mt={3} variant="h5">
-        We are a litte bit busy here..
+        {translate('busy')}
       </Typography>
       <Stack alignItems={'center'} justifyContent={'center'}>
         <Typography
@@ -27,7 +30,7 @@ export const NotFoundPage = (): JSX.Element => {
           mt={3}
           variant="h5"
         >
-          So, maybe, you will go back to the welcome page?
+          {translate('goAway')}
         </Typography>
         <Button
           component={RouterLink}
@@ -43,7 +46,7 @@ export const NotFoundPage = (): JSX.Element => {
           }}
           to="/"
         >
-          Welcome page
+          {translate('welcomePage')}
         </Button>
       </Stack>
     </Box>
