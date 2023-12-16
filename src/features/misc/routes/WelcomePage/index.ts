@@ -1,1 +1,1 @@
-im;
+export * from './WelcomePage';
