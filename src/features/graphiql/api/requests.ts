@@ -11,6 +11,8 @@ type GraphQLResponse = {
   data: object;
 };
 
+const REQUEST_TIMEOUT = 10000;
+
 export const graphQLRequest = async ({
   endpoint,
   headers,
@@ -27,6 +29,7 @@ export const graphQLRequest = async ({
       'content-type': 'application/json',
     },
     method: 'post',
+    timeout: REQUEST_TIMEOUT,
     url: endpoint,
   });
 
