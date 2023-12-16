@@ -4,15 +4,15 @@
 
 <!-- PROJECT LOGO -->
 <div style='text-align: center'>
-  <img src='public/small-favicon.svg'>
+  <img src='/small-logo.svg'>
 </div>
 
 GraphiQL is a playground/IDE for graphQL requests. After login, you can choose any endpoint, construct a request, prettify your code and get a formatted response. Add some variables and headers? No problem! Use variables/headers tabs for it. And don't forget to check out documentation of chosen api in special section.
 
-<div style="display: flex; justify-content: center; gap: 40px">
-  <img src="public/1.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%">
-  <img src="public/2.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%">
-  <img src="public/kate.jpg" alt="Kate" width="150px" height="150px" style="border-radius: 50%">
+<div style="display: flex; justify-content: center; padding: 5px; flex-wrap: wrap;">
+  <img src="/1.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="/2.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="/kate.jpg" alt="Kate" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
 </div>
 
 ## Team project by [Sergey](https://github.com/gentoosiast), [Irina](https://github.com/Irina-Grebennikova), and [Kate](https://github.com/KateGoncharik)
@@ -23,19 +23,27 @@ GraphiQL is a playground/IDE for graphQL requests. After login, you can choose a
 
 ## Technology stack
 
-- ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
-- ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
-- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-- ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
-- ![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
-- ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
-- ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
-- ![firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
-- ![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+
+![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
+
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+
+![firebase](https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black)
+
+![Netlify](https://img.shields.io/badge/netlify-%23000000.svg?style=for-the-badge&logo=netlify&logoColor=#00C7B7)
 
 <!-- TABLE OF CONTENTS -->
 
-Table of Contents
+## Table of Contents
 
 - [Project description](#rs-school-react-2023-q4)
 - [Technology stack](#technology-stack)
@@ -54,13 +62,13 @@ To get a local copy - follow these simple steps.
 1. Clone the repo
 
 ```sh
-  git clone <https://github.com/gentoosiast/graphiql-app>
+  git clone https://github.com/gentoosiast/graphiql-app
 ```
 
 2. Install NPM packages
 
 ```sh
-  npm install`
+  npm install
 ```
 
 3. Start project
@@ -69,7 +77,7 @@ To get a local copy - follow these simple steps.
   npm run dev
 ```
 
-4. Ask team to produce the .env.local file with settings and put in into the root of this project.
+4. Ask team to produce the .env.local file with settings and place it in the project root.
 
 <!-- SCRIPTS -->
 
