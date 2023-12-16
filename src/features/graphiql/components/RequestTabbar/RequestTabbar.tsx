@@ -32,8 +32,8 @@ type Props = {
 export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JSX.Element => {
   const [currentTabIdx, setCurrentTabIdx] = useState(0);
   const [isTabbarOpen, setIsTabbarOpen] = useState(false);
-  const [variablesCode, setVariablesCode] = useState('');
-  const [headersCode, setHeadersCode] = useState('');
+  const [variablesCode, setVariablesCode] = useState('{\n  \n}');
+  const [headersCode, setHeadersCode] = useState('{\n  \n}');
   const theme = tokyoNightStormInit({
     settings: {
       fontFamily: 'Hack, monospace',
