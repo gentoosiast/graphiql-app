@@ -47,7 +47,7 @@
   "prettifyQuery": "Prettify query",
   "sendRequest": "Send request",
   "graphqlQuery": "GraphQL Query",
-  "graphqlResponse": "GraphQL Response",
+  "graphqlResponse": "GraphQL API Response",
   "graphqlVariablesPlaceholder": "Variables (in JSON format)",
   "graphqlHeadersPlaceholder": "Headers (in JSON format)",
   "graphqlRequestTabsLabel": "Variables / Headers tabbar",

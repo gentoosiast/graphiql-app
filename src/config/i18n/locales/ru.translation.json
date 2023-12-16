@@ -53,7 +53,7 @@
   "prettifyQuery": "Отформатировать текст запроса",
   "sendRequest": "Отправить запрос",
   "graphqlQuery": "GraphQL запрос",
-  "graphqlResponse": "GraphQL ответ",
+  "graphqlResponse": "Ответ GraphQL API",
   "graphqlVariablesPlaceholder": "Переменные (в формате JSON)",
   "graphqlHeadersPlaceholder": "HTTP-заголовки (в формате JSON)",
   "graphqlRequestTabsLabel": "Переменные / HTTP-заголовки табы",
