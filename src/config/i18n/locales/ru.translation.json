@@ -47,5 +47,18 @@
   "defaultError": "Что-то пошло не так",
   "loginSuccess": "Вы вошли в аккаунт",
   "accoutNotFound": "Неверная почта или пароль",
-  "signOutSuccess": "Вы вышли из аккаунта"
+  "signOutSuccess": "Вы вышли из аккаунта",
+
+  "graphqlEndpoint": "GraphQL маршрут",
+  "prettifyQuery": "Отформатировать текст запроса",
+  "sendRequest": "Отправить запрос",
+  "graphqlQuery": "GraphQL запрос",
+  "graphqlResponse": "GraphQL ответ",
+  "graphqlVariablesPlaceholder": "Переменные (в формате JSON)",
+  "graphqlHeadersPlaceholder": "HTTP-заголовки (в формате JSON)",
+  "graphqlRequestTabsLabel": "Переменные / HTTP-заголовки табы",
+  "graphqlVariablesTabLabel": "Переменные",
+  "graphqlHeadersTabLabel": "HTTP-заголовки",
+  "collapseTabsLabel": "Свернуть табы",
+  "expandTabsLabel": "Выдвинуть табы"
 }

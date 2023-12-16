@@ -41,5 +41,18 @@
   "defaultError": "Something went wrong",
   "loginSuccess": "You've successfully signed in",
   "accoutNotFound": "Incorrect email or password",
-  "signOutSuccess": "You've successfully signed out"
+  "signOutSuccess": "You've successfully signed out",
+
+  "graphqlEndpoint": "GraphQL endpoint",
+  "prettifyQuery": "Prettify query",
+  "sendRequest": "Send request",
+  "graphqlQuery": "GraphQL Query",
+  "graphqlResponse": "GraphQL Response",
+  "graphqlVariablesPlaceholder": "Variables (in JSON format)",
+  "graphqlHeadersPlaceholder": "Headers (in JSON format)",
+  "graphqlRequestTabsLabel": "Variables / Headers tabbar",
+  "graphqlVariablesTabLabel": "Variables",
+  "graphqlHeadersTabLabel": "Headers",
+  "collapseTabsLabel": "Collapse tabs",
+  "expandTabsLabel": "Expand tabs"
 }

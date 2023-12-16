@@ -10,8 +10,11 @@ import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
+import Tooltip from '@mui/material/Tooltip';
 import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
 import CodeMirror from '@uiw/react-codemirror';
+
+import { useI18NContext } from '@/contexts/i18n';
 
 import { CustomTabPanel } from '../CustomTabPanel';
 
@@ -30,6 +33,7 @@ type Props = {
 };
 
 export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JSX.Element => {
+  const { translate } = useI18NContext();
   const [currentTabIdx, setCurrentTabIdx] = useState(0);
   const [isTabbarOpen, setIsTabbarOpen] = useState(false);
   const [variablesCode, setVariablesCode] = useState('{\n  \n}');
@@ -65,7 +69,7 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
             extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
             height="150px"
             onChange={handleVariablesChange}
-            placeholder="Variables (in JSON format)"
+            placeholder={translate('graphqlVariablesPlaceholder')}
             style={{ fontSize: 12 }}
             theme={theme}
             value={variablesCode}
@@ -76,7 +80,7 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
             extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
             height="150px"
             onChange={handleHeadersChange}
-            placeholder="Headers (in JSON format)"
+            placeholder={translate('graphqlHeadersPlaceholder')}
             style={{ fontSize: 12 }}
             theme={theme}
             value={headersCode}
@@ -91,21 +95,35 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
         }}
       >
         <Tabs
-          aria-label="secondary tabs example"
+          aria-label={translate('graphqlRequestTabsLabel')}
           indicatorColor="secondary"
           onChange={handleTabChange}
           textColor="secondary"
           value={currentTabIdx}
         >
-          <Tab label="Variables" {...a11yProps(0)} onClick={() => setIsTabbarOpen(true)} />
-          <Tab label="Headers" {...a11yProps(1)} onClick={() => setIsTabbarOpen(true)} />
+          <Tab
+            label={translate('graphqlVariablesTabLabel')}
+            {...a11yProps(0)}
+            onClick={() => setIsTabbarOpen(true)}
+          />
+          <Tab
+            label={translate('graphqlHeadersTabLabel')}
+            {...a11yProps(1)}
+            onClick={() => setIsTabbarOpen(true)}
+          />
         </Tabs>
-        <IconButton
-          aria-label={isTabbarOpen ? 'collapse tab bar' : 'expand tab bar'}
-          onClick={() => setIsTabbarOpen(!isTabbarOpen)}
+        <Tooltip
+          title={isTabbarOpen ? translate('collapseTabsLabel') : translate('expandTabsLabel')}
         >
-          {isTabbarOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
-        </IconButton>
+          <IconButton
+            aria-label={
+              isTabbarOpen ? translate('collapseTabsLabel') : translate('expandTabsLabel')
+            }
+            onClick={() => setIsTabbarOpen(!isTabbarOpen)}
+          >
+            {isTabbarOpen ? <ExpandMoreIcon /> : <ExpandLessIcon />}
+          </IconButton>
+        </Tooltip>
       </Box>
     </Box>
   );

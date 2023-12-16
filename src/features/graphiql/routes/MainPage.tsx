@@ -4,12 +4,22 @@ import { useNavigate } from 'react-router-dom';
 
 import { json } from '@codemirror/lang-json';
 import SendIcon from '@mui/icons-material/Send';
-import { Alert, Container, Fab, IconButton, Snackbar, Stack, TextField } from '@mui/material';
+import {
+  Alert,
+  Container,
+  Fab,
+  IconButton,
+  Snackbar,
+  Stack,
+  TextField,
+  Tooltip,
+} from '@mui/material';
 import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
 import CodeMirror from '@uiw/react-codemirror';
 import { isAxiosError } from 'axios';
 import { graphql } from 'cm6-graphql';
 
+import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
 
 import { graphQLRequest } from '../api/requests';
@@ -21,6 +31,7 @@ import 'hack-font/build/web/hack.css';
 
 export const MainPage = (): JSX.Element => {
   const navigate = useNavigate();
+  const { translate } = useI18NContext();
   const { authState } = useAuth();
   const [state, dispatch] = useMainPageReducer();
 
@@ -122,29 +133,37 @@ export const MainPage = (): JSX.Element => {
               sx={{ alignItems: 'center', justifyContent: 'center' }}
             >
               <TextField
-                label="GraphQL endpoint"
+                label={translate('graphqlEndpoint')}
                 onChange={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
-                placeholder="GraphQL endpoint"
+                placeholder={translate('graphqlEndpoint')}
                 sx={{ width: '100%' }}
                 value={state.endpoint}
               />
-              <IconButton aria-label="Prettify query" color="default" onClick={handlePrettify}>
-                <PrettifyIcon />
-              </IconButton>
-              <Fab
-                aria-label="Send request"
-                color="primary"
-                onClick={() => void handleSendRequest()}
-                size="small"
-              >
-                <SendIcon />
-              </Fab>
+              <Tooltip title={translate('prettifyQuery')}>
+                <IconButton
+                  aria-label={translate('prettifyQuery')}
+                  color="default"
+                  onClick={handlePrettify}
+                >
+                  <PrettifyIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title={translate('sendRequest')}>
+                <Fab
+                  aria-label={translate('sendRequest')}
+                  color="primary"
+                  onClick={() => void handleSendRequest()}
+                  size="small"
+                >
+                  <SendIcon />
+                </Fab>
+              </Tooltip>
             </Stack>
             <CodeMirror
               extensions={[graphql()]}
               height="100%"
               onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
-              placeholder="GraphQL Query"
+              placeholder={translate('graphqlQuery')}
               style={{ fontSize: 12, height: '100%' }}
               theme={theme}
               value={state.request}
@@ -160,7 +179,7 @@ export const MainPage = (): JSX.Element => {
               editable={false}
               extensions={[json()]}
               height="100%"
-              placeholder="GraphQL Response"
+              placeholder={translate('graphqlResponse')}
               style={{ fontSize: 12, height: '100%' }}
               theme={theme}
               value={state.response}
