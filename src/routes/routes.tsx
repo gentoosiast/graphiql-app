@@ -1,9 +1,9 @@
 import { RootLayout } from '@/components';
-import { AuthPage } from '@/features/auth/';
+import { AuthPage, AuthState } from '@/features/auth';
 import { MainPage } from '@/features/graphiql';
 import { NotFoundPage, WelcomePage } from '@/features/misc';
 
-import { PrivateRouteGuard } from './PrivateRouteGuard';
+import { AuthRouteGuard } from './AuthRouteGuard';
 
 export const routes = [
   {
@@ -11,13 +11,20 @@ export const routes = [
       { element: <WelcomePage />, index: true },
       {
         element: (
-          <PrivateRouteGuard>
+          <AuthRouteGuard authRejectStatus={AuthState.NOT_AUTHENTICATED} rejectRoute="/">
             <MainPage />
-          </PrivateRouteGuard>
+          </AuthRouteGuard>
         ),
         path: '/main',
       },
-      { element: <AuthPage />, path: '/auth' },
+      {
+        element: (
+          <AuthRouteGuard authRejectStatus={AuthState.AUTHENTICATED} rejectRoute="/main">
+            <AuthPage />
+          </AuthRouteGuard>
+        ),
+        path: '/auth',
+      },
       { element: <NotFoundPage />, path: '*' },
     ],
     element: <RootLayout />,

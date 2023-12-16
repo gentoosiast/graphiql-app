@@ -1,11 +1,9 @@
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-import { Login } from '../components/Login';
-import { Register } from '../components/Register';
+import { Login, Register } from '../components';
 import { AuthState } from '../enums';
-import { useAuth } from '../hooks/use-auth';
 import { getFormMode } from '../utils/get-form-mode';
 
 const AuthPage = (): JSX.Element => {
@@ -13,15 +11,7 @@ const AuthPage = (): JSX.Element => {
   const formMode = getFormMode(location.state);
   const [isLogin, setIsLogin] = useState(formMode === 'login');
 
-  const { authState } = useAuth();
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (authState === AuthState.AUTHENTICATED) {
-      navigate('/main', { replace: true });
-    }
-  }, [authState, navigate]);
+  console.log(AuthState.AUTHENTICATED);
 
   return isLogin ? <Login setIsLogin={setIsLogin} /> : <Register setIsLogin={setIsLogin} />;
 };

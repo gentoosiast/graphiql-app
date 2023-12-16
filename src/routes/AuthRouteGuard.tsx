@@ -1,4 +1,4 @@
-import type { PropsWithChildren, ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
 import CircularProgress from '@mui/material/CircularProgress';
@@ -6,7 +6,13 @@ import { Box } from '@mui/system';
 
 import { AuthState, useAuth } from '@/features/auth';
 
-export const PrivateRouteGuard = ({ children }: PropsWithChildren): ReactNode => {
+type Props = {
+  authRejectStatus: AuthState;
+  children: ReactNode;
+  rejectRoute: string;
+};
+
+export const AuthRouteGuard = ({ authRejectStatus, children, rejectRoute }: Props): ReactNode => {
   const { authState } = useAuth();
 
   if (authState === AuthState.PENDING) {
@@ -24,8 +30,8 @@ export const PrivateRouteGuard = ({ children }: PropsWithChildren): ReactNode =>
     );
   }
 
-  if (authState === AuthState.NOT_AUTHENTICATED) {
-    return <Navigate replace to="/" />;
+  if (authState === authRejectStatus) {
+    return <Navigate replace={true} to={rejectRoute} />;
   }
 
   return children;
