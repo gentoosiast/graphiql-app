@@ -8,44 +8,73 @@ import { useI18NContext } from '@/contexts/i18n';
 
 export const NotFoundPage = (): JSX.Element => {
   const { translate } = useI18NContext();
+
+  const responsiveBox = {
+    flex: { md: 'calc(33% - 20px)', sm: 'calc(50% - 20px)', xs: '100%' },
+  };
+  const responsiveTitle = {
+    fontSize: { md: '62px', sm: '50px', xs: '36px' },
+    margin: 2,
+  };
+  const responsiveText = {
+    fontSize: { md: '22px', sm: '20px', xs: '18px' },
+    marginTop: { md: 1.5, sm: 2, sx: 2 },
+  };
+  const responsiveButton = {
+    ':hover': {
+      backgroundColor: 'primary.light',
+    },
+    backgroundColor: 'primary.main',
+    color: 'primary.contrastText',
+    fontSize: { lg: '23px', md: '20px', sm: '18px' },
+    maxWidth: '40%',
+    mt: 2,
+    textAlign: 'center',
+  };
+
+  const responsiveCat = {
+    width: { md: '30%', sm: '20%', xs: '15%' },
+  };
+
   return (
-    <Box padding={'2%'}>
-      <Typography align="center" component={'h1'} variant="h1">
+    <Box padding={'5%'} sx={responsiveBox}>
+      <Typography align="center" component={'h1'} sx={responsiveTitle} variant="h1">
         {translate('ohHello')}
       </Typography>
-
-      <Stack flexDirection={'row'} justifyContent={'space-evenly'} width={'100%'}>
-        <img alt="cat on the table" src="/not-found-2.jpg" width={'30%'} />
-        <img alt="cat on the table taking a shower" src="/not-found.jpg" width={'30%'} />
+      <Stack direction={'row'} flexWrap="wrap" justifyContent={'center'} spacing={5} useFlexGap>
+        <Box minWidth={'250px'} sx={responsiveCat}>
+          <img
+            alt="cat on the table"
+            height={'100%'}
+            src="/not-found-2.jpg"
+            style={{ objectFit: 'cover' }}
+            width={'100%'}
+          />
+        </Box>
+        <Box minWidth={'250px'} sx={responsiveCat}>
+          <img
+            alt="cat on the table taking a shower"
+            height={'100%'}
+            src="/not-found.jpg"
+            style={{ objectFit: 'cover' }}
+            width={'100%'}
+          />
+        </Box>
       </Stack>
-      <Typography align="center" component={'h4'} mt={3} variant="h5">
+      <Typography align="center" component={'h4'} mt={3} sx={responsiveText} variant="h5">
         {translate('busy')}
       </Typography>
       <Stack alignItems={'center'} justifyContent={'center'}>
         <Typography
           align="center"
           component={'h4'}
-          fontSize="22"
           maxWidth={'80%'}
-          mt={3}
+          sx={responsiveText}
           variant="h5"
         >
           {translate('goAway')}
         </Typography>
-        <Button
-          component={RouterLink}
-          sx={{
-            ':hover': {
-              backgroundColor: 'primary.light',
-            },
-            backgroundColor: 'primary.main',
-            color: 'primary.contrastText',
-            fontSize: 22,
-            maxWidth: '40%',
-            mt: 2,
-          }}
-          to="/"
-        >
+        <Button component={RouterLink} sx={responsiveButton} to="/">
           {translate('welcomePage')}
         </Button>
       </Stack>
