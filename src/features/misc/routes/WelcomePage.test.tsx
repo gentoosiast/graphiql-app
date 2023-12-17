@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
-import { I18NProvider } from '@/providers/i18n/I18NProvider';
+import { I18NProvider } from '@/providers';
 
 import { WelcomePage } from './WelcomePage';
 
