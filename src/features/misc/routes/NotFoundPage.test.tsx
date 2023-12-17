@@ -9,7 +9,7 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 import { NotFoundPage } from './NotFoundPage';
 
 describe('Not found page', () => {
-  it('should render not found page', () => {
+  it('should render', () => {
     renderWithProviders(
       <I18NProvider>
         <MemoryRouter>
