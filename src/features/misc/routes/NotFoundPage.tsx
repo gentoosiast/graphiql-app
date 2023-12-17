@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import { useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Button, Typography } from '@mui/material';
@@ -8,7 +9,11 @@ import { useI18NContext } from '@/contexts/i18n';
 
 export const NotFoundPage = (): JSX.Element => {
   const { translate } = useI18NContext();
+  const [hasError, setHasError] = useState(false);
 
+  if (hasError) {
+    throw new Error('My Unique Error');
+  }
   const responsiveBox = {
     flex: { md: 'calc(33% - 20px)', sm: 'calc(50% - 20px)', xs: '100%' },
   };
@@ -16,6 +21,7 @@ export const NotFoundPage = (): JSX.Element => {
     fontSize: { md: '62px', sm: '50px', xs: '36px' },
     margin: 2,
   };
+
   const responsiveText = {
     fontSize: { md: '22px', sm: '20px', xs: '18px' },
     marginTop: { md: 1.5, sm: 2, sx: 2 },
@@ -62,6 +68,13 @@ export const NotFoundPage = (): JSX.Element => {
           />
         </Box>
       </Stack>
+      <Button
+        onClick={() => {
+          setHasError(true);
+        }}
+      >
+        AAA
+      </Button>
 
       <Stack alignItems={'center'} justifyContent={'center'}>
         <Typography align="center" component={'h4'} mt={3} sx={responsiveText} variant="h5">
