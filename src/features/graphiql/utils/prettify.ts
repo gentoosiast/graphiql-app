@@ -1,4 +1,4 @@
-export const prettify = (query: string, indentSize = 2): string => {
+export const graphqlPrettify = (query: string, indentSize = 2): string => {
   let indentLevel = 0;
 
   return query
@@ -19,4 +19,8 @@ export const prettify = (query: string, indentSize = 2): string => {
       return `${' '.repeat((indentLevel + indentModifier) * indentSize)}${line}`;
     })
     .join('\n');
+};
+
+export const jsonPrettify = (json: unknown, indentSize = 2): string => {
+  return JSON.stringify(json, null, indentSize);
 };

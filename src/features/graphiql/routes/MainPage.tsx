@@ -25,7 +25,7 @@ import { AuthState, useAuth } from '@/features/auth';
 import { graphQLRequest } from '../api/requests';
 import { PrettifyIcon, RequestTabbar } from '../components';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
-import { prettify } from '../utils/prettify';
+import { graphqlPrettify, jsonPrettify } from '../utils/prettify';
 
 import 'hack-font/build/web/hack.css';
 
@@ -59,14 +59,14 @@ export const MainPage = (): JSX.Element => {
         variables: state.variables,
       });
 
-      const responseJSON = JSON.stringify(response.data, null, 2);
+      const responseJSON = jsonPrettify(response.data);
 
       dispatch({ payload: responseJSON, type: 'setResponse' });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
       if (isAxiosError(error)) {
-        const errorJSON = JSON.stringify(error.response?.data, null, 2);
+        const errorJSON = jsonPrettify(error.response?.data);
 
         dispatch({
           payload: { errorMessage, errorResponse: errorJSON },
@@ -86,7 +86,7 @@ export const MainPage = (): JSX.Element => {
   };
 
   const handlePrettify = (): void => {
-    dispatch({ payload: prettify(state.request), type: 'setRequest' });
+    dispatch({ payload: graphqlPrettify(state.request), type: 'setRequest' });
   };
 
   const handleSetHeaders = (headers: string): void => {
