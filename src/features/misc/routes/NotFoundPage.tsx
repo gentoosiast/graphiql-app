@@ -27,6 +27,7 @@ export const NotFoundPage = (): JSX.Element => {
     backgroundColor: 'primary.main',
     color: 'primary.contrastText',
     fontSize: { lg: '20px', md: '18px', sm: '16px' },
+    mb: 5,
     mt: 2,
     padding: { lg: '0 3%', md: '0 3%', sm: '0 10%' },
     textAlign: 'center',
