@@ -71,13 +71,13 @@ To get a local copy - follow these simple steps.
   npm install
 ```
 
-3. Start project
+3. Ask team to produce the .env.local file with settings and place it in the project root.
+
+4. Start project
 
 ```sh
   npm run dev
 ```
-
-4. Ask team to produce the .env.local file with settings and place it in the project root.
 
 <!-- SCRIPTS -->
 
