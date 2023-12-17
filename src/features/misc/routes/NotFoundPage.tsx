@@ -26,18 +26,18 @@ export const NotFoundPage = (): JSX.Element => {
     },
     backgroundColor: 'primary.main',
     color: 'primary.contrastText',
-    fontSize: { lg: '23px', md: '20px', sm: '18px' },
-    maxWidth: '40%',
+    fontSize: { lg: '20px', md: '18px', sm: '16px' },
     mt: 2,
+    padding: { lg: '0 3%', md: '0 3%', sm: '0 10%' },
     textAlign: 'center',
   };
 
   const responsiveCat = {
-    width: { md: '30%', sm: '20%', xs: '15%' },
+    width: { md: '25%', sm: '20%', xs: '15%' },
   };
 
   return (
-    <Box padding={'5%'} sx={responsiveBox}>
+    <Box padding={'1% 5%'} sx={responsiveBox}>
       <Typography align="center" component={'h1'} sx={responsiveTitle} variant="h1">
         {translate('ohHello')}
       </Typography>
@@ -61,10 +61,11 @@ export const NotFoundPage = (): JSX.Element => {
           />
         </Box>
       </Stack>
-      <Typography align="center" component={'h4'} mt={3} sx={responsiveText} variant="h5">
-        {translate('busy')}
-      </Typography>
+
       <Stack alignItems={'center'} justifyContent={'center'}>
+        <Typography align="center" component={'h4'} mt={3} sx={responsiveText} variant="h5">
+          {translate('busy')}
+        </Typography>
         <Typography
           align="center"
           component={'h4'}
@@ -74,7 +75,7 @@ export const NotFoundPage = (): JSX.Element => {
         >
           {translate('goAway')}
         </Typography>
-        <Button component={RouterLink} sx={responsiveButton} to="/">
+        <Button component={RouterLink} replace={true} sx={responsiveButton} to="/">
           {translate('welcomePage')}
         </Button>
       </Stack>
