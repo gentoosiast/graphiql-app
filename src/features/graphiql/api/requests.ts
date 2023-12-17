@@ -7,19 +7,15 @@ type GraphQlRequest = {
   variables?: object;
 };
 
-type GraphQLResponse = {
-  data: object;
-};
-
 const REQUEST_TIMEOUT = 10000;
 
-export const graphQLRequest = async ({
+export const graphQLRequest = async <T>({
   endpoint,
   headers,
   query,
   variables,
-}: GraphQlRequest): Promise<GraphQLResponse> => {
-  const response = await axios<GraphQLResponse>({
+}: GraphQlRequest): Promise<T> => {
+  const response = await axios<T>({
     data: {
       query,
       variables: variables ?? {},

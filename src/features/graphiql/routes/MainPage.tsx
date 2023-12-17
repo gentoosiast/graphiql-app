@@ -48,11 +48,8 @@ export const MainPage = (): JSX.Element => {
   }, [authState, navigate]);
 
   const handleSendRequest = async (): Promise<void> => {
-    console.log(state.endpoint);
-    console.log(state.request);
-
     try {
-      const response = await graphQLRequest({
+      const response = await graphQLRequest<{ data: unknown }>({
         endpoint: state.endpoint,
         headers: state.headers,
         query: state.request,
