@@ -1,15 +1,10 @@
-('use client');
-
-import { useRouteError } from 'react-router-dom';
+import { FallbackProps } from 'react-error-boundary';
 
 import { Typography } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { Box, Stack } from '@mui/system';
 
-export function Fallback(): JSX.Element | undefined {
-  const error = useRouteError();
-  console.error(error);
-
+export function fallbackRender({ error }: FallbackProps): JSX.Element | undefined {
   if (error instanceof Error) {
     return (
       <Box
@@ -42,9 +37,15 @@ export function Fallback(): JSX.Element | undefined {
         >
           Something went wrong.. Try to reload the page.
         </Typography>
-
-        <Alert severity="error" sx={{ padding: 5, width: '90%' }}>
-          {error.message}
+        <Alert
+          severity="error"
+          sx={{
+            fontSize: { lg: '20px', md: '20px', sm: '18px', xs: '18px' },
+            padding: 5,
+            width: '90%',
+          }}
+        >
+          {error.name}: {error.message}
         </Alert>
       </Box>
     );
