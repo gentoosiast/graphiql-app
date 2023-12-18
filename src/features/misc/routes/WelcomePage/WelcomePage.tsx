@@ -25,8 +25,11 @@ export const WelcomePage = (): JSX.Element => {
     <>
       <nav>
         <Box
-          flexDirection={'row'}
-          sx={{ backgroundColor: 'background.paper', fontSize: 22, padding: 2, textAlign: 'right' }}
+          sx={{
+            backgroundColor: 'background.paper',
+            padding: 2,
+            textAlign: 'right',
+          }}
         >
           {authState === AuthState.NOT_AUTHENTICATED && (
             <>
@@ -40,8 +43,8 @@ export const WelcomePage = (): JSX.Element => {
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
+                  fontSize: { lg: 20, md: 18, sm: 16, xs: 14 },
                   margin: 0.7,
-
                   textDecoration: 'none',
                 }}
                 to="/auth"
@@ -58,7 +61,8 @@ export const WelcomePage = (): JSX.Element => {
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-
+                  fontSize: { lg: 20, md: 18, sm: 16, xs: 14 },
+                  margin: 0.7,
                   textDecoration: 'none',
                 }}
                 to="/auth"
@@ -77,7 +81,8 @@ export const WelcomePage = (): JSX.Element => {
                 backgroundColor: 'primary.main',
                 border: 1,
                 color: 'primary.contrastText',
-
+                fontSize: { lg: 18, md: 18, sm: 16, xs: 14 },
+                margin: 0.7,
                 textDecoration: 'none',
               }}
               to="/main"
