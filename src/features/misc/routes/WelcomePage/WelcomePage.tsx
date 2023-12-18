@@ -26,7 +26,7 @@ export const WelcomePage = (): JSX.Element => {
       <nav>
         <Box
           flexDirection={'row'}
-          sx={{ backgroundColor: 'primary.light', fontSize: 22, padding: 2, textAlign: 'right' }}
+          sx={{ backgroundColor: 'background.paper', fontSize: 22, padding: 2, textAlign: 'right' }}
         >
           {authState === AuthState.NOT_AUTHENTICATED && (
             <>
@@ -41,7 +41,7 @@ export const WelcomePage = (): JSX.Element => {
                   border: 1,
                   color: 'primary.contrastText',
                   margin: 0.7,
-                  padding: 2,
+
                   textDecoration: 'none',
                 }}
                 to="/auth"
@@ -58,7 +58,7 @@ export const WelcomePage = (): JSX.Element => {
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-                  padding: 2,
+
                   textDecoration: 'none',
                 }}
                 to="/auth"
@@ -70,7 +70,16 @@ export const WelcomePage = (): JSX.Element => {
           {authState === AuthState.AUTHENTICATED && (
             <Button
               component={RouterLink}
-              sx={{ textDecoration: 'none' }}
+              sx={{
+                ':hover': {
+                  backgroundColor: 'background.paper',
+                },
+                backgroundColor: 'primary.main',
+                border: 1,
+                color: 'primary.contrastText',
+
+                textDecoration: 'none',
+              }}
               to="/main"
               variant="outlined"
             >
