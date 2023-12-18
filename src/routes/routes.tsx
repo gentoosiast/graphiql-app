@@ -1,8 +1,8 @@
 import { RootLayout } from '@/components';
+import { Fallback } from '@/components/Fallback/Fallback';
 import { AuthPage, AuthState } from '@/features/auth';
 import { MainPage } from '@/features/graphiql';
 import { NotFoundPage, WelcomePage } from '@/features/misc';
-import ErrorPage from '@/features/misc/routes/ErrorPage';
 
 import { AuthRouteGuard } from './AuthRouteGuard';
 
@@ -29,7 +29,7 @@ export const routes = [
       { element: <NotFoundPage />, path: '*' },
     ],
     element: <RootLayout />,
-    errorElement: <ErrorPage />,
+    errorElement: <Fallback />,
     path: '/',
   },
 ];

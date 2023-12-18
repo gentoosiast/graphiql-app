@@ -1,12 +1,15 @@
+('use client');
+
 import { useRouteError } from 'react-router-dom';
 
 import { Typography } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { Box, Stack } from '@mui/system';
 
-export default function ErrorPage(): JSX.Element | undefined {
+export function Fallback(): JSX.Element | undefined {
   const error = useRouteError();
   console.error(error);
+
   if (error instanceof Error) {
     return (
       <Box

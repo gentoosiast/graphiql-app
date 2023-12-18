@@ -16,17 +16,7 @@ import '@fontsource/roboto/700.css';
 
 import { ErrorBoundary } from 'react-error-boundary';
 
-export function Fallback({ error }: { error: unknown }): JSX.Element | undefined {
-  // Call resetErrorBoundary() to reset the error boundary and retry the render.
-  if (error instanceof Error) {
-    return (
-      <div role="alert">
-        <p>Something went wrong:</p>
-        <pre style={{ color: 'red' }}>{error.message}</pre>
-      </div>
-    );
-  }
-}
+import { Fallback } from './components/Fallback/';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
