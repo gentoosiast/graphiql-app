@@ -1,26 +1,33 @@
 import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Avatar, Card, CardHeader, ListItem, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { Stack } from '@mui/system';
+import { Avatar, Card, Typography } from '@mui/material';
+import { Box, Stack } from '@mui/system';
 
 import { useI18NContext } from '@/contexts/i18n';
+import { MemberCardContent } from '@/features/data/member-card';
 
 export const WelcomePage = (): JSX.Element => {
-  const MemberText = styled('div')(() => ({
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    fontSize: 18,
-    justifyContent: 'center',
-    width: 400,
-  }));
+  const MemberCard = ({ children }: { children: JSX.Element }): JSX.Element => {
+    return (
+      <Card
+        sx={{
+          backgroundColor: 'background.paper',
+          borderRadius: 3,
+          boxShadow: 20,
+          minWidth: 300,
+          padding: 5,
+        }}
+      >
+        {children}
+      </Card>
+    );
+  };
 
   const { translate } = useI18NContext();
 
   return (
-    <>
+    <Box padding={2}>
       <nav>
         <Link state={{ formMode: 'login' }} to="/auth">
           Sign In
@@ -32,7 +39,7 @@ export const WelcomePage = (): JSX.Element => {
       </nav>
       <Stack alignItems="center" justifyContent="center">
         <Typography component="h1" sx={{ margin: 3 }} variant="h2">
-          {translate('welcome')}
+          {translate('meetTheTeam')}
         </Typography>
 
         <Typography color="primary" component="h2" textAlign="center" variant="h2">
@@ -44,99 +51,55 @@ export const WelcomePage = (): JSX.Element => {
       </Stack>
 
       <Stack direction="row" justifyContent="space-around">
-        <Card
-          sx={{
-            backgroundColor: 'background.paper',
-            borderRadius: 3,
-            boxShadow: 20,
-            minWidth: 300,
-            padding: 5,
-          }}
-        >
-          <Stack alignItems="center" justifyContent="center">
-            <Avatar
-              alt="Kate"
-              src="/kate.jpg"
-              sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
-            />
-          </Stack>
-          <MemberText>
-            <CardHeader color="primary" title={`${translate('kate-welcome-name')}`} />
+        <MemberCardContent />
+        <MemberCard>
+          <>
+            <Stack alignItems="center" justifyContent="center">
+              <Avatar
+                alt="Kate"
+                src="/kate.jpg"
+                sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
+              />
+            </Stack>
 
-            <ListItem>{translate('kate-welcome-from')}</ListItem>
-            <ListItem>{translate('kate-welcome-book')}</ListItem>
-            <ListItem>{translate('kate-welcome-experience')}</ListItem>
-            <ListItem>{translate('kate-welcome-talent')}</ListItem>
-            <ListItem>{translate('kate-welcome-pets')}</ListItem>
-          </MemberText>
-          <Stack direction="row" justifyContent={'space-evenly'}>
-            <Stack
-              justifyContent="space-between
+            <Stack direction="row" justifyContent={'space-evenly'}>
+              <Stack
+                justifyContent="space-between
           "
-              sx={{ maxWidth: 170 }}
-            >
-              <img alt="varya cat" src="/varya.jpg" />
-            </Stack>
+                sx={{ maxWidth: 170 }}
+              >
+                <img alt="varya cat" src="/varya.jpg" />
+              </Stack>
 
-            <Stack
-              justifyContent="space-between
+              <Stack
+                justifyContent="space-between
           "
-              sx={{ maxWidth: 170 }}
-            >
-              <img alt="fania cat" src="/fanya.jpg" />
+                sx={{ maxWidth: 170 }}
+              >
+                <img alt="fania cat" src="/fanya.jpg" />
+              </Stack>
             </Stack>
-          </Stack>
-        </Card>
+          </>
+        </MemberCard>
 
-        <Card
-          sx={{
-            backgroundColor: 'background.paper',
-            borderRadius: 3,
-            boxShadow: 20,
-            minWidth: 300,
-            padding: 5,
-          }}
-        >
-          <Stack alignItems="center" justifyContent="center">
-            <Avatar alt="Ira" src="/2.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
-          </Stack>
-          <MemberText>
-            <CardHeader title={`${translate('ira-welcome-name')}`} />
-            <ListItem>{translate('ira-welcome-from')}</ListItem>
-            <ListItem>{translate('ira-welcome-experience')}</ListItem>
-            <ListItem>{translate('ira-welcome-talent')}</ListItem>
-            <ListItem>{translate('ira-welcome-pets')}</ListItem>
-            <Stack sx={{ maxWidth: 250 }}>
-              <img alt="murych cat" src="/murych.png" />
+        <MemberCard>
+          <>
+            <Stack alignItems="center" justifyContent="center">
+              <Avatar alt="Ira" src="/2.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
             </Stack>
-          </MemberText>
-        </Card>
+          </>
+        </MemberCard>
       </Stack>
 
       <Stack direction="row" justifyContent="center">
-        <Card
-          sx={{
-            backgroundColor: 'background.paper',
-            borderRadius: 3,
-            boxShadow: 20,
-            marginTop: 5,
-            minWidth: 300,
-            padding: 5,
-          }}
-        >
-          <Stack alignItems="center" justifyContent="center">
-            <Avatar alt="Sergey" src="/1.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
-          </Stack>
-          <MemberText>
-            <CardHeader title={`${translate('sergey-welcome-name')}`} />
-            <ListItem>{translate('sergey-welcome-from')}</ListItem>
-            <ListItem>{translate('sergey-welcome-book')}</ListItem>
-            <ListItem>{translate('sergey-welcome-experience')}</ListItem>
-            <ListItem>{translate('sergey-welcome-talent')}</ListItem>
-            <ListItem>{translate('sergey-welcome-pets')}</ListItem>
-          </MemberText>
-        </Card>
+        <MemberCard>
+          <>
+            <Stack alignItems="center" justifyContent="center">
+              <Avatar alt="Sergey" src="/1.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
+            </Stack>
+          </>
+        </MemberCard>
       </Stack>
-    </>
+    </Box>
   );
 };
