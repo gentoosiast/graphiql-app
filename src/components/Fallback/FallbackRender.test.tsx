@@ -8,6 +8,7 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 const TestComponent = (): JSX.Element => {
   throw new Error('Test Error');
 };
+
 describe('PageContent', () => {
   it('async component should throw', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
@@ -18,8 +19,6 @@ describe('PageContent', () => {
       </ErrorBoundary>,
     );
 
-    await vi.waitFor(() => {
-      expect(screen.getByText('Error Boundary')).toBeVisible();
-    });
+    expect(await screen.findByText('Error Boundary')).toBeVisible();
   });
 });
