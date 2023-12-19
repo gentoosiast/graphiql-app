@@ -49,9 +49,9 @@ export const WelcomePage = (): JSX.Element => {
           {translate('team-description')}
         </Typography>
       </Stack>
+      <MemberCardContent />
 
       <Stack direction="row" justifyContent="space-around">
-        <MemberCardContent />
         <MemberCard>
           <>
             <Stack alignItems="center" justifyContent="center">
