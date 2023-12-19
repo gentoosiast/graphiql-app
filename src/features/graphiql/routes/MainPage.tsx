@@ -6,6 +6,7 @@ import { json } from '@codemirror/lang-json';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Alert,
+  Box,
   Container,
   Fab,
   IconButton,
@@ -117,11 +118,13 @@ export const MainPage = (): JSX.Element => {
 
   return (
     <>
-      <Container maxWidth="xl">
-        <Stack
-          direction={{ sm: 'row', xs: 'column' }}
-          spacing={{ sm: 2, xs: 1 }}
-          sx={{ height: '600px' }}
+      <Container maxWidth="xl" sx={{ paddingBlock: '2rem' }}>
+        <Box
+          display="grid"
+          gap="1rem"
+          gridAutoColumns="minmax(0, 1fr)"
+          gridAutoFlow={{ sm: 'column', xs: 'row' }}
+          gridTemplateRows={{ sm: '600px', xs: 'repeat(2, 600px)' }}
         >
           <Stack spacing={1} sx={{ height: '100%', position: 'relative', width: '100%' }}>
             <Stack
@@ -161,7 +164,7 @@ export const MainPage = (): JSX.Element => {
               height="100%"
               onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
               placeholder={translate('graphqlQuery')}
-              style={{ fontSize: 12, height: '100%' }}
+              style={{ flexGrow: '1', fontSize: 12, height: '100%', overflow: 'auto' }}
               theme={theme}
               value={state.request}
               width="100%"
@@ -183,7 +186,7 @@ export const MainPage = (): JSX.Element => {
               width="100%"
             />
           </Stack>
-        </Stack>
+        </Box>
       </Container>
       <Snackbar
         autoHideDuration={5000}
