@@ -2,6 +2,15 @@ import { red } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles';
 
 export const theme = createTheme({
+  breakpoints: {
+    values: {
+      lg: 800,
+      md: 600,
+      sm: 320,
+      xl: 1200,
+      xs: 0,
+    },
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {
