@@ -1,1 +1,1 @@
-export * from './FallbackRender';
+export * from './Fallback';

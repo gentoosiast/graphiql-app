@@ -16,6 +16,7 @@ export const Fallback = ({ error }: FallbackProps): JSX.Element => {
       display={'flex'}
       flexDirection={'column'}
       justifyContent={'center'}
+      padding={'0 0 5%'}
       width={'100%'}
     >
       <Typography align="center" component={'h1'} margin={'2%'} variant="h2">
@@ -26,7 +27,7 @@ export const Fallback = ({ error }: FallbackProps): JSX.Element => {
         <Stack
           alignItems={'center'}
           justifyContent={'center'}
-          width={{ lg: '40%', md: '55%', sm: '70%', xs: '80%' }}
+          width={{ lg: '40%', md: '55%', sm: '70%', xl: '25%', xs: '80%' }}
         >
           <img alt="cats-watch-laptop" src="/error-cats.jpg" style={{ width: '100%' }} />
         </Stack>

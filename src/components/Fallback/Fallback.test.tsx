@@ -9,8 +9,8 @@ const TestComponent = (): JSX.Element => {
   throw new Error('Test Error');
 };
 
-describe('PageContent', () => {
-  it('async component should throw', async () => {
+describe('Fallback', () => {
+  it('error should be caught by error boundary', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
     renderWithProviders(
