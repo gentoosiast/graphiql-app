@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import type { JSX, SyntheticEvent } from 'react';
 
-import { json, jsonParseLinter } from '@codemirror/lang-json';
-import { lintGutter, linter } from '@codemirror/lint';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
@@ -11,12 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import Tooltip from '@mui/material/Tooltip';
-import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
-import CodeMirror from '@uiw/react-codemirror';
 
 import { useI18NContext } from '@/contexts/i18n';
 
-import { CustomTabPanel } from '../CustomTabPanel';
+import { CustomTabPanel, Editor } from '..';
 
 import 'hack-font/build/web/hack.css';
 
@@ -38,11 +34,6 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
   const [isTabbarOpen, setIsTabbarOpen] = useState(false);
   const [variablesCode, setVariablesCode] = useState('{\n  \n}');
   const [headersCode, setHeadersCode] = useState('{\n  \n}');
-  const theme = tokyoNightStormInit({
-    settings: {
-      fontFamily: 'Hack, monospace',
-    },
-  });
 
   const handleTabChange = (_: SyntheticEvent, newValue: number): void => {
     if (!isTabbarOpen) {
@@ -62,27 +53,31 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
   };
 
   return (
-    <Box sx={{ bottom: 0, left: 0, position: 'absolute', width: '100%' }}>
+    <Box
+      sx={{
+        backgroundColor: 'rgba(0 0 0 / 20%)',
+        bottom: 0,
+        left: 0,
+        position: 'absolute',
+        width: '100%',
+      }}
+    >
       <Collapse in={isTabbarOpen} sx={{ borderBlockStart: '1px solid #555' }}>
         <CustomTabPanel index={0} value={currentTabIdx}>
-          <CodeMirror
-            extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
+          <Editor
+            editorMode="json-with-linter"
             height="150px"
             onChange={handleVariablesChange}
             placeholder={translate('graphqlVariablesPlaceholder')}
-            style={{ fontSize: 12 }}
-            theme={theme}
             value={variablesCode}
           />
         </CustomTabPanel>
         <CustomTabPanel index={1} value={currentTabIdx}>
-          <CodeMirror
-            extensions={[json(), linter(jsonParseLinter()), lintGutter()]}
+          <Editor
+            editorMode="json-with-linter"
             height="150px"
             onChange={handleHeadersChange}
             placeholder={translate('graphqlHeadersPlaceholder')}
-            style={{ fontSize: 12 }}
-            theme={theme}
             value={headersCode}
           />
         </CustomTabPanel>

@@ -2,7 +2,6 @@ import type { JSX } from 'react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { json } from '@codemirror/lang-json';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Alert,
@@ -15,16 +14,13 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
-import CodeMirror from '@uiw/react-codemirror';
 import { isAxiosError } from 'axios';
-import { graphql } from 'cm6-graphql';
 
 import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
 
 import { graphQLRequest } from '../api/requests';
-import { PrettifyIcon, RequestTabbar } from '../components';
+import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
 import { graphqlPrettify, jsonPrettify } from '../utils/prettify';
 
@@ -35,12 +31,6 @@ export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
   const { authState } = useAuth();
   const [state, dispatch] = useMainPageReducer();
-
-  const theme = tokyoNightStormInit({
-    settings: {
-      fontFamily: 'Hack, monospace',
-    },
-  });
 
   useEffect(() => {
     if (authState === AuthState.NOT_AUTHENTICATED) {
@@ -159,13 +149,12 @@ export const MainPage = (): JSX.Element => {
                 </Fab>
               </Tooltip>
             </Stack>
-            <CodeMirror
-              extensions={[graphql()]}
+            <Editor
+              editorMode="graphql"
               height="100%"
               onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
               placeholder={translate('graphqlQuery')}
-              style={{ flexGrow: '1', fontSize: 12, height: '100%', overflow: 'auto' }}
-              theme={theme}
+              style={{ flexGrow: '1', height: '100%', overflow: 'auto' }}
               value={state.request}
               width="100%"
             />
@@ -175,13 +164,12 @@ export const MainPage = (): JSX.Element => {
             />
           </Stack>
           <Stack sx={{ height: '100%', width: '100%' }}>
-            <CodeMirror
+            <Editor
               editable={false}
-              extensions={[json()]}
+              editorMode="json"
               height="100%"
               placeholder={translate('graphqlResponse')}
-              style={{ fontSize: 12, height: '100%' }}
-              theme={theme}
+              style={{ height: '100%' }}
               value={state.response}
               width="100%"
             />

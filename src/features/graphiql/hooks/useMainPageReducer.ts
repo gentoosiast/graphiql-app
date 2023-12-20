@@ -3,6 +3,8 @@ import type { AlertColor } from '@mui/material';
 import { useReducer } from 'react';
 import type { Dispatch } from 'react';
 
+import { DEFAULT_GRAPHQL_ENDPOINT } from '../constants';
+
 type MainPageAction =
   | { payload: { errorMessage: string; errorResponse: string }; type: 'setError' }
   | { payload: { message: string; severity: AlertColor }; type: 'setNotification' }
@@ -23,7 +25,7 @@ type MainPageState = {
 };
 
 const initialState: MainPageState = {
-  endpoint: 'https://graphql.anilist.co',
+  endpoint: DEFAULT_GRAPHQL_ENDPOINT,
   headers: {},
   notificationSeverity: 'info',
   notificationText: '',
