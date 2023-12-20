@@ -148,7 +148,7 @@ export const MainPage = (): JSX.Element => {
   return (
     <>
       <Container maxWidth="xl">
-        <Tooltip title="Show documentation">
+        <Tooltip title={translate('docs.show')}>
           <Button
             onClick={() => setIsDocsOpen(true)}
             sx={{

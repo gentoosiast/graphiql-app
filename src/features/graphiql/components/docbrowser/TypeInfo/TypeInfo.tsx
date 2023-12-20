@@ -2,6 +2,8 @@ import type { JSX } from 'react';
 
 import { List, ListItem, Typography } from '@mui/material';
 
+import { useI18NContext } from '@/contexts/i18n';
+
 import type { IntrospectionField, IntrospectionType } from '../../../types';
 
 import { getIterfaceObject, isIntrospectionObjectType } from '../../../utils/introspection';
@@ -16,6 +18,8 @@ type Props = {
 };
 
 const TypeInfo = ({ findAndSetType, setField, setType, type }: Props): JSX.Element => {
+  const { translate } = useI18NContext();
+
   const interfaceObject = getIterfaceObject(type);
 
   return (
@@ -28,7 +32,7 @@ const TypeInfo = ({ findAndSetType, setField, setType, type }: Props): JSX.Eleme
       {interfaceObject && (
         <>
           <Typography component="h5" mb={1} mt={2} variant="subtitle2">
-            Implements
+            {translate('docs.implements')}
           </Typography>
           <TypeLink onClick={() => findAndSetType(interfaceObject.name)}>
             {interfaceObject.name}
@@ -39,7 +43,7 @@ const TypeInfo = ({ findAndSetType, setField, setType, type }: Props): JSX.Eleme
       {isIntrospectionObjectType(type) && (
         <>
           <Typography component="h5" mb={1} mt={2} variant="subtitle2">
-            Fields
+            {translate('docs.fields')}
           </Typography>
           <List>
             {type.fields.map((field) => (
