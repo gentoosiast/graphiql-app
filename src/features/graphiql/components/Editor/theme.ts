@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 
 import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
 import { EditorView } from '@uiw/react-codemirror';
