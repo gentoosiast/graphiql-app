@@ -1,11 +1,13 @@
 import type { JSX } from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { json } from '@codemirror/lang-json';
+import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Alert,
+  Button,
   Container,
   Fab,
   IconButton,
@@ -22,9 +24,12 @@ import { graphql } from 'cm6-graphql';
 import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
 
+import { getIntrospectionQuery } from '../api/get-introspection-query';
 import { graphQLRequest } from '../api/requests';
 import { PrettifyIcon, RequestTabbar } from '../components';
+import { DocsSection } from '../components/docbrowser/DocsSection';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
+import { GraphQLResponse, IntrospectionResponse, IntrospectionSchema } from '../types';
 import { prettify } from '../utils/prettify';
 
 import 'hack-font/build/web/hack.css';
@@ -34,6 +39,28 @@ export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
   const { authState } = useAuth();
   const [state, dispatch] = useMainPageReducer();
+
+  const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
+  const [apiSchema, setApiSchema] = useState<IntrospectionSchema>({} as IntrospectionSchema);
+  const [isDocsOpen, setIsDocsOpen] = useState(false);
+
+  useEffect(() => {
+    const getDocs = async (): Promise<void> => {
+      const introspectionQuery = getIntrospectionQuery();
+
+      try {
+        const response = await graphQLRequest<IntrospectionResponse>({
+          endpoint: state.endpoint,
+          query: introspectionQuery,
+        });
+
+        setApiSchema(response.data.__schema);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    void getDocs();
+  }, [state.endpoint]);
 
   const theme = tokyoNightStormInit({
     settings: {
@@ -52,7 +79,7 @@ export const MainPage = (): JSX.Element => {
     console.log(state.request);
 
     try {
-      const response = await graphQLRequest({
+      const response = await graphQLRequest<GraphQLResponse>({
         endpoint: state.endpoint,
         headers: state.headers,
         query: state.request,
@@ -121,6 +148,25 @@ export const MainPage = (): JSX.Element => {
   return (
     <>
       <Container maxWidth="xl">
+        <Tooltip title="Show documentation">
+          <Button
+            onClick={() => setIsDocsOpen(true)}
+            sx={{
+              maxHeight: '40px',
+              maxWidth: '40px',
+              mb: 2,
+              minHeight: '40px',
+              minWidth: '40px',
+              mt: 2,
+            }}
+            variant="contained"
+          >
+            <DescriptionIcon />
+          </Button>
+        </Tooltip>
+
+        <DocsSection isOpen={isDocsOpen} onClose={() => setIsDocsOpen(false)} schema={apiSchema} />
+
         <Stack
           direction={{ sm: 'row', xs: 'column' }}
           spacing={{ sm: 2, xs: 1 }}
@@ -134,10 +180,11 @@ export const MainPage = (): JSX.Element => {
             >
               <TextField
                 label={translate('graphqlEndpoint')}
-                onChange={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
+                onBlur={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
+                onChange={(e) => setApiEndpoint(e.target.value)}
                 placeholder={translate('graphqlEndpoint')}
                 sx={{ width: '100%' }}
-                value={state.endpoint}
+                value={apiEndpoint}
               />
               <Tooltip title={translate('prettifyQuery')}>
                 <IconButton

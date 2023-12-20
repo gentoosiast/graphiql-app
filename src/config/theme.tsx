@@ -59,5 +59,8 @@ export const theme = createTheme({
     h2: {
       fontFamily: 'Philosopher',
     },
+    h4: {
+      fontFamily: 'Philosopher',
+    },
   },
 });
