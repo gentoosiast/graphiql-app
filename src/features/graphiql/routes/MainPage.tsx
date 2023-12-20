@@ -24,8 +24,6 @@ import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
 import { graphqlPrettify, jsonPrettify } from '../utils/prettify';
 
-import 'hack-font/build/web/hack.css';
-
 export const MainPage = (): JSX.Element => {
   const navigate = useNavigate();
   const { translate } = useI18NContext();

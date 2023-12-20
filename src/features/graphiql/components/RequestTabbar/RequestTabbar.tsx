@@ -14,8 +14,6 @@ import { useI18NContext } from '@/contexts/i18n';
 
 import { CustomTabPanel, Editor } from '..';
 
-import 'hack-font/build/web/hack.css';
-
 const a11yProps = (index: number): Record<string, string> => {
   return {
     'aria-controls': `simple-tabpanel-${index}`,
