@@ -18,8 +18,9 @@ import { useI18NContext } from '@/contexts/i18n';
 
 import { graphQLRequest } from '../api/requests';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
+import { NOTIFICATION_TIMEOUT } from '../constants';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
-import { graphqlPrettify, jsonPrettify } from '../utils/prettify';
+import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
 
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
@@ -29,9 +30,9 @@ export const MainPage = (): JSX.Element => {
     try {
       const response = await graphQLRequest<{ data: unknown }>({
         endpoint: state.endpoint,
-        headers: state.headers,
+        headers: parseEditorCodeToObject(state.headers, 'GraphQL headers'),
         query: state.request,
-        variables: state.variables,
+        variables: parseEditorCodeToObject(state.variables, 'GraphQL variables'),
       });
 
       const responseJSON = jsonPrettify(response.data);
@@ -62,35 +63,6 @@ export const MainPage = (): JSX.Element => {
 
   const handlePrettify = (): void => {
     dispatch({ payload: graphqlPrettify(state.request), type: 'setRequest' });
-  };
-
-  const handleSetHeaders = (headers: string): void => {
-    try {
-      const parsedHeaders: unknown = JSON.parse(headers);
-
-      if (parsedHeaders && typeof parsedHeaders === 'object') {
-        console.log(JSON.stringify(parsedHeaders));
-        dispatch({ payload: parsedHeaders, type: 'setHeaders' });
-      } else {
-        throw new Error('Impossible to parse provided GraphQL headers');
-      }
-    } catch {
-      dispatch({ payload: {}, type: 'setHeaders' });
-    }
-  };
-
-  const handleSetVariables = (variables: string): void => {
-    try {
-      const parsedVariables: unknown = JSON.parse(variables);
-
-      if (parsedVariables && typeof parsedVariables === 'object') {
-        dispatch({ payload: parsedVariables, type: 'setVariables' });
-      } else {
-        throw new Error('Impossible to parse provided GraphQL variables');
-      }
-    } catch {
-      dispatch({ payload: {}, type: 'setVariables' });
-    }
   };
 
   return (
@@ -146,8 +118,10 @@ export const MainPage = (): JSX.Element => {
               width="100%"
             />
             <RequestTabbar
-              onHeadersChange={handleSetHeaders}
-              onVariablesChange={handleSetVariables}
+              headers={state.headers}
+              onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
+              onVariablesChange={(value) => dispatch({ payload: value, type: 'setVariables' })}
+              variables={state.variables}
             />
           </Stack>
           <Stack sx={{ height: '100%', width: '100%' }}>
@@ -164,7 +138,7 @@ export const MainPage = (): JSX.Element => {
         </Box>
       </Container>
       <Snackbar
-        autoHideDuration={5000}
+        autoHideDuration={NOTIFICATION_TIMEOUT}
         onClose={handleSnackbarClose}
         open={state.notificationText.length > 0}
       >

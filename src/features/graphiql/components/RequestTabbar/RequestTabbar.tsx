@@ -22,32 +22,27 @@ const a11yProps = (index: number): Record<string, string> => {
 };
 
 type Props = {
+  headers: string;
   onHeadersChange: (code: string) => void;
   onVariablesChange: (code: string) => void;
+  variables: string;
 };
 
-export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JSX.Element => {
+export const RequestTabbar = ({
+  headers,
+  onHeadersChange,
+  onVariablesChange,
+  variables,
+}: Props): JSX.Element => {
   const { translate } = useI18NContext();
   const [currentTabIdx, setCurrentTabIdx] = useState(0);
   const [isTabbarOpen, setIsTabbarOpen] = useState(false);
-  const [variablesCode, setVariablesCode] = useState('{\n  \n}');
-  const [headersCode, setHeadersCode] = useState('{\n  \n}');
 
   const handleTabChange = (_: SyntheticEvent, newValue: number): void => {
     if (!isTabbarOpen) {
       setIsTabbarOpen(true);
     }
     setCurrentTabIdx(newValue);
-  };
-
-  const handleVariablesChange = (newValue: string): void => {
-    setVariablesCode(newValue);
-    onVariablesChange(newValue);
-  };
-
-  const handleHeadersChange = (newValue: string): void => {
-    setHeadersCode(newValue);
-    onHeadersChange(newValue);
   };
 
   return (
@@ -65,18 +60,18 @@ export const RequestTabbar = ({ onHeadersChange, onVariablesChange }: Props): JS
           <Editor
             editorMode="json-with-linter"
             height="150px"
-            onChange={handleVariablesChange}
+            onChange={onVariablesChange}
             placeholder={translate('graphqlVariablesPlaceholder')}
-            value={variablesCode}
+            value={variables}
           />
         </CustomTabPanel>
         <CustomTabPanel index={1} value={currentTabIdx}>
           <Editor
             editorMode="json-with-linter"
             height="150px"
-            onChange={handleHeadersChange}
+            onChange={onHeadersChange}
             placeholder={translate('graphqlHeadersPlaceholder')}
-            value={headersCode}
+            value={headers}
           />
         </CustomTabPanel>
       </Collapse>

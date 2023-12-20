@@ -8,30 +8,30 @@ import { DEFAULT_GRAPHQL_ENDPOINT } from '../constants';
 type MainPageAction =
   | { payload: { errorMessage: string; errorResponse: string }; type: 'setError' }
   | { payload: { message: string; severity: AlertColor }; type: 'setNotification' }
-  | { payload: object; type: 'setHeaders' }
-  | { payload: object; type: 'setVariables' }
   | { payload: string; type: 'setEndpoint' }
+  | { payload: string; type: 'setHeaders' }
   | { payload: string; type: 'setRequest' }
-  | { payload: string; type: 'setResponse' };
+  | { payload: string; type: 'setResponse' }
+  | { payload: string; type: 'setVariables' };
 
 type MainPageState = {
   endpoint: string;
-  headers: object;
+  headers: string;
   notificationSeverity: AlertColor;
   notificationText: string;
   request: string;
   response: string;
-  variables: object;
+  variables: string;
 };
 
 const initialState: MainPageState = {
   endpoint: DEFAULT_GRAPHQL_ENDPOINT,
-  headers: {},
+  headers: '{\n  \n}',
   notificationSeverity: 'info',
   notificationText: '',
   request: '',
   response: '',
-  variables: {},
+  variables: '{\n  \n}',
 };
 
 const reducer = (state: MainPageState, action: MainPageAction): MainPageState => {
