@@ -1,6 +1,4 @@
 import type { JSX } from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 import SendIcon from '@mui/icons-material/Send';
 import {
@@ -17,7 +15,6 @@ import {
 import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
-import { AuthState, useAuth } from '@/features/auth';
 
 import { graphQLRequest } from '../api/requests';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
@@ -25,16 +22,8 @@ import { useMainPageReducer } from '../hooks/useMainPageReducer';
 import { graphqlPrettify, jsonPrettify } from '../utils/prettify';
 
 export const MainPage = (): JSX.Element => {
-  const navigate = useNavigate();
   const { translate } = useI18NContext();
-  const { authState } = useAuth();
   const [state, dispatch] = useMainPageReducer();
-
-  useEffect(() => {
-    if (authState === AuthState.NOT_AUTHENTICATED) {
-      navigate('/');
-    }
-  }, [authState, navigate]);
 
   const handleSendRequest = async (): Promise<void> => {
     try {
