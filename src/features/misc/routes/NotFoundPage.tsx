@@ -16,6 +16,7 @@ export const NotFoundPage = (): JSX.Element => {
     fontSize: { md: '62px', sm: '50px', xs: '36px' },
     margin: 2,
   };
+
   const responsiveText = {
     fontSize: { md: '22px', sm: '20px', xs: '18px' },
     marginTop: { md: 1.5, sm: 2, sx: 2 },

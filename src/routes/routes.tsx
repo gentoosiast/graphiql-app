@@ -1,4 +1,7 @@
+import { ErrorBoundary } from 'react-error-boundary';
+
 import { RootLayout } from '@/components';
+import { Fallback } from '@/components/Fallback';
 import { AuthPage, AuthState } from '@/features/auth';
 import { MainPage } from '@/features/graphiql';
 import { NotFoundPage, WelcomePage } from '@/features/misc';
@@ -27,7 +30,11 @@ export const routes = [
       },
       { element: <NotFoundPage />, path: '*' },
     ],
-    element: <RootLayout />,
+    element: (
+      <ErrorBoundary FallbackComponent={Fallback}>
+        <RootLayout />
+      </ErrorBoundary>
+    ),
     path: '/',
   },
 ];
