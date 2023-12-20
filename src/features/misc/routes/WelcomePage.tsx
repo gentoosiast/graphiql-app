@@ -1,33 +1,26 @@
 import type { JSX } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Avatar, Card, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 
 import { useI18NContext } from '@/contexts/i18n';
+import { developers } from '@/features/data/developers';
 import { MemberCardContent } from '@/features/data/member-card';
 
 export const WelcomePage = (): JSX.Element => {
-  const MemberCard = ({ children }: { children: JSX.Element }): JSX.Element => {
-    return (
-      <Card
-        sx={{
-          backgroundColor: 'background.paper',
-          borderRadius: 3,
-          boxShadow: 20,
-          minWidth: 300,
-          padding: 5,
-        }}
-      >
-        {children}
-      </Card>
-    );
-  };
-
   const { translate } = useI18NContext();
 
   return (
-    <Box padding={2}>
+    <Box
+      alignItems={'center'}
+      display={'flex'}
+      flexDirection={'column'}
+      flexWrap={'wrap'}
+      justifyContent={'center'}
+      padding={'3%'}
+      width={'100%'}
+    >
       <nav>
         <Link state={{ formMode: 'login' }} to="/auth">
           Sign In
@@ -45,61 +38,60 @@ export const WelcomePage = (): JSX.Element => {
         <Typography color="primary" component="h2" textAlign="center" variant="h2">
           San Junipero
         </Typography>
-        <Typography sx={{ fontSize: 20, margin: 5, width: 600 }}>
+        <Typography sx={{ fontSize: 20, margin: 5, maxWidth: '80%' }}>
           {translate('team-description')}
         </Typography>
       </Stack>
-      <MemberCardContent />
 
-      <Stack direction="row" justifyContent="space-around">
-        <MemberCard>
-          <>
-            <Stack alignItems="center" justifyContent="center">
-              <Avatar
-                alt="Kate"
-                src="/kate.jpg"
-                sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
-              />
-            </Stack>
+      <Box
+        display={'flex'}
+        flexWrap={'wrap'}
+        justifyContent={{ lg: 'space-between', md: 'space-between', sm: 'center' }}
+        padding={'3%'}
+        width={'100%'}
+      >
+        {developers.map((developer) => (
+          <MemberCardContent developer={developer} key={`${developer[0]}`} />
+        ))}
+      </Box>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'center'}
+        padding={'3%'}
+        width={'100%'}
+      >
+        <Typography align="center" component="h3" variant="h2">
+          Our pets
+        </Typography>
 
-            <Stack direction="row" justifyContent={'space-evenly'}>
-              <Stack
-                justifyContent="space-between
-          "
-                sx={{ maxWidth: 170 }}
-              >
-                <img alt="varya cat" src="/varya.jpg" />
-              </Stack>
-
-              <Stack
-                justifyContent="space-between
-          "
-                sx={{ maxWidth: 170 }}
-              >
-                <img alt="fania cat" src="/fanya.jpg" />
-              </Stack>
-            </Stack>
-          </>
-        </MemberCard>
-
-        <MemberCard>
-          <>
-            <Stack alignItems="center" justifyContent="center">
-              <Avatar alt="Ira" src="/2.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
-            </Stack>
-          </>
-        </MemberCard>
-      </Stack>
-
-      <Stack direction="row" justifyContent="center">
-        <MemberCard>
-          <>
-            <Stack alignItems="center" justifyContent="center">
-              <Avatar alt="Sergey" src="/1.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
-            </Stack>
-          </>
-        </MemberCard>
-      </Stack>
+        <Box
+          display={'flex'}
+          flexWrap={'wrap'}
+          justifyContent={{ lg: 'space-between', md: 'space-between', sm: 'center' }}
+          padding={'3%'}
+          width={'100%'}
+        >
+          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
+            <img alt="varya cat" src="/varya.jpg" />
+            <Typography component="h4" variant="h4">
+              Varya
+            </Typography>
+          </Stack>
+          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
+            <img alt="fania cat" src="/fanya.jpg" />
+            <Typography component="h4" variant="h4">
+              Fanya
+            </Typography>
+          </Stack>
+          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
+            <img alt="murych cat" src="/murych.png" />
+            <Typography component="h4" variant="h4">
+              Murych
+            </Typography>
+          </Stack>
+        </Box>
+      </Box>
     </Box>
   );
 };

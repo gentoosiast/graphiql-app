@@ -1,14 +1,26 @@
 export const developers = [
   [
+    'sergeyWelcomeName',
+    'sergeyWelcomeRole',
+    'sergeyWelcomeFrom',
+    'sergeyWelcomeBook',
+    'sergeyWelcomeExperience',
+    'sergeyWelcomeCourses',
+    'sergeyWelcomeTalent',
+    'sergeyWelcomePets',
+    '/sergey.jpg',
+  ],
+  [
     'iraWelcomeName',
     'iraWelcomeRole',
     'iraWelcomeFrom',
+    'iraWelcomeBook',
     'iraWelcomeExperience',
     'iraWelcomeCourses',
     'iraWelcomeTalent',
     'iraWelcomePets',
+    '/ira.jpg',
   ],
-
   [
     'kateWelcomeName',
     'kateWelcomeRole',
@@ -18,16 +30,6 @@ export const developers = [
     'kateWelcomeCourses',
     'kateWelcomeTalent',
     'kateWelcomePets',
-  ],
-
-  [
-    'sergeyWelcomeName',
-    'sergeyWelcomeRole',
-    'sergeyWelcomeFrom',
-    'sergeyWelcomeBook',
-    'sergeyWelcomeExperience',
-    'sergeyWelcomeCourses',
-    'sergeyWelcomeTalent',
-    'sergeyWelcomePets',
+    '/kate.jpg',
   ],
 ];
