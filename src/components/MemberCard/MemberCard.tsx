@@ -9,7 +9,7 @@ type MemberCardProps = {
   developer: Developer;
 };
 
-export const MemberCardContent = ({ developer }: MemberCardProps): JSX.Element => {
+export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
   const MemberText = styled('div')(() => ({
     alignItems: 'center',
     display: 'flex',

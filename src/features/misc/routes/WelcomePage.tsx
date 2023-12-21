@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { Typography } from '@mui/material';
 import { Box, Stack } from '@mui/system';
 
+import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
 import { developers } from '@/features/data/developers';
-import { MemberCardContent } from '@/features/data/member-card';
 
 export const WelcomePage = (): JSX.Element => {
   const { translate } = useI18NContext();
@@ -42,7 +42,6 @@ export const WelcomePage = (): JSX.Element => {
           {translate('team-description')}
         </Typography>
       </Stack>
-
       <Box
         display={'flex'}
         flexWrap={'wrap'}
@@ -51,7 +50,7 @@ export const WelcomePage = (): JSX.Element => {
         width={'100%'}
       >
         {developers.map((developer) => (
-          <MemberCardContent developer={developer} key={`${developer[0]}`} />
+          <MemberCard developer={developer} key={`${developer[0]}`} />
         ))}
       </Box>
       <Box
@@ -62,7 +61,7 @@ export const WelcomePage = (): JSX.Element => {
         width={'100%'}
       >
         <Typography align="center" component="h3" variant="h2">
-          Our pets
+          {translate('ourPets')}
         </Typography>
 
         <Box
@@ -75,19 +74,19 @@ export const WelcomePage = (): JSX.Element => {
           <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
             <img alt="varya cat" src="/varya.jpg" />
             <Typography component="h4" variant="h4">
-              Varya
+              {translate('varya')}
             </Typography>
           </Stack>
           <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
             <img alt="fania cat" src="/fanya.jpg" />
             <Typography component="h4" variant="h4">
-              Fanya
+              {translate('fanya')}
             </Typography>
           </Stack>
           <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
             <img alt="murych cat" src="/murych.png" />
             <Typography component="h4" variant="h4">
-              Murych
+              {translate('murych')}
             </Typography>
           </Stack>
         </Box>
