@@ -67,7 +67,7 @@ export const WelcomePage = (): JSX.Element => {
         <Box
           display={'flex'}
           flexWrap={'wrap'}
-          justifyContent={{ lg: 'space-between', md: 'space-between', sm: 'center' }}
+          justifyContent={{ lg: 'space-evenly', md: 'space-evenly', sm: 'center' }}
           padding={'3%'}
           width={'100%'}
         >
