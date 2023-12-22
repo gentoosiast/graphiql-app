@@ -9,7 +9,7 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 import { WelcomePage } from './WelcomePage';
 
 describe('Welcome page', () => {
-  it('should render welcome page', () => {
+  it('should render', () => {
     renderWithProviders(
       <I18NProvider>
         <MemoryRouter>
