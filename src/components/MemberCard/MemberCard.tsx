@@ -3,13 +3,22 @@ import { styled } from '@mui/material/styles';
 
 import { useI18NContext } from '@/contexts/i18n';
 
-type Developer = string[];
-
-type MemberCardProps = {
-  developer: Developer;
+type Developer = {
+  avatarSrc: string;
+  book: string;
+  cources: string;
+  experience: string;
+  from: string;
+  name: string;
+  pets: string;
+  role: string;
+  talent: string;
 };
 
+type MemberCardProps = { developer: Developer };
+
 export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
+  const { avatarSrc, book, cources, experience, from, name, pets, role, talent } = developer;
   const MemberText = styled('div')(() => ({
     alignItems: 'center',
     display: 'flex',
@@ -39,7 +48,7 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
       <Stack alignItems="center" justifyContent="center">
         <Avatar
           alt="teammember"
-          src={`${developer[8]}`}
+          src={`${avatarSrc}`}
           sx={{
             height: '20%',
             marginTop: 1,
@@ -48,21 +57,21 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
         />
       </Stack>
       <MemberText>
-        <CardHeader color="primary" title={`${translate(developer[0])}`} />
+        <CardHeader color="primary" title={`${translate(name)}`} />
         <MemberDescriptionPoint>{translate('role')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[1])}</ListItem>
+        <ListItem>{translate(role)}</ListItem>
         <MemberDescriptionPoint>{translate('from')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[2])}</ListItem>
+        <ListItem>{translate(from)}</ListItem>
         <MemberDescriptionPoint>{translate('book')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[3])}</ListItem>
+        <ListItem>{translate(book)}</ListItem>
         <MemberDescriptionPoint>{translate('experience')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[4])}</ListItem>
+        <ListItem>{translate(experience)}</ListItem>
         <MemberDescriptionPoint>{translate('courses')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[5])}</ListItem>
+        <ListItem>{translate(cources)}</ListItem>
         <MemberDescriptionPoint>{translate('talent')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[6])}</ListItem>
+        <ListItem>{translate(talent)}</ListItem>
         <MemberDescriptionPoint>{translate('pets')}</MemberDescriptionPoint>
-        <ListItem>{translate(developer[7])}</ListItem>
+        <ListItem>{translate(pets)}</ListItem>
       </MemberText>
     </Box>
   ) : (
