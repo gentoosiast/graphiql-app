@@ -12,7 +12,8 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { useI18NContext } from '@/contexts/i18n';
 
-import { CustomTabPanel, Editor } from '..';
+import { CustomTabPanel } from '../CustomTabPanel';
+import { Editor } from '../Editor';
 
 const a11yProps = (index: number): Record<string, string> => {
   return {
