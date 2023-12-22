@@ -1,4 +1,5 @@
 import type { JSX } from 'react';
+import { useEffect, useRef } from 'react';
 
 import SendIcon from '@mui/icons-material/Send';
 import {
@@ -25,13 +26,31 @@ import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
   const [state, dispatch] = useMainPageReducer();
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   const handleSendRequest = async (): Promise<void> => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    const abortController = new AbortController();
+
+    abortControllerRef.current = abortController;
+
     try {
       const response = await graphQLRequest<{ data: unknown }>({
         endpoint: state.endpoint,
         headers: parseEditorCodeToObject(state.headers, 'GraphQL headers'),
         query: state.request,
+        signal: abortController.signal,
         variables: parseEditorCodeToObject(state.variables, 'GraphQL variables'),
       });
 
