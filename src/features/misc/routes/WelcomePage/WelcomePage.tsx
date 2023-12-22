@@ -1,14 +1,16 @@
 import type { JSX } from 'react';
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
-import { Box, Stack } from '@mui/system';
+import { Box, Button, Typography } from '@mui/material';
+import { Stack } from '@mui/system';
 
 import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
+import { AuthState, useAuth } from '@/features/auth';
 import { developers } from '@/features/data/developers';
 
 export const WelcomePage = (): JSX.Element => {
+  const { authState } = useAuth();
   const { translate } = useI18NContext();
 
   return (
@@ -18,18 +20,85 @@ export const WelcomePage = (): JSX.Element => {
       flexDirection={'column'}
       flexWrap={'wrap'}
       justifyContent={'center'}
-      padding={'3%'}
       width={'100%'}
     >
-      <nav>
-        <Link state={{ formMode: 'login' }} to="/auth">
-          Sign In
-        </Link>
-        <Link state={{ formMode: 'register' }} to="/auth">
-          Sign Up
-        </Link>
-        <Link to="/main">Main Page</Link>
+      <nav
+        style={{
+          width: '100%',
+        }}
+      >
+        <Box
+          sx={{
+            backgroundColor: 'background.paper',
+
+            padding: 2,
+            textAlign: 'right',
+            width: '100%',
+          }}
+        >
+          {authState === AuthState.NOT_AUTHENTICATED && (
+            <>
+              <Button
+                component={RouterLink}
+                state={{ formMode: 'login' }}
+                sx={{
+                  ':hover': {
+                    backgroundColor: 'background.paper',
+                  },
+                  backgroundColor: 'primary.main',
+                  border: 1,
+                  color: 'primary.contrastText',
+                  fontSize: { lg: 18, md: 17, sm: 16, xs: 14 },
+                  margin: 0.7,
+                  textDecoration: 'none',
+                }}
+                to="/auth"
+              >
+                {translate('signIn')}
+              </Button>
+              <Button
+                component={RouterLink}
+                state={{ formMode: 'register' }}
+                sx={{
+                  ':hover': {
+                    backgroundColor: 'background.paper',
+                  },
+                  backgroundColor: 'primary.main',
+                  border: 1,
+                  color: 'primary.contrastText',
+                  fontSize: { lg: 18, md: 17, sm: 16, xs: 14 },
+                  margin: 0.7,
+                  textDecoration: 'none',
+                }}
+                to="/auth"
+              >
+                {translate('signUp')}
+              </Button>
+            </>
+          )}
+          {authState === AuthState.AUTHENTICATED && (
+            <Button
+              component={RouterLink}
+              sx={{
+                ':hover': {
+                  backgroundColor: 'background.paper',
+                },
+                backgroundColor: 'primary.main',
+                border: 1,
+                color: 'primary.contrastText',
+                fontSize: { lg: 17, md: 16, sm: 15, xs: 14 },
+                margin: 0.7,
+                textDecoration: 'none',
+              }}
+              to="/main"
+              variant="outlined"
+            >
+              Main Page
+            </Button>
+          )}
+        </Box>
       </nav>
+
       <Stack alignItems="center" justifyContent="center">
         <Typography
           component="h1"
