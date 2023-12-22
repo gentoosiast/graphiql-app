@@ -91,8 +91,8 @@ export const MainPage = (): JSX.Element => {
           display="grid"
           gap="1rem"
           gridAutoColumns="minmax(0, 1fr)"
-          gridAutoFlow={{ sm: 'column', xs: 'row' }}
-          gridTemplateRows={{ sm: '600px', xs: 'repeat(2, 600px)' }}
+          gridAutoFlow={{ md: 'column', sm: 'row' }}
+          gridTemplateRows={{ md: '600px', sm: 'repeat(2, 600px)' }}
         >
           <Stack spacing={1} sx={{ height: '100%', position: 'relative', width: '100%' }}>
             <Stack
