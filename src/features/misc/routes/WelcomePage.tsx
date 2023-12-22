@@ -31,14 +31,31 @@ export const WelcomePage = (): JSX.Element => {
         <Link to="/main">Main Page</Link>
       </nav>
       <Stack alignItems="center" justifyContent="center">
-        <Typography component="h1" sx={{ margin: 3 }} variant="h2">
+        <Typography
+          component="h1"
+          sx={{ fontSize: { lg: 60, md: 56, sm: 45, xs: 30 }, margin: '2%' }}
+          variant="h2"
+        >
           {translate('meetTheTeam')}
         </Typography>
 
-        <Typography color="primary" component="h2" textAlign="center" variant="h2">
+        <Typography
+          color="primary"
+          component="h2"
+          sx={{ fontSize: { lg: 80, md: 66, sm: 55, xs: 40 } }}
+          textAlign="center"
+          variant="h2"
+        >
           San Junipero
         </Typography>
-        <Typography sx={{ fontSize: 20, margin: 5, maxWidth: '80%' }}>
+        <Typography
+          sx={{
+            fontSize: 20,
+            margin: '5%',
+
+            width: { lg: '60%', md: '85%', sm: '90%', xs: '100%' },
+          }}
+        >
           {translate('team-description')}
         </Typography>
       </Stack>

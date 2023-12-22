@@ -23,15 +23,13 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'column',
-    fontSize: 18,
     justifyContent: 'center',
-    width: 400,
+    width: '95%',
   }));
   const MemberDescriptionPoint = styled('p')(() => ({
     color: '#ea4c87',
-    fontSize: 22,
     margin: 0.2,
-    width: 400,
+    width: '95%',
   }));
   const { translate } = useI18NContext();
   return developer ? (
@@ -40,7 +38,7 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
         backgroundColor: 'background.paper',
         borderRadius: 3,
         boxShadow: 20,
-        mt: '2%',
+        mt: '5%',
         padding: '2%',
         width: { lg: '45%', md: '70%', sm: '85%' },
       }}
@@ -56,7 +54,7 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
           }}
         />
       </Stack>
-      <MemberText>
+      <MemberText sx={{ fontSize: { lg: 22, md: 20, sm: 18, xs: 16 } }}>
         <CardHeader color="primary" title={`${translate(name)}`} />
         <MemberDescriptionPoint>{translate('role')}</MemberDescriptionPoint>
         <ListItem>{translate(role)}</ListItem>
