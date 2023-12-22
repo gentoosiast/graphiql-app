@@ -4,6 +4,7 @@ type GraphQlRequest = {
   endpoint: string;
   headers?: object;
   query: string;
+  signal?: AbortSignal;
   variables?: object;
 };
 
@@ -13,18 +14,20 @@ export const graphQLRequest = async <T>({
   endpoint,
   headers,
   query,
-  variables,
+  signal,
+  variables = {},
 }: GraphQlRequest): Promise<T> => {
   const response = await axios<T>({
     data: {
       query,
-      variables: variables ?? {},
+      variables,
     },
     headers: {
       ...headers,
       'content-type': 'application/json',
     },
     method: 'post',
+    signal,
     timeout: REQUEST_TIMEOUT,
     url: endpoint,
   });

@@ -1,12 +1,11 @@
 import type { JSX } from 'react';
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useRef, useState } from 'react';
 
-import { json } from '@codemirror/lang-json';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Alert,
+  Box,
   Button,
   Container,
   Fab,
@@ -16,28 +15,21 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import { tokyoNightStormInit } from '@uiw/codemirror-theme-tokyo-night-storm';
-import CodeMirror from '@uiw/react-codemirror';
 import { isAxiosError } from 'axios';
-import { graphql } from 'cm6-graphql';
 
 import { useI18NContext } from '@/contexts/i18n';
-import { AuthState, useAuth } from '@/features/auth';
 
 import { getIntrospectionQuery } from '../api/get-introspection-query';
-import { graphQLRequest } from '../api/requests';
-import { PrettifyIcon, RequestTabbar } from '../components';
+import { graphQLRequest } from '../api/graphqlApi';
+import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { DocsSection } from '../components/docbrowser/DocsSection';
+import { NOTIFICATION_TIMEOUT } from '../constants';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
-import { GraphQLResponse, IntrospectionResponse, IntrospectionSchema } from '../types';
-import { prettify } from '../utils/prettify';
-
-import 'hack-font/build/web/hack.css';
+import { IntrospectionResponse, IntrospectionSchema } from '../types';
+import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
 
 export const MainPage = (): JSX.Element => {
-  const navigate = useNavigate();
   const { translate } = useI18NContext();
-  const { authState } = useAuth();
   const [state, dispatch] = useMainPageReducer();
 
   const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
@@ -62,38 +54,42 @@ export const MainPage = (): JSX.Element => {
     void getDocs();
   }, [state.endpoint]);
 
-  const theme = tokyoNightStormInit({
-    settings: {
-      fontFamily: 'Hack, monospace',
-    },
-  });
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
-    if (authState === AuthState.NOT_AUTHENTICATED) {
-      navigate('/');
-    }
-  }, [authState, navigate]);
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
 
   const handleSendRequest = async (): Promise<void> => {
-    console.log(state.endpoint);
-    console.log(state.request);
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    const abortController = new AbortController();
+
+    abortControllerRef.current = abortController;
 
     try {
-      const response = await graphQLRequest<GraphQLResponse>({
+      const response = await graphQLRequest<{ data: unknown }>({
         endpoint: state.endpoint,
-        headers: state.headers,
+        headers: parseEditorCodeToObject(state.headers, 'GraphQL headers'),
         query: state.request,
-        variables: state.variables,
+        signal: abortController.signal,
+        variables: parseEditorCodeToObject(state.variables, 'GraphQL variables'),
       });
 
-      const responseJSON = JSON.stringify(response.data, null, 2);
+      const responseJSON = jsonPrettify(response.data);
 
       dispatch({ payload: responseJSON, type: 'setResponse' });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
       if (isAxiosError(error)) {
-        const errorJSON = JSON.stringify(error.response?.data, null, 2);
+        const errorJSON = jsonPrettify(error.response?.data);
 
         dispatch({
           payload: { errorMessage, errorResponse: errorJSON },
@@ -113,41 +109,12 @@ export const MainPage = (): JSX.Element => {
   };
 
   const handlePrettify = (): void => {
-    dispatch({ payload: prettify(state.request), type: 'setRequest' });
-  };
-
-  const handleSetHeaders = (headers: string): void => {
-    try {
-      const parsedHeaders: unknown = JSON.parse(headers);
-
-      if (parsedHeaders && typeof parsedHeaders === 'object') {
-        console.log(JSON.stringify(parsedHeaders));
-        dispatch({ payload: parsedHeaders, type: 'setHeaders' });
-      } else {
-        throw new Error('Impossible to parse provided GraphQL headers');
-      }
-    } catch {
-      dispatch({ payload: {}, type: 'setHeaders' });
-    }
-  };
-
-  const handleSetVariables = (variables: string): void => {
-    try {
-      const parsedVariables: unknown = JSON.parse(variables);
-
-      if (parsedVariables && typeof parsedVariables === 'object') {
-        dispatch({ payload: parsedVariables, type: 'setVariables' });
-      } else {
-        throw new Error('Impossible to parse provided GraphQL variables');
-      }
-    } catch {
-      dispatch({ payload: {}, type: 'setVariables' });
-    }
+    dispatch({ payload: graphqlPrettify(state.request), type: 'setRequest' });
   };
 
   return (
     <>
-      <Container maxWidth="xl">
+      <Container maxWidth="xl" sx={{ paddingBlock: '2rem' }}>
         <Tooltip title={translate('docs.show')}>
           <Button
             onClick={() => setIsDocsOpen(true)}
@@ -167,10 +134,12 @@ export const MainPage = (): JSX.Element => {
 
         <DocsSection isOpen={isDocsOpen} onClose={() => setIsDocsOpen(false)} schema={apiSchema} />
 
-        <Stack
-          direction={{ sm: 'row', xs: 'column' }}
-          spacing={{ sm: 2, xs: 1 }}
-          sx={{ height: '600px' }}
+        <Box
+          display="grid"
+          gap="1rem"
+          gridAutoColumns="minmax(0, 1fr)"
+          gridAutoFlow={{ md: 'column', sm: 'row' }}
+          gridTemplateRows={{ md: '600px', sm: 'repeat(2, 600px)' }}
         >
           <Stack spacing={1} sx={{ height: '100%', position: 'relative', width: '100%' }}>
             <Stack
@@ -206,37 +175,37 @@ export const MainPage = (): JSX.Element => {
                 </Fab>
               </Tooltip>
             </Stack>
-            <CodeMirror
-              extensions={[graphql()]}
+            <Editor
+              editorMode="graphql"
               height="100%"
               onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
               placeholder={translate('graphqlQuery')}
-              style={{ fontSize: 12, height: '100%' }}
-              theme={theme}
+              style={{ flexGrow: '1', height: '100%', overflow: 'auto' }}
               value={state.request}
               width="100%"
             />
             <RequestTabbar
-              onHeadersChange={handleSetHeaders}
-              onVariablesChange={handleSetVariables}
+              headers={state.headers}
+              onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
+              onVariablesChange={(value) => dispatch({ payload: value, type: 'setVariables' })}
+              variables={state.variables}
             />
           </Stack>
           <Stack sx={{ height: '100%', width: '100%' }}>
-            <CodeMirror
+            <Editor
               editable={false}
-              extensions={[json()]}
+              editorMode="json"
               height="100%"
               placeholder={translate('graphqlResponse')}
-              style={{ fontSize: 12, height: '100%' }}
-              theme={theme}
+              style={{ height: '100%' }}
               value={state.response}
               width="100%"
             />
           </Stack>
-        </Stack>
+        </Box>
       </Container>
       <Snackbar
-        autoHideDuration={5000}
+        autoHideDuration={NOTIFICATION_TIMEOUT}
         onClose={handleSnackbarClose}
         open={state.notificationText.length > 0}
       >
