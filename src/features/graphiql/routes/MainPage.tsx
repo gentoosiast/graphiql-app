@@ -17,7 +17,7 @@ import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
 
-import { graphQLRequest } from '../api/requests';
+import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { NOTIFICATION_TIMEOUT } from '../constants';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
