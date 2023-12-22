@@ -3,12 +3,7 @@ import type { JSX, SyntheticEvent } from 'react';
 
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Tab from '@mui/material/Tab';
-import Tabs from '@mui/material/Tabs';
-import Tooltip from '@mui/material/Tooltip';
+import { Box, Collapse, IconButton, Tab, Tabs, Tooltip } from '@mui/material';
 
 import { useI18NContext } from '@/contexts/i18n';
 
