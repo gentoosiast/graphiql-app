@@ -1,10 +1,12 @@
 import type { JSX } from 'react';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
+import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
 import {
   Alert,
   Box,
+  Button,
   Container,
   Fab,
   IconButton,
@@ -17,15 +19,42 @@ import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
 
+import { getIntrospectionQuery } from '../api/get-introspection-query';
 import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
+import { DocsSection } from '../components/docbrowser/DocsSection';
 import { NOTIFICATION_TIMEOUT } from '../constants';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
+import { IntrospectionResponse, IntrospectionSchema } from '../types';
 import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
 
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
   const [state, dispatch] = useMainPageReducer();
+
+  const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
+  const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
+  const [isDocsOpen, setIsDocsOpen] = useState(false);
+
+  useEffect(() => {
+    const getDocs = async (): Promise<void> => {
+      const introspectionQuery = getIntrospectionQuery();
+
+      try {
+        const response = await graphQLRequest<IntrospectionResponse>({
+          endpoint: state.endpoint,
+          query: introspectionQuery,
+        });
+
+        setApiSchema(response.data.__schema);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
+      }
+    };
+    void getDocs();
+  }, [state.endpoint, dispatch]);
+
   const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -87,6 +116,31 @@ export const MainPage = (): JSX.Element => {
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBlock: '2rem' }}>
+        <Tooltip title={translate('docs.show')}>
+          <Button
+            onClick={() => setIsDocsOpen(true)}
+            sx={{
+              maxHeight: '40px',
+              maxWidth: '40px',
+              mb: 2,
+              minHeight: '40px',
+              minWidth: '40px',
+              mt: 2,
+            }}
+            variant="contained"
+          >
+            <DescriptionIcon />
+          </Button>
+        </Tooltip>
+
+        {apiSchema && (
+          <DocsSection
+            isOpen={isDocsOpen}
+            onClose={() => setIsDocsOpen(false)}
+            schema={apiSchema}
+          />
+        )}
+
         <Box
           display="grid"
           gap="1rem"
@@ -102,10 +156,11 @@ export const MainPage = (): JSX.Element => {
             >
               <TextField
                 label={translate('graphqlEndpoint')}
-                onChange={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
+                onBlur={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
+                onChange={(e) => setApiEndpoint(e.target.value)}
                 placeholder={translate('graphqlEndpoint')}
                 sx={{ width: '100%' }}
-                value={state.endpoint}
+                value={apiEndpoint}
               />
               <Tooltip title={translate('prettifyQuery')}>
                 <IconButton
