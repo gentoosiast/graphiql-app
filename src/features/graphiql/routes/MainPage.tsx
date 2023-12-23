@@ -33,7 +33,7 @@ export const MainPage = (): JSX.Element => {
   const [state, dispatch] = useMainPageReducer();
 
   const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
-  const [apiSchema, setApiSchema] = useState<IntrospectionSchema>({} as IntrospectionSchema);
+  const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
 
   useEffect(() => {
@@ -48,11 +48,12 @@ export const MainPage = (): JSX.Element => {
 
         setApiSchema(response.data.__schema);
       } catch (error) {
-        console.error(error);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
       }
     };
     void getDocs();
-  }, [state.endpoint]);
+  }, [state.endpoint, dispatch]);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -132,7 +133,13 @@ export const MainPage = (): JSX.Element => {
           </Button>
         </Tooltip>
 
-        <DocsSection isOpen={isDocsOpen} onClose={() => setIsDocsOpen(false)} schema={apiSchema} />
+        {apiSchema && (
+          <DocsSection
+            isOpen={isDocsOpen}
+            onClose={() => setIsDocsOpen(false)}
+            schema={apiSchema}
+          />
+        )}
 
         <Box
           display="grid"

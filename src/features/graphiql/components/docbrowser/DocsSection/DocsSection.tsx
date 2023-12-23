@@ -6,11 +6,11 @@ import { Drawer, Typography } from '@mui/material';
 import { useI18NContext } from '@/contexts/i18n';
 
 import { IntrospectionField, IntrospectionSchema, IntrospectionType } from '../../../types';
-import { AllTypes } from '../AllTypes';
 import { FieldFullInfo } from '../FieldFullInfo';
 import { Header } from '../Header';
 import { Nav } from '../Nav';
 import { TypeInfo } from '../TypeInfo';
+import { TypesList } from '../TypesList';
 
 type Props = {
   isOpen: boolean;
@@ -39,7 +39,7 @@ const DocsSection = ({ isOpen, onClose, schema }: Props): JSX.Element => {
   if (type) {
     content = (
       <>
-        <Header onDocsClose={onClose}>
+        <Header onDocsClose={onClose} t={translate}>
           <Nav clearState={() => setType(null)} />
         </Header>
         <TypeInfo
@@ -53,7 +53,7 @@ const DocsSection = ({ isOpen, onClose, schema }: Props): JSX.Element => {
   } else if (field) {
     content = (
       <>
-        <Header onDocsClose={onClose}>
+        <Header onDocsClose={onClose} t={translate}>
           <Nav clearState={() => setField(null)} />
         </Header>
         <FieldFullInfo field={field} findAndSetType={findAndSetType} />
@@ -62,12 +62,12 @@ const DocsSection = ({ isOpen, onClose, schema }: Props): JSX.Element => {
   } else {
     content = (
       <>
-        <Header onDocsClose={onClose}>
+        <Header onDocsClose={onClose} t={translate}>
           <Typography color="primary" component="h3" variant="h4">
             {translate('docs.title')}
           </Typography>
         </Header>
-        <AllTypes
+        <TypesList
           findAndSetType={findAndSetType}
           queryTypeName={schema.queryType?.name || ''}
           setType={(type: IntrospectionType) => setType(type)}

@@ -74,6 +74,7 @@
   "docs.title": "Документация",
   "docs.type": "Тип",
   "docs.show": "Открыть документацию",
+  "docs.close": "Закрыть документацию",
   "docs.implements": "Реализует",
   "docs.fields": "Поля"
 }

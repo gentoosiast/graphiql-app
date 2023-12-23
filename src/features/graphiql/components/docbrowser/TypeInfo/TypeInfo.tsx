@@ -6,7 +6,7 @@ import { useI18NContext } from '@/contexts/i18n';
 
 import type { IntrospectionField, IntrospectionType } from '../../../types';
 
-import { getIterfaceObject, isIntrospectionObjectType } from '../../../utils/introspection';
+import { getInterfaceObject, isIntrospectionObjectType } from '../../../utils/introspection';
 import { FieldItem } from '../FieldItem';
 import { TypeLink } from '../TypeLink';
 
@@ -20,7 +20,7 @@ type Props = {
 const TypeInfo = ({ findAndSetType, setField, setType, type }: Props): JSX.Element => {
   const { translate } = useI18NContext();
 
-  const interfaceObject = getIterfaceObject(type);
+  const interfaceObject = getInterfaceObject(type);
 
   return (
     <>

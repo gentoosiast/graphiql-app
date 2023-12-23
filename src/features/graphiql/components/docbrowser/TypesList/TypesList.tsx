@@ -15,7 +15,7 @@ type Props = {
   types: ReadonlyArray<IntrospectionType>;
 };
 
-const AllTypes = ({ findAndSetType, queryTypeName, setType, types = [] }: Props): JSX.Element => {
+const TypesList = ({ findAndSetType, queryTypeName, setType, types = [] }: Props): JSX.Element => {
   const { translate } = useI18NContext();
 
   return (
@@ -50,4 +50,4 @@ const AllTypes = ({ findAndSetType, queryTypeName, setType, types = [] }: Props)
   );
 };
 
-export { AllTypes };
+export { TypesList };

@@ -67,6 +67,7 @@
   "docs.title": "Docs",
   "docs.type": "Type",
   "docs.show": "Show documentation",
+  "docs.close": "Close documentation",
   "docs.implements": "Implements",
   "docs.fields": "Fields"
 }
