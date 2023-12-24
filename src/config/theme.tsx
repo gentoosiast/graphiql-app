@@ -53,6 +53,7 @@ export const theme = createTheme({
     },
     mode: 'dark',
     primary: {
+      dark: '#a3355e',
       light: '#ff8ebc',
       main: '#ea4c87',
     },

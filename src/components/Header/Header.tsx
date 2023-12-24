@@ -2,6 +2,7 @@ import { useState } from 'react';
 import type { JSX, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import LogoutIcon from '@mui/icons-material/Logout';
 import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import { Alert, AppBar, Button, Menu, MenuItem, Snackbar, useScrollTrigger } from '@mui/material';
 import { Stack } from '@mui/system';
@@ -62,23 +63,26 @@ export const Header = (): JSX.Element => {
         top: 0,
       }}
     >
-      <Stack direction="row" justifyContent={'space-between'} width={'95%'}>
-        <Stack alignItems="center" borderRadius={20} justifyContent="center" width="10%">
+      <Stack
+        direction="row"
+        justifyContent={'space-between'}
+        padding={{ lg: '0 10%', md: '0 7%', sm: '0 4%', xs: '0 2%' }}
+        width={'100%'}
+      >
+        <Stack
+          alignItems="center"
+          borderRadius={20}
+          justifyContent="center"
+          width={{ lg: '10%', md: '10%', sm: '30%', xs: '40%' }}
+        >
           <LogoLink />
         </Stack>
 
-        <Stack direction={'row'} justifyContent={'space-between'} width={'20%'}>
-          {authState === AuthState.AUTHENTICATED && (
-            <Button
-              color="inherit"
-              onClick={() => void signOutUser()}
-              sx={{ backgroundColor: 'primary.light' }}
-              variant="outlined"
-            >
-              {translate('signOut')}
-            </Button>
-          )}
-
+        <Stack
+          direction={'row'}
+          justifyContent={'space-between'}
+          width={{ lg: '30%', md: '35%', sm: '50%', xl: '25%', xs: '65%' }}
+        >
           <Button
             aria-controls={isLanguageMenuOpen ? 'language-menu' : undefined}
             aria-expanded={isLanguageMenuOpen ? 'true' : undefined}
@@ -87,6 +91,11 @@ export const Header = (): JSX.Element => {
             id="language-button"
             onClick={handleLanguageButtonClick}
             startIcon={<TranslateOutlinedIcon />}
+            sx={{
+              backgroundColor: 'primary.light',
+              fontSize: { sm: 12, xs: 10 },
+              padding: { sm: '1%', xs: 0 },
+            }}
             variant="contained"
           >
             {language}
@@ -116,6 +125,24 @@ export const Header = (): JSX.Element => {
               Русский
             </MenuItem>
           </Menu>
+          {authState === AuthState.AUTHENTICATED && (
+            <Button
+              color="inherit"
+              onClick={() => void signOutUser()}
+              sx={{
+                ':hover': {
+                  backgroundColor: 'primary.dark',
+                },
+                backgroundColor: 'primary.light',
+                fontSize: { lg: 15, md: 13, sm: 0, xs: 0 },
+                padding: { lg: '2%', md: '2%', sm: 0 },
+              }}
+              variant="contained"
+            >
+              <LogoutIcon />
+              {translate('signOut')}
+            </Button>
+          )}
         </Stack>
       </Stack>
       <Snackbar autoHideDuration={3000} onClose={() => setAlertType(null)} open={!!alertType}>
