@@ -35,13 +35,25 @@
   "weakPassword": "Password must contain at least one letter, one digit, one special character",
   "noAccount": "Don't have an account?",
   "haveAccount": "Already have an account?",
-
   "registerSuccess": "Account created successfully",
   "accoutExistsError": "Account already exists",
   "defaultError": "Something went wrong",
   "loginSuccess": "You've successfully signed in",
   "accoutNotFound": "Incorrect email or password",
   "signOutSuccess": "You've successfully signed out",
+
+  "graphqlEndpoint": "GraphQL endpoint",
+  "prettifyQuery": "Prettify query",
+  "sendRequest": "Send request",
+  "graphqlQuery": "GraphQL Query",
+  "graphqlResponse": "GraphQL API Response",
+  "graphqlVariablesPlaceholder": "Variables (in JSON format)",
+  "graphqlHeadersPlaceholder": "Headers (in JSON format)",
+  "graphqlRequestTabsLabel": "Variables / Headers tabbar",
+  "graphqlVariablesTabLabel": "Variables",
+  "graphqlHeadersTabLabel": "Headers",
+  "collapseTabsLabel": "Collapse tabs",
+  "expandTabsLabel": "Expand tabs",
 
   "ohHello": "Oh.. Hello?",
   "busy": "We are a litte bit busy here..",
@@ -50,5 +62,15 @@
   "unknownError": "Something went wrong.. Try to reload the page.",
   "footerSergeyName": "Sergey",
   "footerIraName": "Ira",
-  "footerKateName": "Kate"
+  "footerKateName": "Kate",
+
+  "docs.schemaProvides": "A GraphQL schema provides a root type for each kind of operation.",
+  "docs.rootTypes": "Root types",
+  "docs.allTypes": "All Schema Types",
+  "docs.title": "Docs",
+  "docs.type": "Type",
+  "docs.show": "Show documentation",
+  "docs.close": "Close documentation",
+  "docs.implements": "Implements",
+  "docs.fields": "Fields"
 }

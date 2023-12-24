@@ -49,12 +49,36 @@
   "accoutNotFound": "Неверная почта или пароль",
   "signOutSuccess": "Вы вышли из аккаунта",
 
+  "graphqlEndpoint": "GraphQL маршрут",
+  "prettifyQuery": "Отформатировать текст запроса",
+  "sendRequest": "Отправить запрос",
+  "graphqlQuery": "GraphQL запрос",
+  "graphqlResponse": "Ответ GraphQL API",
+  "graphqlVariablesPlaceholder": "Переменные (в формате JSON)",
+  "graphqlHeadersPlaceholder": "HTTP-заголовки (в формате JSON)",
+  "graphqlRequestTabsLabel": "Переменные / HTTP-заголовки табы",
+  "graphqlVariablesTabLabel": "Переменные",
+  "graphqlHeadersTabLabel": "HTTP-заголовки",
+  "collapseTabsLabel": "Свернуть табы",
+  "expandTabsLabel": "Выдвинуть табы",
+
   "ohHello": "О.. Привет?",
   "busy": "Мы тут немного заняты..",
   "goAway": "Может, вы вернётесь на страницу приветствия?",
   "oops": "Ой!",
   "unknownError": "Что-то пошло не так.. Попробуйте перезагрузить страницу.",
+
   "footerSergeyName": "Сергей",
   "footerIraName": "Ира",
-  "footerKateName": "Катя"
+  "footerKateName": "Катя",
+
+  "docs.schemaProvides": "Схема GraphQL предоставляет корневой тип для каждого типа операций.",
+  "docs.rootTypes": "Корневые типы",
+  "docs.allTypes": "Все доступные типы",
+  "docs.title": "Документация",
+  "docs.type": "Тип",
+  "docs.show": "Открыть документацию",
+  "docs.close": "Закрыть документацию",
+  "docs.implements": "Реализует",
+  "docs.fields": "Поля"
 }
