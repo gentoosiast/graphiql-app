@@ -3,7 +3,7 @@ import type { JSX } from 'react';
 import { SvgIcon } from '@mui/material';
 
 export const RssIcon = (): JSX.Element => (
-  <SvgIcon sx={{ minWidth: 150 }}>
+  <SvgIcon sx={{ width: '100%' }}>
     <svg
       fill="none"
       height="206"

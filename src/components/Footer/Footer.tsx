@@ -2,53 +2,87 @@ import type { JSX } from 'react';
 
 import { Button, ButtonGroup, Link, Stack } from '@mui/material';
 
+import { useI18NContext } from '@/contexts/i18n';
+
 import { GitHubIcon } from '../GitHubIcon';
 import { RssIcon } from '../RSSIcon';
 
 export const Footer = (): JSX.Element => {
+  const { translate } = useI18NContext();
   return (
     <footer>
       <Stack
         alignItems="center"
         bgcolor="background.paper"
         direction="row"
+        display="flex"
         justifyContent="center"
-        sx={{ minHeight: 60 }}
+        padding={{ lg: '1%', md: '1%', sm: '3%', xs: '5% 1%' }}
       >
-        <Stack alignItems="center" direction="row">
-          <Link href="https://rs.school/react/">
-            <Stack alignItems="center" minWidth="200">
-              <RssIcon />
-            </Stack>
+        <Stack
+          alignItems="center"
+          direction="row"
+          display="flex"
+          justifyContent={{
+            lg: 'space-evenly',
+            md: 'space-evenly',
+            sm: 'space-evenly',
+            xs: 'space-evenly',
+          }}
+          width={{ lg: '60%', md: '85%', sm: '95%', xs: '100%' }}
+        >
+          <Link
+            href="https://rs.school/react/"
+            width={{ lg: '13%', md: '15%', sm: '17%', xs: '18%' }}
+          >
+            <RssIcon />
           </Link>
+
           <ButtonGroup
             color="primary"
             orientation="horizontal"
-            size="large"
+            size="small"
             sx={{
+              alignItems: 'center',
               boxShadow: 'none',
               display: 'flex',
-              justifyContent: 'space-evenly',
-              maxWidth: 600,
+
+              fontSize: { lg: 18, md: 14, sm: 14, xs: 14 },
+              width: { lg: '40%', md: '50%', sm: '50%', xs: '60%' },
             }}
             variant="contained"
           >
-            <Link href="https://github.com/gentoosiast" sx={{ textDecoration: 'none' }}>
-              <Button sx={{ maxWidth: 200 }}>
+            <Link href="https://github.com/gentoosiast" sx={{ margin: 0, textDecoration: 'none' }}>
+              <Button
+                sx={{
+                  display: 'flex',
+                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                }}
+              >
                 <GitHubIcon />
-                Sergey
+                {translate('footerSergeyName')}
               </Button>
             </Link>
             <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
-              <Button sx={{ maxWidth: 200 }}>
+              <Button
+                sx={{
+                  display: 'flex',
+                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                }}
+              >
                 <GitHubIcon />
-                Irina
+                {translate('footerIraName')}
               </Button>
             </Link>
             <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
-              <Button sx={{ maxWidth: 200 }}>
+              <Button
+                sx={{
+                  display: 'flex',
+                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                }}
+              >
                 <GitHubIcon />
-                Kate
+                {translate('footerKateName')}
               </Button>
             </Link>
           </ButtonGroup>
