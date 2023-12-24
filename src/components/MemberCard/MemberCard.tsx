@@ -6,7 +6,7 @@ import { useI18NContext } from '@/contexts/i18n';
 type Developer = {
   avatarSrc: string;
   book: string;
-  cources: string;
+  courses: string;
   experience: string;
   from: string;
   name: string;
@@ -18,7 +18,7 @@ type Developer = {
 type MemberCardProps = { developer: Developer };
 
 export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
-  const { avatarSrc, book, cources, experience, from, name, pets, role, talent } = developer;
+  const { avatarSrc, book, courses, experience, from, name, pets, role, talent } = developer;
   const MemberText = styled('div')(() => ({
     alignItems: 'center',
     display: 'flex',
@@ -32,7 +32,8 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
     width: '95%',
   }));
   const { translate } = useI18NContext();
-  return developer ? (
+
+  return (
     <Box
       sx={{
         backgroundColor: 'background.paper',
@@ -45,7 +46,7 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
     >
       <Stack alignItems="center" justifyContent="center">
         <Avatar
-          alt="teammember"
+          alt={translate(name)}
           src={`${avatarSrc}`}
           sx={{
             height: '20%',
@@ -65,14 +66,12 @@ export const MemberCard = ({ developer }: MemberCardProps): JSX.Element => {
         <MemberDescriptionPoint>{translate('experience')}</MemberDescriptionPoint>
         <ListItem>{translate(experience)}</ListItem>
         <MemberDescriptionPoint>{translate('courses')}</MemberDescriptionPoint>
-        <ListItem>{translate(cources)}</ListItem>
+        <ListItem>{translate(courses)}</ListItem>
         <MemberDescriptionPoint>{translate('talent')}</MemberDescriptionPoint>
         <ListItem>{translate(talent)}</ListItem>
         <MemberDescriptionPoint>{translate('pets')}</MemberDescriptionPoint>
         <ListItem>{translate(pets)}</ListItem>
       </MemberText>
     </Box>
-  ) : (
-    <>No developers</>
   );
 };

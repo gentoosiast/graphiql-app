@@ -2,7 +2,7 @@ export const developers = [
   {
     avatarSrc: '/sergey.jpg',
     book: 'sergeyWelcomeBook',
-    cources: 'sergeyWelcomeCourses',
+    courses: 'sergeyWelcomeCourses',
     experience: 'sergeyWelcomeExperience',
     from: 'sergeyWelcomeFrom',
     name: 'sergeyWelcomeName',
@@ -13,7 +13,7 @@ export const developers = [
   {
     avatarSrc: '/ira.jpg',
     book: 'iraWelcomeBook',
-    cources: 'iraWelcomeCourses',
+    courses: 'iraWelcomeCourses',
     experience: 'iraWelcomeExperience',
     from: 'iraWelcomeFrom',
     name: 'iraWelcomeName',
@@ -24,7 +24,7 @@ export const developers = [
   {
     avatarSrc: '/kate.jpg',
     book: 'kateWelcomeBook',
-    cources: 'kateWelcomeCourses',
+    courses: 'kateWelcomeCourses',
     experience: 'kateWelcomeExperience',
     from: 'kateWelcomeFrom',
     name: 'kateWelcomeName',

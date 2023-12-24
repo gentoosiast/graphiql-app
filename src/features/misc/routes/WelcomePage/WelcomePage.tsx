@@ -121,7 +121,7 @@ export const WelcomePage = (): JSX.Element => {
           sx={{
             fontSize: 20,
             margin: '5%',
-
+            textAlign: { md: 'left', xs: 'center' },
             width: { lg: '60%', md: '85%', sm: '90%', xs: '100%' },
           }}
         >
@@ -153,6 +153,7 @@ export const WelcomePage = (): JSX.Element => {
         <Box
           display={'flex'}
           flexWrap={'wrap'}
+          gap={3}
           justifyContent={{ lg: 'space-evenly', md: 'space-evenly', sm: 'center' }}
           padding={'3%'}
           width={'100%'}
