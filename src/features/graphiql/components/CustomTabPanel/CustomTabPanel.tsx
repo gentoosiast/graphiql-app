@@ -1,15 +1,16 @@
 type Props = {
   children?: React.ReactNode;
   index: number;
+  isVisible: boolean;
   value: number;
 };
 
 export const CustomTabPanel = (props: Props): JSX.Element => {
-  const { children, index, value, ...other } = props;
+  const { children, index, isVisible, value, ...other } = props;
 
   return (
     <div
-      aria-hidden={value !== index}
+      aria-hidden={!isVisible || value !== index}
       aria-labelledby={`simple-tab-${index}`}
       hidden={value !== index}
       id={`simple-tabpanel-${index}`}
