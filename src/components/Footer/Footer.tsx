@@ -1,6 +1,6 @@
 import type { JSX } from 'react';
 
-import { Button, ButtonGroup, Link, Stack } from '@mui/material';
+import { Button, ButtonGroup, Link, Stack, Typography } from '@mui/material';
 
 import { useI18NContext } from '@/contexts/i18n';
 
@@ -17,38 +17,37 @@ export const Footer = (): JSX.Element => {
         direction="row"
         display="flex"
         justifyContent="center"
-        padding={{ lg: '1%', md: '1%', sm: '3%', xs: '5% 1%' }}
+        padding={{ lg: '1%', md: '2%', sm: '3%', xs: '5% 1%' }}
       >
         <Stack
           alignItems="center"
           direction="row"
           display="flex"
-          justifyContent={{
-            lg: 'space-evenly',
-            md: 'space-evenly',
-            sm: 'space-evenly',
-            xs: 'space-evenly',
-          }}
+          justifyContent={'space-evenly'}
           width={{ lg: '60%', md: '85%', sm: '95%', xs: '100%' }}
         >
-          <Link
-            href="https://rs.school/react/"
-            width={{ lg: '13%', md: '15%', sm: '17%', xs: '18%' }}
+          <Stack
+            alignItems="center"
+            direction="row"
+            display="flex"
+            flexDirection={{ lg: 'row', md: 'column', sm: 'column', xs: 'column' }}
+            justifyContent={'space-between'}
           >
-            <RssIcon />
-          </Link>
+            <Link href="https://rs.school/react/" width={{ lg: '33%', xs: '100%' }}>
+              <RssIcon />
+            </Link>
+            <Typography component={'p'} sx={{ fontSize: { lg: 16, sm: 14 } }} textAlign={'center'}>
+              2023-2024
+            </Typography>
+          </Stack>
 
           <ButtonGroup
             color="primary"
             orientation="horizontal"
             size="small"
             sx={{
-              alignItems: 'center',
               boxShadow: 'none',
               display: 'flex',
-
-              fontSize: { lg: 18, md: 14, sm: 14, xs: 14 },
-              width: { lg: '40%', md: '50%', sm: '50%', xs: '60%' },
             }}
             variant="contained"
           >
@@ -56,7 +55,8 @@ export const Footer = (): JSX.Element => {
               <Button
                 sx={{
                   display: 'flex',
-                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                  flexDirection: { lg: 'row', xs: 'column' },
+                  fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
                 }}
               >
                 <GitHubIcon />
@@ -68,6 +68,7 @@ export const Footer = (): JSX.Element => {
                 sx={{
                   display: 'flex',
                   flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                  fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
                 }}
               >
                 <GitHubIcon />
@@ -78,7 +79,8 @@ export const Footer = (): JSX.Element => {
               <Button
                 sx={{
                   display: 'flex',
-                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                  flexDirection: { lg: 'row', xs: 'column' },
+                  fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
                 }}
               >
                 <GitHubIcon />
