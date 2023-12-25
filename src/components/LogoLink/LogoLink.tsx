@@ -9,9 +9,11 @@ export const LogoLink = (): JSX.Element => (
       sx={{
         ':hover circle': {
           fill: '#fff',
+          transition: '1s',
         },
         ':hover path': {
           fill: '#ff8ebc',
+          transition: '1s',
         },
         borderRadius: 30,
         minHeight: 60,
