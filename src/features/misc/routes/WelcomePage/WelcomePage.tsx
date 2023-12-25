@@ -7,7 +7,7 @@ import { Stack } from '@mui/system';
 import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
-import { developers } from '@/features/data/developers';
+import { developers } from '@/features/developers/data/developers';
 
 export const WelcomePage = (): JSX.Element => {
   const { authState } = useAuth();
