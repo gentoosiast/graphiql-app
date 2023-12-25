@@ -1,6 +1,6 @@
 import { HttpResponse, delay, graphql } from 'msw';
 
-import { character42Response } from './mocks/characterResponses';
+import { character42Response, characterSuperUserResponse } from './mocks/characterResponses';
 import { introspectionResponse } from './mocks/introspectionResponse';
 
 export const handlers = [
@@ -10,11 +10,25 @@ export const handlers = [
     return HttpResponse.json(introspectionResponse);
   }),
 
-  graphql.query('CharacterQuery', async ({ query }) => {
+  graphql.query('CharacterQuery', async ({ query, request: { headers }, variables }) => {
+    const authHeader = headers.get('authorization');
+
     await delay();
 
-    if (query.includes('id: 42')) {
+    if (authHeader === 'Bearer SUPERUSER') {
+      return HttpResponse.json(characterSuperUserResponse);
+    } else if (query.includes('id: 42')) {
+      return HttpResponse.json(character42Response);
+    } else if (query.includes('id: $id') && variables.id === 42) {
       return HttpResponse.json(character42Response);
     }
+
+    return HttpResponse.json({
+      errors: [
+        {
+          message: 'Unknown error happened',
+        },
+      ],
+    });
   }),
 ];

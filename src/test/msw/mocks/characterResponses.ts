@@ -5,3 +5,9 @@ export const character42Response = {
     },
   },
 };
+
+export const characterSuperUserResponse = {
+  data: {
+    character: { name: 'SuperMegaGigaUser' },
+  },
+};
