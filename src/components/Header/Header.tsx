@@ -97,8 +97,10 @@ export const Header = (): JSX.Element => {
                 transition: '1s',
               },
               backgroundColor: 'primary.light',
+
               fontSize: { sm: 12, xs: 10 },
               padding: { sm: '1%', xs: 0 },
+              transition: '2s',
             }}
             variant="contained"
           >
@@ -136,12 +138,13 @@ export const Header = (): JSX.Element => {
               sx={{
                 ':hover': {
                   backgroundColor: 'primary.dark',
-
-                  transition: '13s',
+                  transition: '1s',
                 },
                 backgroundColor: 'primary.light',
+
                 fontSize: { lg: 15, md: 13, sm: 0, xs: 0 },
                 padding: { lg: '2%', md: '2%', sm: 0 },
+                transition: '2s',
               }}
               variant="contained"
             >
