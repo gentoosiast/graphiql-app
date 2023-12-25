@@ -125,7 +125,7 @@ export const WelcomePage = (): JSX.Element => {
             width: { lg: '60%', md: '85%', sm: '90%', xs: '100%' },
           }}
         >
-          {translate('team-description')}
+          {translate('teamDescription')}
         </Typography>
       </Stack>
       <Box
@@ -133,6 +133,11 @@ export const WelcomePage = (): JSX.Element => {
         flexWrap={'wrap'}
         justifyContent={{ lg: 'space-evenly', md: 'space-evenly', sm: 'center' }}
         padding={'3%'}
+        sx={{
+          ':last-child': {
+            width: '100%',
+          },
+        }}
         width={'100%'}
       >
         {developers.map((developer) => (
@@ -155,28 +160,50 @@ export const WelcomePage = (): JSX.Element => {
           flexWrap={'wrap'}
           gap={3}
           justifyContent={{ lg: 'space-evenly', md: 'space-evenly', sm: 'center' }}
-          padding={'3%'}
+          margin={'0 0 4%'}
+          padding={'3% 0'}
           width={'100%'}
         >
           <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
             <img alt="varya cat" src="/varya.jpg" />
-            <Typography component="h4" variant="h4">
+            <Typography align="center" component="h4" variant="h5">
               {translate('varya')}
             </Typography>
           </Stack>
           <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
             <img alt="fania cat" src="/fanya.jpg" />
-            <Typography component="h4" variant="h4">
+            <Typography align="center" component="h4" variant="h5">
               {translate('fanya')}
             </Typography>
           </Stack>
           <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
             <img alt="murych cat" src="/murych.png" />
-            <Typography component="h4" variant="h4">
+            <Typography align="center" component="h4" variant="h5">
               {translate('murych')}
             </Typography>
           </Stack>
         </Box>
+        <Stack alignItems="center" justifyContent="center">
+          <Typography
+            color="primary"
+            component="h2"
+            sx={{ fontSize: { lg: 40, md: 36, sm: 40, xs: 30 } }}
+            textAlign="center"
+            variant="h2"
+          >
+            About the course
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: 20,
+              margin: '2%',
+              textAlign: { md: 'left', xs: 'center' },
+              width: { lg: '60%', md: '85%', sm: '90%', xs: '100%' },
+            }}
+          >
+            {translate('courseDescription')}
+          </Typography>
+        </Stack>
       </Box>
     </Box>
   );
