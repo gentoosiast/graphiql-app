@@ -9,7 +9,7 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 import { WelcomePage } from './WelcomePage';
 
 describe('Welcome page', () => {
-  it('should render welcome page', () => {
+  it('should render', () => {
     renderWithProviders(
       <I18NProvider>
         <MemoryRouter>
@@ -18,10 +18,10 @@ describe('Welcome page', () => {
       </I18NProvider>,
     );
 
-    const teamNameTitle = screen.getByRole('heading', { level: 2 });
+    const meetTheTeamTitle = screen.getByText(/meet the team/i);
     const memberName = screen.getByText('Kate Goncharick');
 
-    expect(teamNameTitle).toHaveTextContent(/san junipero/i);
+    expect(meetTheTeamTitle).toBeInTheDocument();
     expect(memberName).toBeInTheDocument();
   });
 });

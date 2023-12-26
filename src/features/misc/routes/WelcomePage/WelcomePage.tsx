@@ -1,34 +1,39 @@
 import type { JSX } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-import { Avatar, Box, Button, Card, CardHeader, ListItem, Typography } from '@mui/material';
-import { styled } from '@mui/material/styles';
+import { Box, Button, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 
+import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
 import { AuthState, useAuth } from '@/features/auth';
+import { developers } from '@/features/developers/data/developers';
 
 export const WelcomePage = (): JSX.Element => {
   const { authState } = useAuth();
-  const MemberText = styled('div')(() => ({
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    fontSize: 18,
-    justifyContent: 'center',
-    width: 400,
-  }));
-
   const { translate } = useI18NContext();
 
   return (
-    <>
-      <nav>
+    <Box
+      alignItems={'center'}
+      display={'flex'}
+      flexDirection={'column'}
+      flexWrap={'wrap'}
+      justifyContent={'center'}
+      width={'100%'}
+    >
+      <nav
+        style={{
+          width: '100%',
+        }}
+      >
         <Box
           sx={{
             backgroundColor: 'background.paper',
+
             padding: 2,
             textAlign: 'right',
+            width: '100%',
           }}
         >
           {authState === AuthState.NOT_AUTHENTICATED && (
@@ -43,7 +48,7 @@ export const WelcomePage = (): JSX.Element => {
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-                  fontSize: { lg: 20, md: 18, sm: 16, xs: 14 },
+                  fontSize: { lg: 18, md: 17, sm: 16, xs: 14 },
                   margin: 0.7,
                   textDecoration: 'none',
                 }}
@@ -61,7 +66,7 @@ export const WelcomePage = (): JSX.Element => {
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-                  fontSize: { lg: 20, md: 18, sm: 16, xs: 14 },
+                  fontSize: { lg: 18, md: 17, sm: 16, xs: 14 },
                   margin: 0.7,
                   textDecoration: 'none',
                 }}
@@ -81,7 +86,7 @@ export const WelcomePage = (): JSX.Element => {
                 backgroundColor: 'primary.main',
                 border: 1,
                 color: 'primary.contrastText',
-                fontSize: { lg: 18, md: 18, sm: 16, xs: 14 },
+                fontSize: { lg: 17, md: 16, sm: 15, xs: 14 },
                 margin: 0.7,
                 textDecoration: 'none',
               }}
@@ -95,112 +100,111 @@ export const WelcomePage = (): JSX.Element => {
       </nav>
 
       <Stack alignItems="center" justifyContent="center">
-        <Typography component="h1" sx={{ margin: 3 }} variant="h2">
-          {translate('welcome')}
+        <Typography
+          component="h1"
+          sx={{ fontSize: { lg: 60, md: 56, sm: 45, xs: 30 }, margin: '2%' }}
+          variant="h2"
+        >
+          {translate('meetTheTeam')}
         </Typography>
 
-        <Typography color="primary" component="h2" textAlign="center" variant="h2">
+        <Typography
+          color="primary"
+          component="h2"
+          sx={{ fontSize: { lg: 80, md: 66, sm: 55, xs: 40 } }}
+          textAlign="center"
+          variant="h2"
+        >
           San Junipero
         </Typography>
-        <Typography sx={{ fontSize: 20, margin: 5, width: 600 }}>
-          {translate('team-description')}
+        <Typography
+          sx={{
+            fontSize: 20,
+            margin: '5%',
+            textAlign: { md: 'left', xs: 'center' },
+            width: { lg: '60%', md: '85%', sm: '90%', xs: '100%' },
+          }}
+        >
+          {translate('teamDescription')}
         </Typography>
       </Stack>
+      <Box
+        display={'flex'}
+        flexWrap={'wrap'}
+        justifyContent={{ lg: 'space-evenly', md: 'space-evenly', sm: 'center' }}
+        padding={'3%'}
+        sx={{
+          ':last-child': {
+            width: '100%',
+          },
+        }}
+        width={'100%'}
+      >
+        {developers.map((developer) => (
+          <MemberCard developer={developer} key={`${developer.name}`} />
+        ))}
+      </Box>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        justifyContent={'center'}
+        padding={'3%'}
+        width={'100%'}
+      >
+        <Typography align="center" component="h3" variant="h2">
+          {translate('ourPets')}
+        </Typography>
 
-      <Stack direction="row" justifyContent="space-around">
-        <Card
-          sx={{
-            backgroundColor: 'background.paper',
-            borderRadius: 3,
-            boxShadow: 20,
-            minWidth: 300,
-            padding: 5,
-          }}
+        <Box
+          display={'flex'}
+          flexWrap={'wrap'}
+          gap={3}
+          justifyContent={{ lg: 'space-evenly', md: 'space-evenly', sm: 'center' }}
+          margin={'0 0 4%'}
+          padding={'3% 0'}
+          width={'100%'}
         >
-          <Stack alignItems="center" justifyContent="center">
-            <Avatar
-              alt="Kate"
-              src="/kate.jpg"
-              sx={{ marginTop: 1, minHeight: 200, minWidth: 200 }}
-            />
+          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
+            <img alt="varya cat" src="/varya.jpg" />
+            <Typography align="center" component="h4" variant="h5">
+              {translate('varya')}
+            </Typography>
           </Stack>
-          <MemberText>
-            <CardHeader color="primary" title={`${translate('kate-welcome-name')}`} />
-
-            <ListItem>{translate('kate-welcome-from')}</ListItem>
-            <ListItem>{translate('kate-welcome-book')}</ListItem>
-            <ListItem>{translate('kate-welcome-experience')}</ListItem>
-            <ListItem>{translate('kate-welcome-talent')}</ListItem>
-            <ListItem>{translate('kate-welcome-pets')}</ListItem>
-          </MemberText>
-          <Stack direction="row" justifyContent={'space-evenly'}>
-            <Stack
-              justifyContent="space-between
-          "
-              sx={{ maxWidth: 170 }}
-            >
-              <img alt="varya cat" src="/varya.jpg" />
-            </Stack>
-
-            <Stack
-              justifyContent="space-between
-          "
-              sx={{ maxWidth: 170 }}
-            >
-              <img alt="fania cat" src="/fanya.jpg" />
-            </Stack>
+          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
+            <img alt="fania cat" src="/fanya.jpg" />
+            <Typography align="center" component="h4" variant="h5">
+              {translate('fanya')}
+            </Typography>
           </Stack>
-        </Card>
-
-        <Card
-          sx={{
-            backgroundColor: 'background.paper',
-            borderRadius: 3,
-            boxShadow: 20,
-            minWidth: 300,
-            padding: 5,
-          }}
-        >
-          <Stack alignItems="center" justifyContent="center">
-            <Avatar alt="Ira" src="/2.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
+          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
+            <img alt="murych cat" src="/murych.png" />
+            <Typography align="center" component="h4" variant="h5">
+              {translate('murych')}
+            </Typography>
           </Stack>
-          <MemberText>
-            <CardHeader title={`${translate('ira-welcome-name')}`} />
-            <ListItem>{translate('ira-welcome-from')}</ListItem>
-            <ListItem>{translate('ira-welcome-experience')}</ListItem>
-            <ListItem>{translate('ira-welcome-talent')}</ListItem>
-            <ListItem>{translate('ira-welcome-pets')}</ListItem>
-            <Stack sx={{ maxWidth: 250 }}>
-              <img alt="murych cat" src="/murych.png" />
-            </Stack>
-          </MemberText>
-        </Card>
-      </Stack>
-
-      <Stack direction="row" justifyContent="center">
-        <Card
-          sx={{
-            backgroundColor: 'background.paper',
-            borderRadius: 3,
-            boxShadow: 20,
-            marginTop: 5,
-            minWidth: 300,
-            padding: 5,
-          }}
-        >
-          <Stack alignItems="center" justifyContent="center">
-            <Avatar alt="Sergey" src="/1.jpg" sx={{ height: 200, marginTop: 1, width: 200 }} />
-          </Stack>
-          <MemberText>
-            <CardHeader title={`${translate('sergey-welcome-name')}`} />
-            <ListItem>{translate('sergey-welcome-from')}</ListItem>
-            <ListItem>{translate('sergey-welcome-book')}</ListItem>
-            <ListItem>{translate('sergey-welcome-experience')}</ListItem>
-            <ListItem>{translate('sergey-welcome-talent')}</ListItem>
-            <ListItem>{translate('sergey-welcome-pets')}</ListItem>
-          </MemberText>
-        </Card>
-      </Stack>
-    </>
+        </Box>
+        <Stack alignItems="center" justifyContent="center">
+          <Typography
+            color="primary"
+            component="h2"
+            sx={{ fontSize: { lg: 40, md: 36, sm: 40, xs: 30 } }}
+            textAlign="center"
+            variant="h2"
+          >
+            About the course
+          </Typography>
+          <Typography
+            sx={{
+              fontSize: 20,
+              margin: '2%',
+              textAlign: { md: 'left', xs: 'center' },
+              width: { lg: '60%', md: '85%', sm: '90%', xs: '100%' },
+            }}
+          >
+            {translate('courseDescription')}
+          </Typography>
+        </Stack>
+      </Box>
+    </Box>
   );
 };
