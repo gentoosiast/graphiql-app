@@ -103,7 +103,7 @@ describe('MainPage', () => {
 
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
-    const graphQLButton = screen.getByRole('button', { name: /send request/i });
+    const sendButton = screen.getByRole('button', { name: /send request/i });
 
     expect(responseViewer).toHaveValue('');
 
@@ -112,7 +112,7 @@ describe('MainPage', () => {
     await user.keyboard(
       'query CharacterQuery {{[Enter]character (id: 42) {{[Enter]name[Enter]}[Enter]}[Enter]',
     );
-    await user.click(graphQLButton);
+    await user.click(sendButton);
 
     const responseText = await within(responseViewer).findByText(/big head morty/i);
     expect(responseText).toBeInTheDocument();
@@ -128,7 +128,7 @@ describe('MainPage', () => {
     );
 
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
-    const graphQLButton = screen.getByRole('button', { name: /send request/i });
+    const sendButton = screen.getByRole('button', { name: /send request/i });
     const variablesTab = screen.getByText(/variables/i);
 
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
@@ -145,7 +145,7 @@ describe('MainPage', () => {
     await user.click(variablesEditor);
     await user.clear(variablesEditor);
     await user.keyboard('{{"id": 42}');
-    await user.click(graphQLButton);
+    await user.click(sendButton);
 
     const responseText = await within(responseViewer).findByText(/big head morty/i);
     expect(responseText).toBeInTheDocument();
@@ -161,7 +161,7 @@ describe('MainPage', () => {
     );
 
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
-    const graphQLButton = screen.getByRole('button', { name: /send request/i });
+    const sendButton = screen.getByRole('button', { name: /send request/i });
     const headersTab = screen.getByText(/headers/i);
 
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
@@ -178,9 +178,37 @@ describe('MainPage', () => {
     await user.click(headersEditor);
     await user.clear(headersEditor);
     await user.keyboard('{{"Authorization": "Bearer SUPERUSER"}');
-    await user.click(graphQLButton);
+    await user.click(sendButton);
 
     const responseText = await within(responseViewer).findByText(/supermegagigauser/i);
     expect(responseText).toBeInTheDocument();
-  });
-}, 10000);
+  }, 10000);
+
+  it('should allow user to send GraphQL requess to different endpoints', async () => {
+    const user = userEvent.setup();
+
+    render(
+      <I18NProvider>
+        <MainPage />
+      </I18NProvider>,
+    );
+
+    const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
+    const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
+    const sendButton = screen.getByRole('button', { name: /send request/i });
+
+    const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
+    expect(responseViewer).toHaveValue('');
+
+    await user.click(endpointInput);
+    await user.clear(endpointInput);
+    await user.keyboard('https://example.com/graphql');
+    await user.click(graphQLQueryEditor);
+    await user.clear(graphQLQueryEditor);
+    await user.keyboard('query ExampleQuery {{[Enter]message}[Enter]');
+    await user.click(sendButton);
+
+    const responseText = await within(responseViewer).findByText(/hi, i'm an example query!/i);
+    expect(responseText).toBeInTheDocument();
+  }, 10000);
+});

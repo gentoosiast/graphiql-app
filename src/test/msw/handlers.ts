@@ -31,4 +31,24 @@ export const handlers = [
       ],
     });
   }),
+
+  graphql.query('ExampleQuery', async ({ request: { url } }) => {
+    await delay();
+
+    if (url === 'https://example.com/graphql') {
+      return HttpResponse.json({
+        data: {
+          message: "Hi, I'm an example query!",
+        },
+      });
+    }
+
+    return HttpResponse.json({
+      errors: [
+        {
+          message: 'Unknown error happened',
+        },
+      ],
+    });
+  }),
 ];
