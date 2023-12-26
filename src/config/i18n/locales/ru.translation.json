@@ -68,6 +68,10 @@
   "oops": "Ой!",
   "unknownError": "Что-то пошло не так.. Попробуйте перезагрузить страницу.",
 
+  "footerSergeyName": "Сергей",
+  "footerIraName": "Ира",
+  "footerKateName": "Катя",
+
   "docs.schemaProvides": "Схема GraphQL предоставляет корневой тип для каждого типа операций.",
   "docs.rootTypes": "Корневые типы",
   "docs.allTypes": "Все доступные типы",

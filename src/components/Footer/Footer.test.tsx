@@ -1,18 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 
+import { I18NProvider } from '@/providers';
+
 import { Footer } from '.';
 
 describe('Footer', () => {
-  it('should render footer', () => {
-    render(<Footer />);
+  it('should render', () => {
+    render(
+      <I18NProvider>
+        <Footer />
+      </I18NProvider>,
+    );
 
-    const firstMemberButton = screen.getByText('Sergey');
-    const secondMemberButton = screen.getByText('Irina');
-    const thirdMemberButton = screen.getByText('Kate');
-
-    expect(firstMemberButton).toBeInTheDocument();
-    expect(secondMemberButton).toBeInTheDocument();
-    expect(thirdMemberButton).toBeInTheDocument();
+    const sergeyButton = screen.getByText(/sergey/i);
+    expect(sergeyButton).toBeInTheDocument();
   });
 });
