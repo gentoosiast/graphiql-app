@@ -107,7 +107,6 @@ describe('MainPage', () => {
 
     expect(responseViewer).toHaveValue('');
 
-    await user.click(graphQLQueryEditor);
     await user.clear(graphQLQueryEditor);
     await user.keyboard(
       'query CharacterQuery {{[Enter]character (id: 42) {{[Enter]name[Enter]}[Enter]}[Enter]',
@@ -137,12 +136,10 @@ describe('MainPage', () => {
     await user.click(variablesTab);
     const variablesEditor = screen.getByPlaceholderText(/variables \(in json format\)/i);
 
-    await user.click(graphQLQueryEditor);
     await user.clear(graphQLQueryEditor);
     await user.keyboard(
       'query CharacterQuery($id: ID!) {{[Enter]character(id: $id) {{[Enter]name[Enter]}[Enter]}[Enter]',
     );
-    await user.click(variablesEditor);
     await user.clear(variablesEditor);
     await user.keyboard('{{"id": 42}');
     await user.click(sendButton);
@@ -170,12 +167,10 @@ describe('MainPage', () => {
     await user.click(headersTab);
     const headersEditor = screen.getByPlaceholderText(/headers \(in json format\)/i);
 
-    await user.click(graphQLQueryEditor);
     await user.clear(graphQLQueryEditor);
     await user.keyboard(
       'query CharacterQuery {{[Enter]character (id: 42) {{[Enter]name[Enter]}[Enter]}[Enter]',
     );
-    await user.click(headersEditor);
     await user.clear(headersEditor);
     await user.keyboard('{{"Authorization": "Bearer SUPERUSER"}');
     await user.click(sendButton);
@@ -200,10 +195,8 @@ describe('MainPage', () => {
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
     expect(responseViewer).toHaveValue('');
 
-    await user.click(endpointInput);
     await user.clear(endpointInput);
     await user.keyboard('https://example.com/graphql');
-    await user.click(graphQLQueryEditor);
     await user.clear(graphQLQueryEditor);
     await user.keyboard('query ExampleQuery {{[Enter]message}[Enter]');
     await user.click(sendButton);
