@@ -96,13 +96,14 @@ export const Header = (): JSX.Element => {
                 backgroundColor: 'primary.dark',
                 transition: '1s',
               },
-              backgroundColor: 'primary.light',
+              backgroundColor: 'primary.main',
+              border: 1,
+              color: 'primary.contrastText',
 
               fontSize: { sm: 12, xs: 10 },
               padding: { sm: '1%', xs: 0 },
               transition: '2s',
             }}
-            variant="contained"
           >
             {language}
           </Button>

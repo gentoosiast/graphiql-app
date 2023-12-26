@@ -43,14 +43,18 @@ export const WelcomePage = (): JSX.Element => {
                 state={{ formMode: 'login' }}
                 sx={{
                   ':hover': {
-                    backgroundColor: 'background.paper',
+                    backgroundColor: 'primary.dark',
+                    transition: '1s',
                   },
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-                  fontSize: { lg: 18, md: 17, sm: 16, xs: 14 },
+
+                  fontSize: { lg: 16, xs: 14 },
+
                   margin: 0.7,
                   textDecoration: 'none',
+                  transition: '1s',
                 }}
                 to="/auth"
               >
@@ -61,14 +65,16 @@ export const WelcomePage = (): JSX.Element => {
                 state={{ formMode: 'register' }}
                 sx={{
                   ':hover': {
-                    backgroundColor: 'background.paper',
+                    backgroundColor: 'primary.dark',
+                    transition: '1s',
                   },
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-                  fontSize: { lg: 18, md: 17, sm: 16, xs: 14 },
+                  fontSize: { lg: 16, xs: 14 },
                   margin: 0.7,
                   textDecoration: 'none',
+                  transition: '1s',
                 }}
                 to="/auth"
               >
@@ -81,14 +87,18 @@ export const WelcomePage = (): JSX.Element => {
               component={RouterLink}
               sx={{
                 ':hover': {
-                  backgroundColor: 'background.paper',
+                  backgroundColor: 'primary.dark',
+
+                  transition: '1s',
                 },
                 backgroundColor: 'primary.main',
                 border: 1,
                 color: 'primary.contrastText',
-                fontSize: { lg: 17, md: 16, sm: 15, xs: 14 },
+                fontSize: { lg: 16, xs: 14 },
+
                 margin: 0.7,
                 textDecoration: 'none',
+                transition: '1s',
               }}
               to="/main"
               variant="outlined"

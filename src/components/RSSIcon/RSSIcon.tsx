@@ -3,7 +3,17 @@ import type { JSX } from 'react';
 import { SvgIcon } from '@mui/material';
 
 export const RssIcon = (): JSX.Element => (
-  <SvgIcon sx={{ width: '100%' }}>
+  <SvgIcon
+    sx={{
+      ':hover path': {
+        fill: '#ff8ebc',
+        transition: '1s',
+      },
+
+      transition: '2s',
+      width: '100%',
+    }}
+  >
     <svg
       fill="none"
       height="206"

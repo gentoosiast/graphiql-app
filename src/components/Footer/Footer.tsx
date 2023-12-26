@@ -54,9 +54,14 @@ export const Footer = (): JSX.Element => {
             <Link href="https://github.com/gentoosiast" sx={{ margin: 0, textDecoration: 'none' }}>
               <Button
                 sx={{
+                  ':hover': {
+                    backgroundColor: 'primary.dark',
+                    transition: '1s',
+                  },
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
+                  transition: '2s',
                 }}
               >
                 <GitHubIcon />
@@ -66,9 +71,14 @@ export const Footer = (): JSX.Element => {
             <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
               <Button
                 sx={{
+                  ':hover': {
+                    backgroundColor: 'primary.dark',
+                    transition: '1s',
+                  },
                   display: 'flex',
                   flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
+                  transition: '2s',
                 }}
               >
                 <GitHubIcon />
@@ -78,9 +88,14 @@ export const Footer = (): JSX.Element => {
             <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
               <Button
                 sx={{
+                  ':hover': {
+                    backgroundColor: 'primary.dark',
+                    transition: '1s',
+                  },
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
+                  transition: '2s',
                 }}
               >
                 <GitHubIcon />
