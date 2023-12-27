@@ -1,5 +1,0 @@
-export enum AuthState {
-  PENDING,
-  AUTHENTICATED,
-  NOT_AUTHENTICATED,
-}

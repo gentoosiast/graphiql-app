@@ -6,11 +6,11 @@ import { Stack } from '@mui/system';
 
 import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
-import { AuthState, useAuth } from '@/features/auth';
+import { useAuth } from '@/features/auth';
 import { developers } from '@/features/developers/data/developers';
 
 export const WelcomePage = (): JSX.Element => {
-  const { authState } = useAuth();
+  const { email } = useAuth();
   const { translate } = useI18NContext();
 
   return (
@@ -36,7 +36,7 @@ export const WelcomePage = (): JSX.Element => {
             width: '100%',
           }}
         >
-          {authState === AuthState.NOT_AUTHENTICATED && (
+          {!email && (
             <>
               <Button
                 component={RouterLink}
@@ -78,7 +78,7 @@ export const WelcomePage = (): JSX.Element => {
               </Button>
             </>
           )}
-          {authState === AuthState.AUTHENTICATED && (
+          {email && (
             <Button
               component={RouterLink}
               sx={{

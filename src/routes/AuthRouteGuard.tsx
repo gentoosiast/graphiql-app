@@ -1,36 +1,18 @@
 import type { ReactNode } from 'react';
 import { Navigate } from 'react-router-dom';
 
-import CircularProgress from '@mui/material/CircularProgress';
-import { Box } from '@mui/system';
-
-import { AuthState, useAuth } from '@/features/auth';
+import { useAuth } from '@/features/auth';
 
 type Props = {
-  authRejectStatus: AuthState;
   children: ReactNode;
+  isAuthNeeded: boolean;
   rejectRoute: string;
 };
 
-export const AuthRouteGuard = ({ authRejectStatus, children, rejectRoute }: Props): ReactNode => {
-  const { authState } = useAuth();
+export const AuthRouteGuard = ({ children, isAuthNeeded, rejectRoute }: Props): ReactNode => {
+  const { email } = useAuth();
 
-  if (authState === AuthState.PENDING) {
-    return (
-      <Box
-        sx={{
-          left: '50%',
-          position: 'absolute',
-          top: '50%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
-        <CircularProgress color="primary" />
-      </Box>
-    );
-  }
-
-  if (authState === authRejectStatus) {
+  if ((isAuthNeeded && !email) || (!isAuthNeeded && email)) {
     return <Navigate replace={true} to={rejectRoute} />;
   }
 

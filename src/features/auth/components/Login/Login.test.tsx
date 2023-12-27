@@ -1,10 +1,11 @@
 import { MemoryRouter } from 'react-router-dom';
 
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { describe, expect, it } from 'vitest';
 
 import { I18NProvider } from '@/providers/i18n';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 import { Login } from './Login';
 
@@ -12,7 +13,7 @@ describe('Login', () => {
   it('should validate email', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <I18NProvider>
           <Login setIsLogin={() => {}} />
@@ -32,7 +33,7 @@ describe('Login', () => {
   it('should validate password', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <I18NProvider>
           <Login setIsLogin={() => {}} />
@@ -63,7 +64,7 @@ describe('Login', () => {
   it('button to toggle password visibility should work', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <MemoryRouter>
         <I18NProvider>
           <Login setIsLogin={() => {}} />
