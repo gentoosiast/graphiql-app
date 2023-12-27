@@ -21,6 +21,7 @@ export default defineConfig({
         'src/main.tsx',
         'src/config/**/*',
         'src/theme.tsx',
+        'src/types/*',
       ],
       include: ['src/**/*'],
       provider: 'v8',
