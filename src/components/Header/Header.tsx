@@ -94,15 +94,15 @@ export const Header = (): JSX.Element => {
             sx={{
               ':hover': {
                 backgroundColor: 'primary.dark',
-                transition: '1s',
               },
-              backgroundColor: 'primary.light',
+              backgroundColor: 'primary.main',
+              border: 1,
+              color: 'primary.contrastText',
 
               fontSize: { sm: 12, xs: 10 },
               padding: { sm: '1%', xs: 0 },
               transition: '2s',
             }}
-            variant="contained"
           >
             {language}
           </Button>
@@ -138,10 +138,9 @@ export const Header = (): JSX.Element => {
               sx={{
                 ':hover': {
                   backgroundColor: 'primary.dark',
-                  transition: '1s',
                 },
-                backgroundColor: 'primary.light',
-
+                backgroundColor: 'primary.main',
+                border: 1,
                 fontSize: { lg: 15, md: 13, sm: 0, xs: 0 },
                 padding: { lg: '2%', md: '2%', sm: 0 },
                 transition: '2s',

@@ -51,36 +51,62 @@ export const Footer = (): JSX.Element => {
             }}
             variant="contained"
           >
-            <Link href="https://github.com/gentoosiast" sx={{ margin: 0, textDecoration: 'none' }}>
+            <Link
+              href="https://github.com/gentoosiast"
+              sx={{
+                border: 0.5,
+                borderColor: 'primary.contrastText',
+                borderRadius: '10% 0 0 10%',
+                textDecoration: 'none',
+              }}
+            >
               <Button
                 sx={{
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
+                  transition: '2s',
                 }}
               >
                 <GitHubIcon />
                 {translate('footerSergeyName')}
               </Button>
             </Link>
-            <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
+            <Link
+              href="https://github.com/Irina-Grebennikova"
+              sx={{
+                border: 0.5,
+                borderColor: 'primary.contrastText',
+                textDecoration: 'none',
+              }}
+            >
               <Button
                 sx={{
                   display: 'flex',
-                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                  flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
+                  transition: '2s',
                 }}
               >
                 <GitHubIcon />
                 {translate('footerIraName')}
               </Button>
             </Link>
-            <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
+            <Link
+              href="https://github.com/KateGoncharik"
+              sx={{
+                border: 0.5,
+                borderColor: 'primary.contrastText',
+                borderRadius: '0 10% 10% 0',
+                textDecoration: 'none',
+              }}
+            >
               <Button
                 sx={{
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
+                  transition: '2s',
                 }}
               >
                 <GitHubIcon />
