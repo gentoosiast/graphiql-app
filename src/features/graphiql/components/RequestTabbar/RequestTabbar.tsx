@@ -52,7 +52,7 @@ export const RequestTabbar = ({
       }}
     >
       <Collapse in={isTabbarOpen} sx={{ borderBlockStart: '1px solid #555' }}>
-        <CustomTabPanel index={0} value={currentTabIdx}>
+        <CustomTabPanel index={0} isVisible={isTabbarOpen} value={currentTabIdx}>
           <Editor
             editorMode="json-with-linter"
             height="150px"
@@ -61,7 +61,7 @@ export const RequestTabbar = ({
             value={variables}
           />
         </CustomTabPanel>
-        <CustomTabPanel index={1} value={currentTabIdx}>
+        <CustomTabPanel index={1} isVisible={isTabbarOpen} value={currentTabIdx}>
           <Editor
             editorMode="json-with-linter"
             height="150px"
