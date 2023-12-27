@@ -94,7 +94,6 @@ export const Header = (): JSX.Element => {
             sx={{
               ':hover': {
                 backgroundColor: 'primary.dark',
-                transition: '1s',
               },
               backgroundColor: 'primary.main',
               border: 1,
@@ -139,7 +138,6 @@ export const Header = (): JSX.Element => {
               sx={{
                 ':hover': {
                   backgroundColor: 'primary.dark',
-                  transition: '1s',
                 },
                 backgroundColor: 'primary.main',
                 border: 1,

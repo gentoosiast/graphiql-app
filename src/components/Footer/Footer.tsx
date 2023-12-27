@@ -21,7 +21,6 @@ export const Footer = (): JSX.Element => {
       >
         <Stack
           alignItems="center"
-          color="primary.contrastText"
           direction="row"
           display="flex"
           justifyContent={'space-evenly'}
@@ -52,13 +51,17 @@ export const Footer = (): JSX.Element => {
             }}
             variant="contained"
           >
-            <Link href="https://github.com/gentoosiast" sx={{ textDecoration: 'none' }}>
+            <Link
+              href="https://github.com/gentoosiast"
+              sx={{
+                border: 0.5,
+                borderColor: 'primary.contrastText',
+                borderRadius: '10% 0 0 10%',
+                textDecoration: 'none',
+              }}
+            >
               <Button
                 sx={{
-                  ':hover': {
-                    transition: '1s',
-                  },
-                  border: 1,
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
@@ -69,13 +72,16 @@ export const Footer = (): JSX.Element => {
                 {translate('footerSergeyName')}
               </Button>
             </Link>
-            <Link href="https://github.com/Irina-Grebennikova" sx={{ textDecoration: 'none' }}>
+            <Link
+              href="https://github.com/Irina-Grebennikova"
+              sx={{
+                border: 0.5,
+                borderColor: 'primary.contrastText',
+                textDecoration: 'none',
+              }}
+            >
               <Button
                 sx={{
-                  ':hover': {
-                    transition: '1s',
-                  },
-                  border: 1,
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
@@ -86,13 +92,17 @@ export const Footer = (): JSX.Element => {
                 {translate('footerIraName')}
               </Button>
             </Link>
-            <Link href="https://github.com/KateGoncharik" sx={{ textDecoration: 'none' }}>
+            <Link
+              href="https://github.com/KateGoncharik"
+              sx={{
+                border: 0.5,
+                borderColor: 'primary.contrastText',
+                borderRadius: '0 10% 10% 0',
+                textDecoration: 'none',
+              }}
+            >
               <Button
                 sx={{
-                  ':hover': {
-                    transition: '1s',
-                  },
-                  border: 1,
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
