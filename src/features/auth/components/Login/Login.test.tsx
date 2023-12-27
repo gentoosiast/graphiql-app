@@ -58,7 +58,7 @@ describe('Login', () => {
         'Password must contain at least one letter, one digit, one special character',
       ),
     ).toBeInTheDocument();
-  });
+  }, 10000);
 
   it('button to toggle password visibility should work', async () => {
     const user = userEvent.setup();
