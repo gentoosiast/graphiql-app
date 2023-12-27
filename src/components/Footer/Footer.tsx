@@ -21,6 +21,7 @@ export const Footer = (): JSX.Element => {
       >
         <Stack
           alignItems="center"
+          color="primary.contrastText"
           direction="row"
           display="flex"
           justifyContent={'space-evenly'}
@@ -51,13 +52,13 @@ export const Footer = (): JSX.Element => {
             }}
             variant="contained"
           >
-            <Link href="https://github.com/gentoosiast" sx={{ margin: 0, textDecoration: 'none' }}>
+            <Link href="https://github.com/gentoosiast" sx={{ textDecoration: 'none' }}>
               <Button
                 sx={{
                   ':hover': {
-                    backgroundColor: 'primary.dark',
                     transition: '1s',
                   },
+                  border: 1,
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
@@ -72,11 +73,11 @@ export const Footer = (): JSX.Element => {
               <Button
                 sx={{
                   ':hover': {
-                    backgroundColor: 'primary.dark',
                     transition: '1s',
                   },
+                  border: 1,
                   display: 'flex',
-                  flexDirection: { lg: 'row', md: 'column', sm: 'column', xs: 'column' },
+                  flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },
                   transition: '2s',
                 }}
@@ -89,9 +90,9 @@ export const Footer = (): JSX.Element => {
               <Button
                 sx={{
                   ':hover': {
-                    backgroundColor: 'primary.dark',
                     transition: '1s',
                   },
+                  border: 1,
                   display: 'flex',
                   flexDirection: { lg: 'row', xs: 'column' },
                   fontSize: { lg: 16, md: 14, sm: 12, xs: 10 },

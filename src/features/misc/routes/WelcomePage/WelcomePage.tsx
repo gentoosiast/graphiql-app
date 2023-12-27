@@ -49,9 +49,7 @@ export const WelcomePage = (): JSX.Element => {
                   backgroundColor: 'primary.main',
                   border: 1,
                   color: 'primary.contrastText',
-
                   fontSize: { lg: 16, xs: 14 },
-
                   margin: 0.7,
                   textDecoration: 'none',
                   transition: '1s',
@@ -88,11 +86,11 @@ export const WelcomePage = (): JSX.Element => {
               sx={{
                 ':hover': {
                   backgroundColor: 'primary.dark',
-
                   transition: '1s',
                 },
                 backgroundColor: 'primary.main',
                 border: 1,
+
                 color: 'primary.contrastText',
                 fontSize: { lg: 16, xs: 14 },
 
@@ -101,7 +99,6 @@ export const WelcomePage = (): JSX.Element => {
                 transition: '1s',
               }}
               to="/main"
-              variant="outlined"
             >
               Main Page
             </Button>
