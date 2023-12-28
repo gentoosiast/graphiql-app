@@ -13,6 +13,30 @@ export const WelcomePage = (): JSX.Element => {
   const { email } = useAuth();
   const { translate } = useI18NContext();
 
+  const NavButton = (to: string, actionToTranslate: string, formMode?: string): JSX.Element => {
+    return (
+      <Button
+        component={RouterLink}
+        state={{ formMode }}
+        sx={{
+          ':hover': {
+            backgroundColor: 'primary.dark',
+          },
+          backgroundColor: 'primary.main',
+          border: 1,
+          color: 'primary.contrastText',
+          fontSize: { lg: 16, xs: 14 },
+          margin: 0.7,
+          textDecoration: 'none',
+          transition: '1s',
+        }}
+        to={to}
+      >
+        {translate(actionToTranslate)}
+      </Button>
+    );
+  };
+
   return (
     <Box
       alignItems={'center'}
@@ -38,73 +62,17 @@ export const WelcomePage = (): JSX.Element => {
         >
           {!email && (
             <>
-              <Button
-                component={RouterLink}
-                state={{ formMode: 'login' }}
-                sx={{
-                  ':hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  backgroundColor: 'primary.main',
-                  border: 1,
-                  color: 'primary.contrastText',
-                  fontSize: { lg: 16, xs: 14 },
-                  margin: 0.7,
-                  textDecoration: 'none',
-                  transition: '1s',
-                }}
-                to="/auth"
-              >
-                {translate('signIn')}
-              </Button>
-              <Button
-                component={RouterLink}
-                state={{ formMode: 'register' }}
-                sx={{
-                  ':hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  backgroundColor: 'primary.main',
-                  border: 1,
-                  color: 'primary.contrastText',
-                  fontSize: { lg: 16, xs: 14 },
-                  margin: 0.7,
-                  textDecoration: 'none',
-                  transition: '1s',
-                }}
-                to="/auth"
-              >
-                {translate('signUp')}
-              </Button>
+              {NavButton('/auth', 'signIn', 'login')}
+              {NavButton('/auth', 'signUp', 'register')}
             </>
           )}
-          {email && (
-            <Button
-              component={RouterLink}
-              sx={{
-                ':hover': {
-                  backgroundColor: 'primary.dark',
-                },
-                backgroundColor: 'primary.main',
-                border: 1,
-
-                color: 'primary.contrastText',
-                fontSize: { lg: 16, xs: 14 },
-
-                margin: 0.7,
-                textDecoration: 'none',
-                transition: '1s',
-              }}
-              to="/main"
-            >
-              Main Page
-            </Button>
-          )}
+          {email && NavButton('/main', 'mainPage')}
         </Box>
       </nav>
 
       <Stack alignItems="center" justifyContent="center">
         <Typography
+          align="center"
           component="h1"
           sx={{ fontSize: { lg: 60, md: 56, sm: 45, xs: 30 }, margin: '2%' }}
           variant="h2"
