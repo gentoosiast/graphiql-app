@@ -7,6 +7,7 @@ import { I18NProvider } from '@/providers';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
 import { Fallback } from '.';
+
 const TestComponent = (): JSX.Element => {
   throw new Error('Test Error');
 };
