@@ -1,7 +1,6 @@
 import type { JSX } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 
 import { MemberCard } from '@/components/MemberCard';
@@ -9,33 +8,11 @@ import { useI18NContext } from '@/contexts/i18n';
 import { useAuth } from '@/features/auth';
 import { developers } from '@/features/developers/data/developers';
 
+import { NavButton } from './NavButton';
+
 export const WelcomePage = (): JSX.Element => {
   const { email } = useAuth();
   const { translate } = useI18NContext();
-
-  const NavButton = (to: string, actionToTranslate: string, formMode?: string): JSX.Element => {
-    return (
-      <Button
-        component={RouterLink}
-        state={{ formMode }}
-        sx={{
-          ':hover': {
-            backgroundColor: 'primary.dark',
-          },
-          backgroundColor: 'primary.main',
-          border: 1,
-          color: 'primary.contrastText',
-          fontSize: { lg: 16, xs: 14 },
-          margin: 0.7,
-          textDecoration: 'none',
-          transition: '1s',
-        }}
-        to={to}
-      >
-        {translate(actionToTranslate)}
-      </Button>
-    );
-  };
 
   return (
     <Box
