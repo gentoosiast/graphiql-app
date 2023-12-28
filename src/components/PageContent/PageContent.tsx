@@ -1,26 +1,22 @@
 import type { JSX } from 'react';
-import { useEffect } from 'react';
+import { useLayoutEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import { Box } from '@mui/system';
-import { onAuthStateChanged } from 'firebase/auth';
+import { suspend } from 'suspend-react';
 
-import { auth } from '@/config/firebase';
-import { removeUser, setUser } from '@/features/users';
+import { setUser } from '@/features/users';
 import { useAppDispatch } from '@/store';
 
+import { getInitialAuthState } from './getInitialAuthState';
+
 const PageContent = (): JSX.Element => {
+  const user = suspend(getInitialAuthState, ['initialAuthState']);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        dispatch(setUser({ email: user.email ?? '' }));
-      } else {
-        dispatch(removeUser());
-      }
-    });
-  }, [dispatch]);
+  useLayoutEffect(() => {
+    dispatch(setUser({ email: user?.email ?? null }));
+  }, [user, dispatch]);
 
   return (
     <Box component="main" sx={{ flexGrow: 1 }}>

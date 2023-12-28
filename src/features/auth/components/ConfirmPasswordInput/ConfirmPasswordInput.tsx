@@ -2,7 +2,8 @@ import type { JSX } from 'react';
 import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { IconButton, InputAdornment, TextField } from '@mui/material';
 
 import { useI18NContext } from '@/contexts/i18n';

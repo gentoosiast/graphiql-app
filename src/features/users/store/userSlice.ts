@@ -1,10 +1,11 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { AuthState } from '@/features/auth';
+type UserState = {
+  email: null | string;
+};
 
-const initialState = {
-  authState: AuthState.PENDING,
-  email: '',
+const initialState: UserState = {
+  email: null,
 };
 
 const userSlice = createSlice({
@@ -12,12 +13,10 @@ const userSlice = createSlice({
   name: 'user',
   reducers: {
     removeUser(state) {
-      state.email = '';
-      state.authState = AuthState.NOT_AUTHENTICATED;
+      state.email = null;
     },
-    setUser(state, action: PayloadAction<{ email: string }>) {
+    setUser(state, action: PayloadAction<{ email: null | string }>) {
       state.email = action.payload.email;
-      state.authState = AuthState.AUTHENTICATED;
     },
   },
 });
