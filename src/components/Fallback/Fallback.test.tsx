@@ -6,7 +6,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { I18NProvider } from '@/providers';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
-import { Fallback } from './Fallback';
+import { Fallback } from './Fallback.tsx';
 
 const TestComponent = (): JSX.Element => {
   throw new Error('Test Error');
