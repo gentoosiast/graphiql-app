@@ -9,6 +9,7 @@ import { useAuth } from '@/features/auth';
 import { developers } from '@/features/developers/data/developers';
 
 import { NavButton } from './NavButton';
+import { PetCard } from './PetCard';
 
 export const WelcomePage = (): JSX.Element => {
   const { email } = useAuth();
@@ -113,24 +114,9 @@ export const WelcomePage = (): JSX.Element => {
           padding={'3% 0'}
           width={'100%'}
         >
-          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
-            <img alt="varya cat" src="/varya.jpg" />
-            <Typography align="center" component="h4" variant="h5">
-              {translate('varya')}
-            </Typography>
-          </Stack>
-          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
-            <img alt="fania cat" src="/fanya.jpg" />
-            <Typography align="center" component="h4" variant="h5">
-              {translate('fanya')}
-            </Typography>
-          </Stack>
-          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
-            <img alt="murych cat" src="/murych.png" />
-            <Typography align="center" component="h4" variant="h5">
-              {translate('murych')}
-            </Typography>
-          </Stack>
+          {PetCard('/varya.jpg', 'varya')}
+          {PetCard('/fanya.jpg', 'fanya')}
+          {PetCard('/murych.png', 'murych')}
         </Box>
         <Stack alignItems="center" justifyContent="center">
           <Typography
@@ -140,7 +126,7 @@ export const WelcomePage = (): JSX.Element => {
             textAlign="center"
             variant="h2"
           >
-            About the course
+            {translate('courseTitle')}
           </Typography>
           <Typography
             sx={{
