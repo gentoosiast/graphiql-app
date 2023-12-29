@@ -1,3 +1,5 @@
+import type { Auth, NextFn, User } from 'firebase/auth';
+
 import { vi } from 'vitest';
 
 const mockFirebase = {
@@ -8,5 +10,11 @@ const mockFirebase = {
   }),
 };
 
+const authStateFn = (auth: Auth, observerFn: NextFn<User | null>): (() => void) => {
+  observerFn(auth.currentUser);
+
+  return () => {};
+};
+
 vi.mock('@/config/firebase', () => mockFirebase);
-vi.mock('firebase/auth', () => ({ onAuthStateChanged: vi.fn() }));
+vi.mock('firebase/auth', () => ({ onAuthStateChanged: authStateFn }));
