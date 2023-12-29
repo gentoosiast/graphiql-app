@@ -3,7 +3,10 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 
+import { I18NProvider } from '@/providers';
 import { renderWithProviders } from '@/test/renderWithProviders';
+
+import { Fallback } from './Fallback.tsx';
 
 const TestComponent = (): JSX.Element => {
   throw new Error('Test Error');
@@ -14,11 +17,14 @@ describe('Fallback', () => {
     vi.spyOn(console, 'error').mockImplementation(() => null);
 
     renderWithProviders(
-      <ErrorBoundary fallback={<>Error Boundary</>}>
-        <TestComponent />
-      </ErrorBoundary>,
+      <I18NProvider>
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <TestComponent />
+        </ErrorBoundary>
+      </I18NProvider>,
     );
 
-    expect(await screen.findByText('Error Boundary')).toBeVisible();
+    expect(await screen.findByText(/something went wrong.. try to reload the page/i)).toBeVisible();
+    expect(screen.getByText(/test error/i)).toBeVisible();
   });
 });

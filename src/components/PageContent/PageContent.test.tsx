@@ -7,13 +7,13 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 import { PageContent } from './PageContent';
 
 describe('PageContent', () => {
-  it('should render', () => {
+  it('should render', async () => {
     renderWithProviders(
       <I18NProvider>
         <PageContent />
       </I18NProvider>,
     );
 
-    expect(screen.getByRole('main')).toBeInTheDocument();
+    expect(await screen.findByRole('main')).toBeInTheDocument();
   });
 });

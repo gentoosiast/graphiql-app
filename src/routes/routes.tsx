@@ -2,7 +2,7 @@ import { ErrorBoundary } from 'react-error-boundary';
 
 import { RootLayout } from '@/components';
 import { Fallback } from '@/components/Fallback';
-import { AuthPage, AuthState } from '@/features/auth';
+import { AuthPage } from '@/features/auth';
 import { MainPage } from '@/features/graphiql';
 import { NotFoundPage, WelcomePage } from '@/features/misc';
 
@@ -14,7 +14,7 @@ export const routes = [
       { element: <WelcomePage />, index: true },
       {
         element: (
-          <AuthRouteGuard authRejectStatus={AuthState.NOT_AUTHENTICATED} rejectRoute="/">
+          <AuthRouteGuard isAuthNeeded={true} rejectRoute="/">
             <MainPage />
           </AuthRouteGuard>
         ),
@@ -22,7 +22,7 @@ export const routes = [
       },
       {
         element: (
-          <AuthRouteGuard authRejectStatus={AuthState.AUTHENTICATED} rejectRoute="/main">
+          <AuthRouteGuard isAuthNeeded={false} rejectRoute="/main">
             <AuthPage />
           </AuthRouteGuard>
         ),
