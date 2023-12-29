@@ -1,8 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import '@fontsource/philosopher';
-
 import '@/config/firebase';
 
 import { App } from './App';
