@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { lazy, useEffect, useRef, useState } from 'react';
+import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
 
 import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
@@ -39,6 +39,8 @@ export const MainPage = (): JSX.Element => {
   const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
+
+  const deferredApiSchema = useDeferredValue(apiSchema);
 
   useEffect(() => {
     const getDocs = async (): Promise<void> => {
@@ -120,7 +122,7 @@ export const MainPage = (): JSX.Element => {
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBlock: '2rem', position: 'relative' }}>
-        {apiSchema && (
+        {deferredApiSchema && (
           <>
             <Tooltip title={translate('docs.show')}>
               <Button
@@ -142,7 +144,7 @@ export const MainPage = (): JSX.Element => {
             <DocsSection
               isOpen={isDocsOpen}
               onClose={() => setIsDocsOpen(false)}
-              schema={apiSchema}
+              schema={deferredApiSchema}
             />
           </>
         )}
