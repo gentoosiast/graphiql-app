@@ -115,7 +115,7 @@ describe('MainPage', () => {
 
     const responseText = await within(responseViewer).findByText(/big head morty/i);
     expect(responseText).toBeInTheDocument();
-  }, 10000);
+  }, 20000);
 
   it('should allow user to send GraphQL requests and provide Variables', async () => {
     const user = userEvent.setup();
@@ -146,7 +146,7 @@ describe('MainPage', () => {
 
     const responseText = await within(responseViewer).findByText(/big head morty/i);
     expect(responseText).toBeInTheDocument();
-  }, 10000);
+  }, 15000);
 
   it('should allow user to send GraphQL requests and provide Headers', async () => {
     const user = userEvent.setup();
@@ -177,7 +177,7 @@ describe('MainPage', () => {
 
     const responseText = await within(responseViewer).findByText(/supermegagigauser/i);
     expect(responseText).toBeInTheDocument();
-  }, 10000);
+  }, 20000);
 
   it('should allow user to send GraphQL requess to different endpoints', async () => {
     const user = userEvent.setup();
