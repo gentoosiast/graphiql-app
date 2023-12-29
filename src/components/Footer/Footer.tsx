@@ -2,8 +2,7 @@ import type { JSX } from 'react';
 
 import { ButtonGroup, Link, Typography } from '@mui/material';
 
-import { GitHubButton } from '@/components/GitHubButton';
-
+import { GitHubButton } from '../GitHubButton';
 import { RssIcon } from '../RSSIcon';
 import { FooterContentWrapper, FooterWrapper, IconDateWrapper } from './FooterWrappers';
 

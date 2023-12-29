@@ -3,11 +3,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Button } from '@mui/material';
 
 import { useI18NContext } from '@/contexts/i18n';
-export const NavButton = (
-  to: string,
-  actionToTranslate: string,
-  formMode?: string,
-): JSX.Element => {
+
+export const NavButton = (to: string, translateToken: string, formMode?: string): JSX.Element => {
   const { translate } = useI18NContext();
 
   return (
@@ -28,7 +25,7 @@ export const NavButton = (
       }}
       to={to}
     >
-      {translate(actionToTranslate)}
+      {translate(translateToken)}
     </Button>
   );
 };

@@ -2,11 +2,11 @@ import { Button, Link } from '@mui/material';
 
 import { useI18NContext } from '@/contexts/i18n';
 
-import { GitHubIcon } from '..';
+import { GitHubIcon } from '../GitHubIcon';
 
 export const GitHubButton = (
   githubLink: string,
-  borderR: string,
+  borderRadius: string,
   nameForTranslation: string,
 ): JSX.Element => {
   const { translate } = useI18NContext();
@@ -16,7 +16,7 @@ export const GitHubButton = (
       sx={{
         border: 0.5,
         borderColor: 'primary.contrastText',
-        borderRadius: borderR,
+        borderRadius,
         textDecoration: 'none',
       }}
     >
