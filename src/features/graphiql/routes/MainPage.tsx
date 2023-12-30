@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
 
 import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
@@ -22,11 +22,15 @@ import { useI18NContext } from '@/contexts/i18n';
 import { getIntrospectionQuery } from '../api/get-introspection-query';
 import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
-import { DocsSection } from '../components/docbrowser/DocsSection';
 import { NOTIFICATION_TIMEOUT } from '../constants';
 import { useMainPageReducer } from '../hooks/useMainPageReducer';
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
 import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
+
+const DocsSection = lazy(async () => {
+  const { DocsSection } = await import('../components/docbrowser/DocsSection');
+  return { default: DocsSection };
+});
 
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
@@ -35,6 +39,8 @@ export const MainPage = (): JSX.Element => {
   const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
+
+  const deferredApiSchema = useDeferredValue(apiSchema);
 
   useEffect(() => {
     const getDocs = async (): Promise<void> => {
@@ -115,30 +121,32 @@ export const MainPage = (): JSX.Element => {
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ paddingBlock: '2rem' }}>
-        <Tooltip title={translate('docs.show')}>
-          <Button
-            onClick={() => setIsDocsOpen(true)}
-            sx={{
-              maxHeight: '40px',
-              maxWidth: '40px',
-              mb: 2,
-              minHeight: '40px',
-              minWidth: '40px',
-              mt: 2,
-            }}
-            variant="contained"
-          >
-            <DescriptionIcon />
-          </Button>
-        </Tooltip>
+      <Container maxWidth="xl" sx={{ paddingBlock: '2rem', position: 'relative' }}>
+        {deferredApiSchema && (
+          <>
+            <Tooltip title={translate('docs.show')}>
+              <Button
+                onClick={() => setIsDocsOpen(true)}
+                sx={{
+                  maxHeight: '40px',
+                  maxWidth: '40px',
+                  minHeight: '40px',
+                  minWidth: '40px',
+                  position: 'absolute',
+                  top: '2rem',
+                }}
+                variant="contained"
+              >
+                <DescriptionIcon />
+              </Button>
+            </Tooltip>
 
-        {apiSchema && (
-          <DocsSection
-            isOpen={isDocsOpen}
-            onClose={() => setIsDocsOpen(false)}
-            schema={apiSchema}
-          />
+            <DocsSection
+              isOpen={isDocsOpen}
+              onClose={() => setIsDocsOpen(false)}
+              schema={deferredApiSchema}
+            />
+          </>
         )}
 
         <Box
@@ -147,6 +155,7 @@ export const MainPage = (): JSX.Element => {
           gridAutoColumns="minmax(0, 1fr)"
           gridAutoFlow={{ md: 'column', sm: 'row' }}
           gridTemplateRows={{ md: '600px', sm: 'repeat(2, 600px)' }}
+          pt="4rem"
         >
           <Stack spacing={1} sx={{ height: '100%', position: 'relative', width: '100%' }}>
             <Stack
