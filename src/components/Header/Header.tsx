@@ -7,6 +7,7 @@ import TranslateOutlinedIcon from '@mui/icons-material/TranslateOutlined';
 import { Alert, AppBar, Button, Menu, MenuItem, Snackbar, useScrollTrigger } from '@mui/material';
 import { Stack } from '@mui/system';
 import { signOut } from 'firebase/auth';
+import { useLocalStorage } from 'usehooks-ts';
 
 import { auth } from '@/config/firebase';
 import { I18NLanguage } from '@/config/i18n';
@@ -25,6 +26,7 @@ export const Header = (): JSX.Element => {
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
   const [alertText, setAlertText] = useState('');
   const { email } = useAuth();
+  const [_, setSelectedLanguage] = useLocalStorage('sanJunipero-language', 'en');
 
   const isLanguageMenuOpen = Boolean(anchorEl);
 
@@ -35,6 +37,7 @@ export const Header = (): JSX.Element => {
   const handleLanguageMenuClose = (lang?: I18NLanguage): void => {
     if (lang) {
       setLanguage(lang);
+      setSelectedLanguage(lang);
     }
 
     setAnchorEl(null);
