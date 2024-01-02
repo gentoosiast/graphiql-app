@@ -1,14 +1,33 @@
 import type { JSX } from 'react';
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import { Box, CircularProgress } from '@mui/material';
+import { onAuthStateChanged } from 'firebase/auth';
 
-import { Footer } from '@/components/Footer';
-import { Header } from '@/components/Header';
+import { auth } from '@/config/firebase';
+import { setUser } from '@/features/users';
+import { setAuthState, useAppDispatch } from '@/store';
 
+import { Footer } from '../Footer';
+import { Header } from '../Header';
 import { PageContent } from '../PageContent';
 
 export const RootLayout = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      const authState = user ? 'AUTHENTICATED' : 'UNAUTHENTICATED';
+
+      dispatch(setAuthState(authState));
+      dispatch(setUser({ email: user?.email ?? null }));
+    });
+
+    return () => {
+      unsub();
+    };
+  }, [dispatch]);
+
   return (
     <Box
       sx={{

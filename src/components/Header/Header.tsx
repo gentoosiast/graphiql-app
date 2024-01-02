@@ -11,20 +11,17 @@ import { signOut } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { I18NLanguage } from '@/config/i18n';
 import { useI18NContext } from '@/contexts/i18n';
-import { useAuth } from '@/features/auth';
-import { removeUser } from '@/features/users';
-import { useAppDispatch } from '@/store';
+import { useAuth } from '@/hooks';
 
 import { LogoLink } from '../LogoLink/';
 
 export const Header = (): JSX.Element => {
-  const dispatch = useAppDispatch();
+  const authState = useAuth();
   const navigate = useNavigate();
   const { language, setLanguage, translate } = useI18NContext();
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
   const [alertText, setAlertText] = useState('');
-  const { email } = useAuth();
 
   const isLanguageMenuOpen = Boolean(anchorEl);
 
@@ -43,7 +40,6 @@ export const Header = (): JSX.Element => {
   const signOutUser = async (): Promise<void> => {
     try {
       await signOut(auth);
-      dispatch(removeUser());
 
       setAlertType('success');
       setAlertText(translate('signOutSuccess'));
@@ -135,7 +131,7 @@ export const Header = (): JSX.Element => {
               Русский
             </MenuItem>
           </Menu>
-          {email && (
+          {authState === 'AUTHENTICATED' && (
             <Button
               color="inherit"
               onClick={() => void signOutUser()}

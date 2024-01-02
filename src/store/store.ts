@@ -4,7 +4,9 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import userReducer from '@/features/users';
 
-const rootReducer = combineReducers({ user: userReducer });
+import authReducer from './slices/authSlice';
+
+const rootReducer = combineReducers({ auth: authReducer, user: userReducer });
 
 export const setupStore = (preloadedState?: Partial<RootState>): Store<RootState> =>
   configureStore({
