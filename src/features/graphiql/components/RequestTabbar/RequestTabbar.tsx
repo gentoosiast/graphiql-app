@@ -6,7 +6,9 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Box, Collapse, IconButton, Tab, Tabs, Tooltip } from '@mui/material';
 
 import { useI18NContext } from '@/contexts/i18n';
+import { useAppDispatch, useAppSelector } from '@/store';
 
+import { setHeaders, setVariables } from '../../store';
 import { CustomTabPanel } from '../CustomTabPanel';
 import { Editor } from '../Editor';
 
@@ -17,22 +19,15 @@ const a11yProps = (index: number): Record<string, string> => {
   };
 };
 
-type Props = {
-  headers: string;
-  onHeadersChange: (code: string) => void;
-  onVariablesChange: (code: string) => void;
-  variables: string;
-};
-
-export const RequestTabbar = ({
-  headers,
-  onHeadersChange,
-  onVariablesChange,
-  variables,
-}: Props): JSX.Element => {
+export const RequestTabbar = (): JSX.Element => {
   const { translate } = useI18NContext();
   const [currentTabIdx, setCurrentTabIdx] = useState(0);
   const [isTabbarOpen, setIsTabbarOpen] = useState(false);
+
+  const headers = useAppSelector((state) => state.graphiql.headers);
+  const variables = useAppSelector((state) => state.graphiql.variables);
+
+  const dispatch = useAppDispatch();
 
   const handleTabChange = (_: SyntheticEvent, newValue: number): void => {
     if (!isTabbarOpen) {
@@ -56,7 +51,7 @@ export const RequestTabbar = ({
           <Editor
             editorMode="json-with-linter"
             height="150px"
-            onChange={onVariablesChange}
+            onChange={(value) => dispatch(setVariables(value))}
             placeholder={translate('graphqlVariablesPlaceholder')}
             value={variables}
           />
@@ -65,7 +60,7 @@ export const RequestTabbar = ({
           <Editor
             editorMode="json-with-linter"
             height="150px"
-            onChange={onHeadersChange}
+            onChange={(value) => dispatch(setHeaders(value))}
             placeholder={translate('graphqlHeadersPlaceholder')}
             value={headers}
           />

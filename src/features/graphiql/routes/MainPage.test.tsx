@@ -1,9 +1,10 @@
-import { render, screen, within } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { I18NProvider } from '@/providers';
 import { EditorMock } from '@/test/components';
+import { renderWithProviders } from '@/test/renderWithProviders';
 
 import { MainPage } from './MainPage';
 
@@ -19,7 +20,7 @@ describe('MainPage', () => {
   it("should expand Variables tab when it's clicked", async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
@@ -43,7 +44,7 @@ describe('MainPage', () => {
   it("should expand Headers tab when it's clicked", async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
@@ -67,7 +68,7 @@ describe('MainPage', () => {
   it('should toggle tabbar when toggle button is clicked', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
@@ -95,7 +96,7 @@ describe('MainPage', () => {
   it('should allow user to send GraphQL requests', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
@@ -120,7 +121,7 @@ describe('MainPage', () => {
   it('should allow user to send GraphQL requests and provide Variables', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
@@ -151,7 +152,7 @@ describe('MainPage', () => {
   it('should allow user to send GraphQL requests and provide Headers', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
@@ -182,7 +183,7 @@ describe('MainPage', () => {
   it('should allow user to send GraphQL requess to different endpoints', async () => {
     const user = userEvent.setup();
 
-    render(
+    renderWithProviders(
       <I18NProvider>
         <MainPage />
       </I18NProvider>,
