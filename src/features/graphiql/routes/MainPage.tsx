@@ -18,12 +18,13 @@ import {
 import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 import { getIntrospectionQuery } from '../api/get-introspection-query';
 import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { NOTIFICATION_TIMEOUT } from '../constants';
-import { useMainPageReducer } from '../hooks/useMainPageReducer';
+import { setEndpoint, setError, setNotification, setRequest, setResponse } from '../store';
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
 import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
 
@@ -34,9 +35,16 @@ const DocsSection = lazy(async () => {
 
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
-  const [state, dispatch] = useMainPageReducer();
 
-  const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
+  const dispatch = useAppDispatch();
+
+  const endpoint = useAppSelector((state) => state.graphiql.endpoint);
+  const request = useAppSelector((state) => state.graphiql.request);
+  const response = useAppSelector((state) => state.graphiql.response);
+  const headers = useAppSelector((state) => state.graphiql.headers);
+  const variables = useAppSelector((state) => state.graphiql.variables);
+  const notificationText = useAppSelector((state) => state.graphiql.notificationText);
+
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
 
@@ -48,18 +56,18 @@ export const MainPage = (): JSX.Element => {
 
       try {
         const response = await graphQLRequest<IntrospectionResponse>({
-          endpoint: state.endpoint,
+          endpoint,
           query: introspectionQuery,
         });
 
         setApiSchema(response.data.__schema);
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
+        dispatch(setError({ errorMessage, errorResponse: '' }));
       }
     };
     void getDocs();
-  }, [state.endpoint, dispatch]);
+  }, [endpoint, dispatch]);
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -82,41 +90,35 @@ export const MainPage = (): JSX.Element => {
 
     try {
       const response = await graphQLRequest<{ data: unknown }>({
-        endpoint: state.endpoint,
-        headers: parseEditorCodeToObject(state.headers, 'GraphQL headers'),
-        query: state.request,
+        endpoint,
+        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
+        query: request,
         signal: abortController.signal,
-        variables: parseEditorCodeToObject(state.variables, 'GraphQL variables'),
+        variables: parseEditorCodeToObject(variables, 'GraphQL variables'),
       });
 
       const responseJSON = jsonPrettify(response.data);
 
-      dispatch({ payload: responseJSON, type: 'setResponse' });
+      dispatch(setResponse(responseJSON));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
       if (isAxiosError(error)) {
         const errorJSON = jsonPrettify(error.response?.data);
 
-        dispatch({
-          payload: { errorMessage, errorResponse: errorJSON },
-          type: 'setError',
-        });
+        dispatch(setError({ errorMessage, errorResponse: errorJSON }));
       } else {
-        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
+        dispatch(setError({ errorMessage, errorResponse: '' }));
       }
     }
   };
 
   const handleSnackbarClose = (): void => {
-    dispatch({
-      payload: { message: '', severity: 'info' },
-      type: 'setNotification',
-    });
+    dispatch(setNotification({ message: '', severity: 'info' }));
   };
 
   const handlePrettify = (): void => {
-    dispatch({ payload: graphqlPrettify(state.request), type: 'setRequest' });
+    dispatch(setRequest(graphqlPrettify(request)));
   };
 
   return (
@@ -164,12 +166,11 @@ export const MainPage = (): JSX.Element => {
               sx={{ alignItems: 'center', justifyContent: 'center' }}
             >
               <TextField
+                defaultValue={endpoint}
                 label={translate('graphqlEndpoint')}
-                onBlur={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
-                onChange={(e) => setApiEndpoint(e.target.value)}
+                onBlur={(e) => dispatch(setEndpoint(e.target.value))}
                 placeholder={translate('graphqlEndpoint')}
                 sx={{ width: '100%' }}
-                value={apiEndpoint}
               />
               <Tooltip title={translate('prettifyQuery')}>
                 <IconButton
@@ -194,18 +195,13 @@ export const MainPage = (): JSX.Element => {
             <Editor
               editorMode="graphql"
               height="100%"
-              onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
+              onChange={(value) => dispatch(setRequest(value))}
               placeholder={translate('graphqlQuery')}
               style={{ flexGrow: '1', height: '100%', overflow: 'auto' }}
-              value={state.request}
+              value={request}
               width="100%"
             />
-            <RequestTabbar
-              headers={state.headers}
-              onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
-              onVariablesChange={(value) => dispatch({ payload: value, type: 'setVariables' })}
-              variables={state.variables}
-            />
+            <RequestTabbar />
           </Stack>
           <Stack sx={{ height: '100%', width: '100%' }}>
             <Editor
@@ -214,7 +210,7 @@ export const MainPage = (): JSX.Element => {
               height="100%"
               placeholder={translate('graphqlResponse')}
               style={{ height: '100%' }}
-              value={state.response}
+              value={response}
               width="100%"
             />
           </Stack>
@@ -223,10 +219,10 @@ export const MainPage = (): JSX.Element => {
       <Snackbar
         autoHideDuration={NOTIFICATION_TIMEOUT}
         onClose={handleSnackbarClose}
-        open={state.notificationText.length > 0}
+        open={notificationText.length > 0}
       >
         <Alert onClick={handleSnackbarClose} severity="error">
-          {state.notificationText}
+          {notificationText}
         </Alert>
       </Snackbar>
     </>

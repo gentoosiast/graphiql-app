@@ -2,9 +2,10 @@ import type { Store } from '@reduxjs/toolkit';
 
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
+import graphiQLReducer from '@/features/graphiql';
 import userReducer from '@/features/users';
 
-const rootReducer = combineReducers({ user: userReducer });
+const rootReducer = combineReducers({ graphiql: graphiQLReducer, user: userReducer });
 
 export const setupStore = (preloadedState?: Partial<RootState>): Store<RootState> =>
   configureStore({
