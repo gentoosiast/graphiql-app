@@ -1,2 +1,3 @@
 export * from './routes';
-export * from './hooks';
+export { default } from './store';
+export * from './store';
