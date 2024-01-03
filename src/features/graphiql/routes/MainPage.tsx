@@ -1,6 +1,7 @@
 import type { JSX } from 'react';
 import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
 import {
@@ -50,25 +51,7 @@ export const MainPage = (): JSX.Element => {
 
   const deferredApiSchema = useDeferredValue(apiSchema);
 
-  useEffect(() => {
-    const getDocs = async (): Promise<void> => {
-      const introspectionQuery = getIntrospectionQuery();
-
-      try {
-        const response = await graphQLRequest<IntrospectionResponse>({
-          endpoint,
-          query: introspectionQuery,
-        });
-
-        setApiSchema(response.data.__schema);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        dispatch(setError({ errorMessage, errorResponse: '' }));
-      }
-    };
-    void getDocs();
-  }, [endpoint, dispatch]);
-
+  const endpointInputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -78,6 +61,26 @@ export const MainPage = (): JSX.Element => {
       }
     };
   }, []);
+
+  const getDocs = async (url: string): Promise<void> => {
+    const introspectionQuery = getIntrospectionQuery();
+
+    try {
+      setApiSchema(null);
+
+      const response = await graphQLRequest<IntrospectionResponse>({
+        endpoint: url,
+        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
+        query: introspectionQuery,
+      });
+
+      setApiSchema(response.data.__schema);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setApiSchema(null);
+      dispatch(setError({ errorMessage, errorResponse: '' }));
+    }
+  };
 
   const handleSendRequest = async (): Promise<void> => {
     if (abortControllerRef.current) {
@@ -166,9 +169,24 @@ export const MainPage = (): JSX.Element => {
               sx={{ alignItems: 'center', justifyContent: 'center' }}
             >
               <TextField
-                defaultValue={endpoint}
+                InputProps={{
+                  endAdornment: (
+                    <Tooltip title={translate('changeEndpoint')}>
+                      <IconButton
+                        aria-label={translate('changeEndpoint')}
+                        onClick={() => {
+                          const endpoint = endpointInputRef.current?.value ?? '';
+                          dispatch(setEndpoint(endpoint));
+                          void getDocs(endpoint);
+                        }}
+                      >
+                        <CheckCircleIcon />
+                      </IconButton>
+                    </Tooltip>
+                  ),
+                }}
+                inputRef={endpointInputRef}
                 label={translate('graphqlEndpoint')}
-                onBlur={(e) => dispatch(setEndpoint(e.target.value))}
                 placeholder={translate('graphqlEndpoint')}
                 sx={{ width: '100%' }}
               />

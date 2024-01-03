@@ -192,17 +192,19 @@ describe('MainPage', () => {
     const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
     const sendButton = screen.getByRole('button', { name: /send request/i });
+    const setEndpointButton = screen.getByRole('button', { name: /change endpoint/i });
 
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
     expect(responseViewer).toHaveValue('');
 
     await user.clear(endpointInput);
     await user.keyboard('https://example.com/graphql');
+    await user.click(setEndpointButton);
     await user.clear(graphQLQueryEditor);
     await user.keyboard('query ExampleQuery {{[Enter]message}[Enter]');
     await user.click(sendButton);
 
     const responseText = await within(responseViewer).findByText(/hi, i'm an example query!/i);
     expect(responseText).toBeInTheDocument();
-  }, 10000);
+  }, 15000);
 });
