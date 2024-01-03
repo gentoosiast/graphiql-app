@@ -7,7 +7,7 @@ import type { Preferences } from '@/types';
 import { I18NLanguage, languageData } from '@/config/i18n';
 import { defaultPreferences } from '@/config/preferences';
 import { UNIQUE_STORAGE_PREFIX } from '@/config/storage';
-import { I18NContext } from '@/contexts/i18n/context';
+import { I18NContext } from '@/contexts/i18n';
 import { usePreferences } from '@/hooks';
 import { isPreferences } from '@/validators';
 
