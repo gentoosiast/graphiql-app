@@ -5,14 +5,14 @@ import { Stack } from '@mui/system';
 
 import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
-import { useAuth } from '@/features/auth';
 import { developers } from '@/features/developers/data/developers';
+import { useAuth } from '@/hooks';
 
 import { NavButton } from './NavButton';
 import { PetCard } from './PetCard';
 
 export const WelcomePage = (): JSX.Element => {
-  const { email } = useAuth();
+  const authState = useAuth();
   const { translate } = useI18NContext();
 
   return (
@@ -38,13 +38,13 @@ export const WelcomePage = (): JSX.Element => {
             width: '100%',
           }}
         >
-          {!email && (
+          {authState === 'UNAUTHENTICATED' && (
             <>
-              {NavButton('/auth', 'signIn', 'login')}
-              {NavButton('/auth', 'signUp', 'register')}
+              {NavButton('/auth', translate('signIn'), 'login')}
+              {NavButton('/auth', translate('signUp'), 'register')}
             </>
           )}
-          {email && NavButton('/main', 'mainPage')}
+          {authState === 'AUTHENTICATED' && NavButton('/main', translate('mainPage'))}
         </Box>
       </nav>
 

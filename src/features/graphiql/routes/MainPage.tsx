@@ -1,6 +1,7 @@
 import type { JSX } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
 
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
 import SendIcon from '@mui/icons-material/Send';
 import {
@@ -18,43 +19,39 @@ import {
 import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
+import { useAppDispatch, useAppSelector } from '@/store';
 
 import { getIntrospectionQuery } from '../api/get-introspection-query';
 import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
-import { DocsSection } from '../components/docbrowser/DocsSection';
 import { NOTIFICATION_TIMEOUT } from '../constants';
-import { useMainPageReducer } from '../hooks/useMainPageReducer';
+import { setEndpoint, setError, setNotification, setRequest, setResponse } from '../store';
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
 import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
 
+const DocsSection = lazy(async () => {
+  const { DocsSection } = await import('../components/docbrowser/DocsSection');
+  return { default: DocsSection };
+});
+
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
-  const [state, dispatch] = useMainPageReducer();
 
-  const [apiEndpoint, setApiEndpoint] = useState(state.endpoint);
+  const dispatch = useAppDispatch();
+
+  const endpoint = useAppSelector((state) => state.graphiql.endpoint);
+  const request = useAppSelector((state) => state.graphiql.request);
+  const response = useAppSelector((state) => state.graphiql.response);
+  const headers = useAppSelector((state) => state.graphiql.headers);
+  const variables = useAppSelector((state) => state.graphiql.variables);
+  const notificationText = useAppSelector((state) => state.graphiql.notificationText);
+
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
 
-  useEffect(() => {
-    const getDocs = async (): Promise<void> => {
-      const introspectionQuery = getIntrospectionQuery();
+  const deferredApiSchema = useDeferredValue(apiSchema);
 
-      try {
-        const response = await graphQLRequest<IntrospectionResponse>({
-          endpoint: state.endpoint,
-          query: introspectionQuery,
-        });
-
-        setApiSchema(response.data.__schema);
-      } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
-      }
-    };
-    void getDocs();
-  }, [state.endpoint, dispatch]);
-
+  const endpointInputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
 
   useEffect(() => {
@@ -64,6 +61,26 @@ export const MainPage = (): JSX.Element => {
       }
     };
   }, []);
+
+  const getDocs = async (url: string): Promise<void> => {
+    const introspectionQuery = getIntrospectionQuery();
+
+    try {
+      setApiSchema(null);
+
+      const response = await graphQLRequest<IntrospectionResponse>({
+        endpoint: url,
+        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
+        query: introspectionQuery,
+      });
+
+      setApiSchema(response.data.__schema);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      setApiSchema(null);
+      dispatch(setError({ errorMessage, errorResponse: '' }));
+    }
+  };
 
   const handleSendRequest = async (): Promise<void> => {
     if (abortControllerRef.current) {
@@ -76,69 +93,65 @@ export const MainPage = (): JSX.Element => {
 
     try {
       const response = await graphQLRequest<{ data: unknown }>({
-        endpoint: state.endpoint,
-        headers: parseEditorCodeToObject(state.headers, 'GraphQL headers'),
-        query: state.request,
+        endpoint,
+        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
+        query: request,
         signal: abortController.signal,
-        variables: parseEditorCodeToObject(state.variables, 'GraphQL variables'),
+        variables: parseEditorCodeToObject(variables, 'GraphQL variables'),
       });
 
       const responseJSON = jsonPrettify(response.data);
 
-      dispatch({ payload: responseJSON, type: 'setResponse' });
+      dispatch(setResponse(responseJSON));
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
       if (isAxiosError(error)) {
         const errorJSON = jsonPrettify(error.response?.data);
 
-        dispatch({
-          payload: { errorMessage, errorResponse: errorJSON },
-          type: 'setError',
-        });
+        dispatch(setError({ errorMessage, errorResponse: errorJSON }));
       } else {
-        dispatch({ payload: { errorMessage, errorResponse: '' }, type: 'setError' });
+        dispatch(setError({ errorMessage, errorResponse: '' }));
       }
     }
   };
 
   const handleSnackbarClose = (): void => {
-    dispatch({
-      payload: { message: '', severity: 'info' },
-      type: 'setNotification',
-    });
+    dispatch(setNotification({ message: '', severity: 'info' }));
   };
 
   const handlePrettify = (): void => {
-    dispatch({ payload: graphqlPrettify(state.request), type: 'setRequest' });
+    dispatch(setRequest(graphqlPrettify(request)));
   };
 
   return (
     <>
-      <Container maxWidth="xl" sx={{ paddingBlock: '2rem' }}>
-        <Tooltip title={translate('docs.show')}>
-          <Button
-            onClick={() => setIsDocsOpen(true)}
-            sx={{
-              maxHeight: '40px',
-              maxWidth: '40px',
-              mb: 2,
-              minHeight: '40px',
-              minWidth: '40px',
-              mt: 2,
-            }}
-            variant="contained"
-          >
-            <DescriptionIcon />
-          </Button>
-        </Tooltip>
+      <Container maxWidth="xl" sx={{ paddingBlock: '2rem', position: 'relative' }}>
+        {deferredApiSchema && (
+          <>
+            <Tooltip title={translate('docs.show')}>
+              <Button
+                onClick={() => setIsDocsOpen(true)}
+                sx={{
+                  maxHeight: '40px',
+                  maxWidth: '40px',
+                  minHeight: '40px',
+                  minWidth: '40px',
+                  position: 'absolute',
+                  top: '2rem',
+                }}
+                variant="contained"
+              >
+                <DescriptionIcon />
+              </Button>
+            </Tooltip>
 
-        {apiSchema && (
-          <DocsSection
-            isOpen={isDocsOpen}
-            onClose={() => setIsDocsOpen(false)}
-            schema={apiSchema}
-          />
+            <DocsSection
+              isOpen={isDocsOpen}
+              onClose={() => setIsDocsOpen(false)}
+              schema={deferredApiSchema}
+            />
+          </>
         )}
 
         <Box
@@ -147,6 +160,7 @@ export const MainPage = (): JSX.Element => {
           gridAutoColumns="minmax(0, 1fr)"
           gridAutoFlow={{ md: 'column', sm: 'row' }}
           gridTemplateRows={{ md: '600px', sm: 'repeat(2, 600px)' }}
+          pt="4rem"
         >
           <Stack spacing={1} sx={{ height: '100%', position: 'relative', width: '100%' }}>
             <Stack
@@ -155,12 +169,26 @@ export const MainPage = (): JSX.Element => {
               sx={{ alignItems: 'center', justifyContent: 'center' }}
             >
               <TextField
+                InputProps={{
+                  endAdornment: (
+                    <Tooltip title={translate('changeEndpoint')}>
+                      <IconButton
+                        aria-label={translate('changeEndpoint')}
+                        onClick={() => {
+                          const endpoint = endpointInputRef.current?.value ?? '';
+                          dispatch(setEndpoint(endpoint));
+                          void getDocs(endpoint);
+                        }}
+                      >
+                        <CheckCircleIcon />
+                      </IconButton>
+                    </Tooltip>
+                  ),
+                }}
+                inputRef={endpointInputRef}
                 label={translate('graphqlEndpoint')}
-                onBlur={(e) => dispatch({ payload: e.target.value, type: 'setEndpoint' })}
-                onChange={(e) => setApiEndpoint(e.target.value)}
                 placeholder={translate('graphqlEndpoint')}
                 sx={{ width: '100%' }}
-                value={apiEndpoint}
               />
               <Tooltip title={translate('prettifyQuery')}>
                 <IconButton
@@ -185,18 +213,13 @@ export const MainPage = (): JSX.Element => {
             <Editor
               editorMode="graphql"
               height="100%"
-              onChange={(value) => dispatch({ payload: value, type: 'setRequest' })}
+              onChange={(value) => dispatch(setRequest(value))}
               placeholder={translate('graphqlQuery')}
               style={{ flexGrow: '1', height: '100%', overflow: 'auto' }}
-              value={state.request}
+              value={request}
               width="100%"
             />
-            <RequestTabbar
-              headers={state.headers}
-              onHeadersChange={(value) => dispatch({ payload: value, type: 'setHeaders' })}
-              onVariablesChange={(value) => dispatch({ payload: value, type: 'setVariables' })}
-              variables={state.variables}
-            />
+            <RequestTabbar />
           </Stack>
           <Stack sx={{ height: '100%', width: '100%' }}>
             <Editor
@@ -205,7 +228,7 @@ export const MainPage = (): JSX.Element => {
               height="100%"
               placeholder={translate('graphqlResponse')}
               style={{ height: '100%' }}
-              value={state.response}
+              value={response}
               width="100%"
             />
           </Stack>
@@ -214,10 +237,10 @@ export const MainPage = (): JSX.Element => {
       <Snackbar
         autoHideDuration={NOTIFICATION_TIMEOUT}
         onClose={handleSnackbarClose}
-        open={state.notificationText.length > 0}
+        open={notificationText.length > 0}
       >
         <Alert onClick={handleSnackbarClose} severity="error">
-          {state.notificationText}
+          {notificationText}
         </Alert>
       </Snackbar>
     </>

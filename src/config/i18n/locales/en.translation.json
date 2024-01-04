@@ -67,6 +67,7 @@
   "signOutSuccess": "You've successfully signed out",
 
   "graphqlEndpoint": "GraphQL endpoint",
+  "changeEndpoint": "Change endpoint",
   "prettifyQuery": "Prettify query",
   "sendRequest": "Send request",
   "graphqlQuery": "GraphQL Query",
