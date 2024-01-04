@@ -1,13 +1,15 @@
 import type { JSX } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { Stack } from '@mui/system';
 
 import { MemberCard } from '@/components/MemberCard';
 import { useI18NContext } from '@/contexts/i18n';
 import { developers } from '@/features/developers/data/developers';
 import { useAuth } from '@/hooks';
+
+import { NavButton } from './NavButton';
+import { PetCard } from './PetCard';
 
 export const WelcomePage = (): JSX.Element => {
   const authState = useAuth();
@@ -38,73 +40,17 @@ export const WelcomePage = (): JSX.Element => {
         >
           {authState === 'UNAUTHENTICATED' && (
             <>
-              <Button
-                component={RouterLink}
-                state={{ formMode: 'login' }}
-                sx={{
-                  ':hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  backgroundColor: 'primary.main',
-                  border: 1,
-                  color: 'primary.contrastText',
-                  fontSize: { lg: 16, xs: 14 },
-                  margin: 0.7,
-                  textDecoration: 'none',
-                  transition: '1s',
-                }}
-                to="/auth"
-              >
-                {translate('signIn')}
-              </Button>
-              <Button
-                component={RouterLink}
-                state={{ formMode: 'register' }}
-                sx={{
-                  ':hover': {
-                    backgroundColor: 'primary.dark',
-                  },
-                  backgroundColor: 'primary.main',
-                  border: 1,
-                  color: 'primary.contrastText',
-                  fontSize: { lg: 16, xs: 14 },
-                  margin: 0.7,
-                  textDecoration: 'none',
-                  transition: '1s',
-                }}
-                to="/auth"
-              >
-                {translate('signUp')}
-              </Button>
+              {NavButton('/auth', translate('signIn'), 'login')}
+              {NavButton('/auth', translate('signUp'), 'register')}
             </>
           )}
-          {authState === 'AUTHENTICATED' && (
-            <Button
-              component={RouterLink}
-              sx={{
-                ':hover': {
-                  backgroundColor: 'primary.dark',
-                },
-                backgroundColor: 'primary.main',
-                border: 1,
-
-                color: 'primary.contrastText',
-                fontSize: { lg: 16, xs: 14 },
-
-                margin: 0.7,
-                textDecoration: 'none',
-                transition: '1s',
-              }}
-              to="/main"
-            >
-              Main Page
-            </Button>
-          )}
+          {authState === 'AUTHENTICATED' && NavButton('/main', translate('mainPage'))}
         </Box>
       </nav>
 
       <Stack alignItems="center" justifyContent="center">
         <Typography
+          align="center"
           component="h1"
           sx={{ fontSize: { lg: 60, md: 56, sm: 45, xs: 30 }, margin: '2%' }}
           variant="h2"
@@ -168,24 +114,9 @@ export const WelcomePage = (): JSX.Element => {
           padding={'3% 0'}
           width={'100%'}
         >
-          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
-            <img alt="varya cat" src="/varya.jpg" />
-            <Typography align="center" component="h4" variant="h5">
-              {translate('varya')}
-            </Typography>
-          </Stack>
-          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
-            <img alt="fania cat" src="/fanya.jpg" />
-            <Typography align="center" component="h4" variant="h5">
-              {translate('fanya')}
-            </Typography>
-          </Stack>
-          <Stack justifyContent="space-between" sx={{ maxWidth: 170 }}>
-            <img alt="murych cat" src="/murych.png" />
-            <Typography align="center" component="h4" variant="h5">
-              {translate('murych')}
-            </Typography>
-          </Stack>
+          {PetCard('/varya.jpg', 'varya')}
+          {PetCard('/fanya.jpg', 'fanya')}
+          {PetCard('/murych.png', 'murych')}
         </Box>
         <Stack alignItems="center" justifyContent="center">
           <Typography
@@ -195,7 +126,7 @@ export const WelcomePage = (): JSX.Element => {
             textAlign="center"
             variant="h2"
           >
-            About the course
+            {translate('courseTitle')}
           </Typography>
           <Typography
             sx={{
