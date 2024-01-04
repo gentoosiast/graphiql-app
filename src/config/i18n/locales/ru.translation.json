@@ -70,6 +70,7 @@
   "signOutSuccess": "Вы вышли из аккаунта",
 
   "graphqlEndpoint": "GraphQL маршрут",
+  "changeEndpoint": "Обновить GraphQL маршрут",
   "prettifyQuery": "Отформатировать текст запроса",
   "sendRequest": "Отправить запрос",
   "graphqlQuery": "GraphQL запрос",
