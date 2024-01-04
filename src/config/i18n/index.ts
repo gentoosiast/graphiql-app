@@ -1,7 +1,7 @@
 import en from './locales/en.translation.json';
 import ru from './locales/ru.translation.json';
 
-export const enum I18NLanguage {
+export enum I18NLanguage {
   English = 'en',
   Russian = 'ru',
 }
