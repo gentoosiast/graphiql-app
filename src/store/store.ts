@@ -3,11 +3,12 @@ import type { Store } from '@reduxjs/toolkit';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
 import authReducer from '@/features/auth';
-import graphiQLReducer from '@/features/graphiql';
+import graphiQLReducer, { graphQLApi } from '@/features/graphiql';
 import userReducer from '@/features/users';
 
 const rootReducer = combineReducers({
   auth: authReducer,
+  [graphQLApi.reducerPath]: graphQLApi.reducer,
   graphiql: graphiQLReducer,
   user: userReducer,
 });
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
 export const setupStore = (preloadedState?: Partial<RootState>): Store<RootState> =>
   configureStore({
     devTools: true,
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(graphQLApi.middleware),
     preloadedState,
     reducer: rootReducer,
   });

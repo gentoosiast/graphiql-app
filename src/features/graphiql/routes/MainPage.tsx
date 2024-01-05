@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
+import { lazy, useDeferredValue, useRef, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -16,18 +16,22 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
 import { useAppDispatch, useAppSelector } from '@/store';
 
-import { getIntrospectionQuery } from '../api/get-introspection-query';
-import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { NOTIFICATION_TIMEOUT } from '../constants';
-import { setEndpoint, setError, setNotification, setRequest, setResponse } from '../store';
+import {
+  setEndpoint,
+  setError,
+  setNotification,
+  setRequest,
+  setResponse,
+  useGraphQLMutation,
+} from '../store';
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
-import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
+import { graphqlPrettify, jsonPrettify } from '../utils';
 
 const DocsSection = lazy(async () => {
   const { DocsSection } = await import('../components/docbrowser/DocsSection');
@@ -36,14 +40,13 @@ const DocsSection = lazy(async () => {
 
 export const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
+  const [sendGraphQLRequest, { isLoading }] = useGraphQLMutation();
+  const [sendIntrospectionRequest] = useGraphQLMutation();
 
   const dispatch = useAppDispatch();
 
-  const endpoint = useAppSelector((state) => state.graphiql.endpoint);
   const request = useAppSelector((state) => state.graphiql.request);
   const response = useAppSelector((state) => state.graphiql.response);
-  const headers = useAppSelector((state) => state.graphiql.headers);
-  const variables = useAppSelector((state) => state.graphiql.variables);
   const notificationText = useAppSelector((state) => state.graphiql.notificationText);
 
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
@@ -52,67 +55,63 @@ export const MainPage = (): JSX.Element => {
   const deferredApiSchema = useDeferredValue(apiSchema);
 
   const endpointInputRef = useRef<HTMLInputElement | null>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
-
-  const getDocs = async (url: string): Promise<void> => {
-    const introspectionQuery = getIntrospectionQuery();
-
+  const getDocs = async (): Promise<void> => {
     try {
       setApiSchema(null);
 
-      const response = await graphQLRequest<IntrospectionResponse>({
-        endpoint: url,
-        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
-        query: introspectionQuery,
-      });
+      const response = await sendIntrospectionRequest({});
 
-      setApiSchema(response.data.__schema);
+      if ('data' in response) {
+        const introspectionResponse = response.data as IntrospectionResponse;
+
+        setApiSchema(introspectionResponse.data.__schema);
+      } else if ('data' in response.error) {
+        dispatch(
+          setError({
+            errorMessage: `HTTP Error, status code: ${response.error.status}`,
+            errorResponse: '',
+          }),
+        );
+      } else if ('error' in response.error) {
+        dispatch(setError({ errorMessage: response.error.error, errorResponse: '' }));
+      } else {
+        throw response.error;
+      }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Unknown API error while getting introspection data';
       setApiSchema(null);
       dispatch(setError({ errorMessage, errorResponse: '' }));
     }
   };
 
   const handleSendRequest = async (): Promise<void> => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-
-    const abortController = new AbortController();
-
-    abortControllerRef.current = abortController;
-
     try {
-      const response = await graphQLRequest<{ data: unknown }>({
-        endpoint,
-        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
+      const response = await sendGraphQLRequest({
         query: request,
-        signal: abortController.signal,
-        variables: parseEditorCodeToObject(variables, 'GraphQL variables'),
       });
 
-      const responseJSON = jsonPrettify(response.data);
-
-      dispatch(setResponse(responseJSON));
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-
-      if (isAxiosError(error)) {
-        const errorJSON = jsonPrettify(error.response?.data);
-
-        dispatch(setError({ errorMessage, errorResponse: errorJSON }));
+      if ('data' in response) {
+        dispatch(setResponse(jsonPrettify(response.data)));
+      } else if ('data' in response.error) {
+        dispatch(
+          setError({
+            errorMessage: `HTTP Error, status code: ${response.error.status}`,
+            errorResponse: jsonPrettify(response.error.data),
+          }),
+        );
+      } else if ('error' in response.error) {
+        dispatch(setError({ errorMessage: response.error.error, errorResponse: '' }));
       } else {
-        dispatch(setError({ errorMessage, errorResponse: '' }));
+        throw response.error;
       }
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown API error';
+
+      dispatch(setError({ errorMessage, errorResponse: '' }));
     }
   };
 
@@ -177,7 +176,7 @@ export const MainPage = (): JSX.Element => {
                         onClick={() => {
                           const endpoint = endpointInputRef.current?.value ?? '';
                           dispatch(setEndpoint(endpoint));
-                          void getDocs(endpoint);
+                          void getDocs();
                         }}
                       >
                         <CheckCircleIcon />
@@ -201,8 +200,10 @@ export const MainPage = (): JSX.Element => {
               </Tooltip>
               <Tooltip title={translate('sendRequest')}>
                 <Fab
+                  aria-disabled={isLoading}
                   aria-label={translate('sendRequest')}
                   color="primary"
+                  disabled={isLoading}
                   onClick={() => void handleSendRequest()}
                   size="small"
                 >
