@@ -4,7 +4,6 @@ import { onAuthStateChanged } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
 import { setAuthState } from '@/features/auth';
-import { setUser } from '@/features/users';
 import { store } from '@/store';
 
 export const useAuthStateChange = (): void => {
@@ -13,7 +12,6 @@ export const useAuthStateChange = (): void => {
       const authState = user ? 'AUTHENTICATED' : 'UNAUTHENTICATED';
 
       store.dispatch(setAuthState(authState));
-      store.dispatch(setUser({ email: user?.email ?? null }));
     });
 
     return () => {
