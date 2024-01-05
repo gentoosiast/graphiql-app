@@ -2,7 +2,13 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { Button } from '@mui/material';
 
-export const NavButton = (to: string, textContent: string, formMode?: string): JSX.Element => {
+type NavButtonProps = {
+  formMode?: string;
+  textContent: string;
+  to: string;
+};
+
+export const NavButton = ({ formMode, textContent, to }: NavButtonProps): JSX.Element => {
   return (
     <Button
       component={RouterLink}

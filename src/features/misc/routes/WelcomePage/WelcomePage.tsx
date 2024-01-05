@@ -40,11 +40,12 @@ export const WelcomePage = (): JSX.Element => {
         >
           {authState === 'UNAUTHENTICATED' && (
             <>
-              {NavButton('/auth', translate('signIn'), 'login')}
-              {NavButton('/auth', translate('signUp'), 'register')}
+              {NavButton({ formMode: 'login', textContent: translate('signIn'), to: '/auth' })}
+              {NavButton({ formMode: 'register', textContent: translate('signUp'), to: '/auth' })}
             </>
           )}
-          {authState === 'AUTHENTICATED' && NavButton('/main', translate('mainPage'))}
+          {authState === 'AUTHENTICATED' &&
+            NavButton({ textContent: translate('mainPage'), to: '/main' })}
         </Box>
       </nav>
 
