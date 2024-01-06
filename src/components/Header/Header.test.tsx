@@ -2,7 +2,7 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it } from 'vitest';
 
 import { I18NProvider } from '@/providers/i18n';
 import { renderWithProviders } from '@/test/renderWithProviders';
@@ -10,6 +10,10 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 import { Header } from '.';
 
 describe('Header', () => {
+  afterEach(() => {
+    localStorage.clear();
+  });
+
   it('should render header', () => {
     renderWithProviders(
       <I18NProvider>
@@ -50,5 +54,34 @@ describe('Header', () => {
 
     languageRusDropdown = screen.getByLabelText(/выбор языка интерфейса/i);
     expect(languageRusDropdown).toBeInTheDocument();
+  });
+
+  it('should show sign out button for authenticated user', () => {
+    renderWithProviders(
+      <I18NProvider>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </I18NProvider>,
+      { preloadedState: { auth: { authState: 'AUTHENTICATED' } } },
+    );
+
+    const signOutButton = screen.getByRole('button', { name: /sign out/i });
+
+    expect(signOutButton).toBeInTheDocument();
+  });
+
+  it('should not show sign out button for unauthenticated user', () => {
+    renderWithProviders(
+      <I18NProvider>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </I18NProvider>,
+    );
+
+    const signOutButton = screen.queryByRole('button', { name: /sign out/i });
+
+    expect(signOutButton).not.toBeInTheDocument();
   });
 });
