@@ -6,7 +6,7 @@ import { I18NProvider } from '@/providers';
 import { EditorMock } from '@/test/components';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
-import { MainPage } from './MainPage';
+import MainPage from './MainPage';
 
 vi.mock('../components/Editor', () => ({
   Editor: vi.fn((props) => <EditorMock {...props} />),
