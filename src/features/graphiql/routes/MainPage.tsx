@@ -45,6 +45,7 @@ export const MainPage = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
 
+  const endpoint = useAppSelector((state) => state.graphiql.endpoint);
   const request = useAppSelector((state) => state.graphiql.request);
   const response = useAppSelector((state) => state.graphiql.response);
   const notificationText = useAppSelector((state) => state.graphiql.notificationText);
@@ -184,6 +185,7 @@ export const MainPage = (): JSX.Element => {
                     </Tooltip>
                   ),
                 }}
+                defaultValue={endpoint}
                 inputRef={endpointInputRef}
                 label={translate('graphqlEndpoint')}
                 placeholder={translate('graphqlEndpoint')}

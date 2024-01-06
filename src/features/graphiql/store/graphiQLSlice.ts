@@ -3,8 +3,6 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 import { createSlice } from '@reduxjs/toolkit';
 
-import { DEFAULT_GRAPHQL_ENDPOINT } from '../constants';
-
 type GraphiQLState = {
   endpoint: string;
   headers: string;
@@ -16,7 +14,7 @@ type GraphiQLState = {
 };
 
 const initialState: GraphiQLState = {
-  endpoint: DEFAULT_GRAPHQL_ENDPOINT,
+  endpoint: '',
   headers: '{\n  \n}',
   notificationSeverity: 'info',
   notificationText: '',
