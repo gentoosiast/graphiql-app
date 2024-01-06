@@ -133,6 +133,7 @@ export const Header = (): JSX.Element => {
           </Menu>
           {authState === 'AUTHENTICATED' && (
             <Button
+              aria-label={translate('signOut')}
               color="inherit"
               onClick={() => void signOutUser()}
               sx={{
