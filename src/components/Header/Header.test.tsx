@@ -2,16 +2,18 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { afterEach, describe, expect, it } from 'vitest';
+import * as auth from 'firebase/auth';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { I18NProvider } from '@/providers/i18n';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
-import { Header } from '.';
+import { Header } from './Header';
 
 describe('Header', () => {
   afterEach(() => {
     localStorage.clear();
+    vi.restoreAllMocks();
   });
 
   it('should render header', () => {
@@ -83,5 +85,26 @@ describe('Header', () => {
     const signOutButton = screen.queryByRole('button', { name: /sign out/i });
 
     expect(signOutButton).not.toBeInTheDocument();
+  });
+
+  it('should sign out authenticated user when clicking on sign out button', async () => {
+    const user = userEvent.setup();
+
+    vi.spyOn(auth, 'signOut').mockImplementation(() => Promise.resolve());
+
+    renderWithProviders(
+      <I18NProvider>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </I18NProvider>,
+      { preloadedState: { auth: { authState: 'AUTHENTICATED' } } },
+    );
+
+    const signOutButton = screen.getByRole('button', { name: /sign out/i });
+
+    await user.click(signOutButton);
+
+    expect(auth.signOut).toHaveBeenCalled();
   });
 });
