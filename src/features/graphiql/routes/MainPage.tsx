@@ -31,7 +31,7 @@ import {
   useGraphQLMutation,
 } from '../store';
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
-import { graphqlPrettify, jsonPrettify } from '../utils';
+import { graphqlPrettify, jsonPrettify, processApiResponse } from '../utils';
 
 const DocsSection = lazy(async () => {
   const { DocsSection } = await import('../components/docbrowser/DocsSection');
@@ -58,61 +58,31 @@ export const MainPage = (): JSX.Element => {
   const endpointInputRef = useRef<HTMLInputElement | null>(null);
 
   const getDocs = async (): Promise<void> => {
-    try {
-      setApiSchema(null);
+    setApiSchema(null);
 
-      const response = await sendIntrospectionRequest({});
+    const response = await sendIntrospectionRequest({});
+    const { data, errorMessage, isSuccess } = processApiResponse(response);
 
-      if ('data' in response) {
-        const introspectionResponse = response.data as IntrospectionResponse;
+    if (isSuccess) {
+      const introspectionResponse = data as IntrospectionResponse;
 
-        setApiSchema(introspectionResponse.data.__schema);
-      } else if ('data' in response.error) {
-        dispatch(
-          setError({
-            errorMessage: `HTTP Error, status code: ${response.error.status}`,
-            errorResponse: '',
-          }),
-        );
-      } else if ('error' in response.error) {
-        dispatch(setError({ errorMessage: response.error.error, errorResponse: '' }));
-      } else {
-        throw response.error;
-      }
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Unknown API error while getting introspection data';
-      setApiSchema(null);
+      setApiSchema(introspectionResponse.data.__schema);
+    } else {
       dispatch(setError({ errorMessage, errorResponse: '' }));
+      setApiSchema(null);
     }
   };
 
   const handleSendRequest = async (): Promise<void> => {
-    try {
-      const response = await sendGraphQLRequest({
-        query: request,
-      });
+    const response = await sendGraphQLRequest({
+      query: request,
+    });
+    const { data, errorMessage, isSuccess } = processApiResponse(response);
 
-      if ('data' in response) {
-        dispatch(setResponse(jsonPrettify(response.data)));
-      } else if ('data' in response.error) {
-        dispatch(
-          setError({
-            errorMessage: `HTTP Error, status code: ${response.error.status}`,
-            errorResponse: response.error.data ? jsonPrettify(response.error.data) : '',
-          }),
-        );
-      } else if ('error' in response.error) {
-        dispatch(setError({ errorMessage: response.error.error, errorResponse: '' }));
-      } else {
-        throw response.error;
-      }
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown API error';
-
-      dispatch(setError({ errorMessage, errorResponse: '' }));
+    if (isSuccess) {
+      dispatch(setResponse(jsonPrettify(data)));
+    } else {
+      dispatch(setError({ errorMessage, errorResponse: data ? jsonPrettify(data) : '' }));
     }
   };
 
