@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
 import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -53,6 +54,8 @@ export const MainPage = (): JSX.Element => {
 
   const endpointInputRef = useRef<HTMLInputElement | null>(null);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
     return () => {
@@ -124,6 +127,16 @@ export const MainPage = (): JSX.Element => {
     dispatch(setRequest(graphqlPrettify(request)));
   };
 
+  const handleSetEndpointClick = (): void => {
+    const endpoint = endpointInputRef.current?.value ?? '';
+    dispatch(setEndpoint(endpoint));
+    void getDocs(endpoint);
+
+    searchParams.delete('type');
+    searchParams.delete('field');
+    setSearchParams(searchParams);
+  };
+
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBlock: '2rem', position: 'relative' }}>
@@ -150,6 +163,7 @@ export const MainPage = (): JSX.Element => {
               isOpen={isDocsOpen}
               onClose={() => setIsDocsOpen(false)}
               schema={deferredApiSchema}
+              searchParams={searchParams}
             />
           </>
         )}
@@ -174,11 +188,7 @@ export const MainPage = (): JSX.Element => {
                     <Tooltip title={translate('changeEndpoint')}>
                       <IconButton
                         aria-label={translate('changeEndpoint')}
-                        onClick={() => {
-                          const endpoint = endpointInputRef.current?.value ?? '';
-                          dispatch(setEndpoint(endpoint));
-                          void getDocs(endpoint);
-                        }}
+                        onClick={handleSetEndpointClick}
                       >
                         <CheckCircleIcon />
                       </IconButton>
