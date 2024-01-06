@@ -101,7 +101,7 @@ export const MainPage = (): JSX.Element => {
         dispatch(
           setError({
             errorMessage: `HTTP Error, status code: ${response.error.status}`,
-            errorResponse: jsonPrettify(response.error.data),
+            errorResponse: response.error.data ? jsonPrettify(response.error.data) : '',
           }),
         );
       } else if ('error' in response.error) {
