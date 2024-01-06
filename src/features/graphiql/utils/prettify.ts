@@ -16,7 +16,9 @@ export const graphqlPrettify = (query: string, indentSize = 2): string => {
         indentModifier = -1;
       }
 
-      return `${' '.repeat((indentLevel + indentModifier) * indentSize)}${line}`;
+      const finalIndent = Math.max((indentLevel + indentModifier) * indentSize, 0);
+
+      return `${' '.repeat(finalIndent)}${line}`;
     })
     .join('\n');
 };
