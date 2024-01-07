@@ -10,8 +10,8 @@
 GraphiQL is a playground/IDE for graphQL requests. After login, you can choose any endpoint, construct a request, prettify your code and get a formatted response. Add some variables and headers? No problem! Use variables/headers tabs for it. And don't forget to check out documentation of chosen api in special section.
 
 <div align="center" style="display: flex; justify-content: center; padding: 5px; flex-wrap: wrap;">
-  <img src="public/1.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
-  <img src="public/2.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="public/sergey.jpg" alt="Sergey" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
+  <img src="public/ira.jpg" alt="Irina" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
   <img src="public/kate.jpg" alt="Kate" width="150px" height="150px" style="border-radius: 50%; margin: 10px">
 </div>
 
@@ -34,6 +34,8 @@ GraphiQL is a playground/IDE for graphQL requests. After login, you can choose a
 ![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
 
 ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+
+![RTK Query](./public/rtk-query-badge.svg)
 
 ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
