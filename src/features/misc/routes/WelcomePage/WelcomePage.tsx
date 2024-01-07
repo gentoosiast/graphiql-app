@@ -117,6 +117,7 @@ export const WelcomePage = (): JSX.Element => {
           {PetCard('/varya.jpg', 'varya')}
           {PetCard('/fanya.jpg', 'fanya')}
           {PetCard('/murych.png', 'murych')}
+          {PetCard('/ryzhik.jpg', 'ryzhik')}
         </Box>
         <Stack alignItems="center" justifyContent="center">
           <Typography
