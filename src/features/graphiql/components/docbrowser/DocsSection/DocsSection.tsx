@@ -99,4 +99,4 @@ const DocsSection = ({ isOpen, onClose, schema }: Props): JSX.Element => {
   );
 };
 
-export { DocsSection };
+export default DocsSection;

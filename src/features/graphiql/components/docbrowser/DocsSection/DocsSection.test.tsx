@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 
 import { I18NProvider } from '@/providers';
 
-import { DocsSection } from './DocsSection';
+import DocsSection from './DocsSection';
 
 const schema = {
   directives: [],

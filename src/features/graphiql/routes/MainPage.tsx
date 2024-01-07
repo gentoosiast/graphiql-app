@@ -29,12 +29,9 @@ import { setEndpoint, setError, setNotification, setRequest, setResponse } from 
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
 import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
 
-const DocsSection = lazy(async () => {
-  const { DocsSection } = await import('../components/docbrowser/DocsSection');
-  return { default: DocsSection };
-});
+const DocsSection = lazy(() => import('../components/docbrowser/DocsSection/DocsSection'));
 
-export const MainPage = (): JSX.Element => {
+const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
 
   const dispatch = useAppDispatch();
@@ -246,3 +243,5 @@ export const MainPage = (): JSX.Element => {
     </>
   );
 };
+
+export default MainPage;
