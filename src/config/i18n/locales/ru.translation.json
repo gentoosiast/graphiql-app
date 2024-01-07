@@ -73,6 +73,7 @@
 
   "graphqlEndpoint": "GraphQL маршрут",
   "changeEndpoint": "Обновить GraphQL маршрут",
+  "endpointSet": "Маршрут установлен",
   "prettifyQuery": "Отформатировать текст запроса",
   "sendRequest": "Отправить запрос",
   "graphqlQuery": "GraphQL запрос",

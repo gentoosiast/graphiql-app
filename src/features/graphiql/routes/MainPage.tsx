@@ -47,9 +47,11 @@ const MainPage = (): JSX.Element => {
   const request = useAppSelector((state) => state.graphiql.request);
   const response = useAppSelector((state) => state.graphiql.response);
   const notificationText = useAppSelector((state) => state.graphiql.notificationText);
+  const notificationSeverity = useAppSelector((state) => state.graphiql.notificationSeverity);
 
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
   const [isDocsOpen, setIsDocsOpen] = useState(false);
+  const [isEndpointSet, setIsEndpointSet] = useState(!!endpoint);
 
   const deferredApiSchema = useDeferredValue(apiSchema);
 
@@ -96,7 +98,17 @@ const MainPage = (): JSX.Element => {
 
   const handleSetEndpointClick = (): void => {
     const endpoint = endpointInputRef.current?.value ?? '';
+    if (endpoint.trim() === '') {
+      return;
+    }
+    setIsEndpointSet(true);
     dispatch(setEndpoint(endpoint));
+    dispatch(
+      setNotification({
+        message: translate('endpointSet'),
+        severity: 'success',
+      }),
+    );
     void getDocs();
 
     searchParams.delete('type');
@@ -155,6 +167,7 @@ const MainPage = (): JSX.Element => {
                     <Tooltip title={translate('changeEndpoint')}>
                       <IconButton
                         aria-label={translate('changeEndpoint')}
+                        color={isEndpointSet ? 'success' : 'default'}
                         onClick={handleSetEndpointClick}
                       >
                         <CheckCircleIcon />
@@ -165,8 +178,17 @@ const MainPage = (): JSX.Element => {
                 defaultValue={endpoint}
                 inputRef={endpointInputRef}
                 label={translate('graphqlEndpoint')}
+                onChange={() => setIsEndpointSet(false)}
                 placeholder={translate('graphqlEndpoint')}
-                sx={{ width: '100%' }}
+                sx={{
+                  '& fieldset': {
+                    borderColor: isEndpointSet ? 'success.main' : undefined,
+                  },
+                  '& input': {
+                    color: isEndpointSet ? 'default' : '#c9c0bbcc',
+                  },
+                  width: '100%',
+                }}
               />
               <Tooltip title={translate('prettifyQuery')}>
                 <IconButton
@@ -219,7 +241,7 @@ const MainPage = (): JSX.Element => {
         onClose={handleSnackbarClose}
         open={notificationText.length > 0}
       >
-        <Alert onClick={handleSnackbarClose} severity="error">
+        <Alert onClick={handleSnackbarClose} severity={notificationSeverity}>
           {notificationText}
         </Alert>
       </Snackbar>

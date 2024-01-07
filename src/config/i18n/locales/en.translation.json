@@ -69,6 +69,7 @@
 
   "graphqlEndpoint": "GraphQL endpoint",
   "changeEndpoint": "Change endpoint",
+  "endpointSet": "Endpoint set",
   "prettifyQuery": "Prettify query",
   "sendRequest": "Send request",
   "graphqlQuery": "GraphQL Query",
