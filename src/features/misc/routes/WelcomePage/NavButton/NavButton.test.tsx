@@ -13,7 +13,7 @@ describe('Nav button', () => {
     renderWithProviders(
       <I18NProvider>
         <MemoryRouter>
-          {NavButton({ formMode: 'login', textContent: 'sign in', to: '/auth' })}
+          <NavButton formMode="login" textContent="sign in" to="/auth" />
         </MemoryRouter>
       </I18NProvider>,
     );
