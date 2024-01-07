@@ -13,4 +13,4 @@ const AuthPage = (): JSX.Element => {
   return isLogin ? <Login setIsLogin={setIsLogin} /> : <Register setIsLogin={setIsLogin} />;
 };
 
-export { AuthPage };
+export default AuthPage;

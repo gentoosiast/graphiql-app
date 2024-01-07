@@ -1,5 +1,5 @@
 import type { JSX } from 'react';
-import { lazy, useDeferredValue, useEffect, useRef, useState } from 'react';
+import { lazy, useDeferredValue, useRef, useState } from 'react';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -16,34 +16,35 @@ import {
   TextField,
   Tooltip,
 } from '@mui/material';
-import { isAxiosError } from 'axios';
 
 import { useI18NContext } from '@/contexts/i18n';
 import { useAppDispatch, useAppSelector } from '@/store';
 
-import { getIntrospectionQuery } from '../api/get-introspection-query';
-import { graphQLRequest } from '../api/graphqlApi';
 import { Editor, PrettifyIcon, RequestTabbar } from '../components';
 import { NOTIFICATION_TIMEOUT } from '../constants';
-import { setEndpoint, setError, setNotification, setRequest, setResponse } from '../store';
+import {
+  setEndpoint,
+  setError,
+  setNotification,
+  setRequest,
+  setResponse,
+  useGraphQLMutation,
+} from '../store';
 import { IntrospectionResponse, IntrospectionSchema } from '../types';
-import { graphqlPrettify, jsonPrettify, parseEditorCodeToObject } from '../utils';
+import { graphqlPrettify, jsonPrettify, processApiResponse } from '../utils';
 
-const DocsSection = lazy(async () => {
-  const { DocsSection } = await import('../components/docbrowser/DocsSection');
-  return { default: DocsSection };
-});
+const DocsSection = lazy(() => import('../components/docbrowser/DocsSection/DocsSection'));
 
-export const MainPage = (): JSX.Element => {
+const MainPage = (): JSX.Element => {
   const { translate } = useI18NContext();
+  const [sendGraphQLRequest, { isLoading }] = useGraphQLMutation();
+  const [sendIntrospectionRequest] = useGraphQLMutation();
 
   const dispatch = useAppDispatch();
 
   const endpoint = useAppSelector((state) => state.graphiql.endpoint);
   const request = useAppSelector((state) => state.graphiql.request);
   const response = useAppSelector((state) => state.graphiql.response);
-  const headers = useAppSelector((state) => state.graphiql.headers);
-  const variables = useAppSelector((state) => state.graphiql.variables);
   const notificationText = useAppSelector((state) => state.graphiql.notificationText);
 
   const [apiSchema, setApiSchema] = useState<IntrospectionSchema | null>(null);
@@ -52,67 +53,33 @@ export const MainPage = (): JSX.Element => {
   const deferredApiSchema = useDeferredValue(apiSchema);
 
   const endpointInputRef = useRef<HTMLInputElement | null>(null);
-  const abortControllerRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, []);
+  const getDocs = async (): Promise<void> => {
+    setApiSchema(null);
 
-  const getDocs = async (url: string): Promise<void> => {
-    const introspectionQuery = getIntrospectionQuery();
+    const response = await sendIntrospectionRequest({});
+    const { data, errorMessage, isSuccess } = processApiResponse(response);
 
-    try {
-      setApiSchema(null);
+    if (isSuccess) {
+      const introspectionResponse = data as IntrospectionResponse;
 
-      const response = await graphQLRequest<IntrospectionResponse>({
-        endpoint: url,
-        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
-        query: introspectionQuery,
-      });
-
-      setApiSchema(response.data.__schema);
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      setApiSchema(null);
+      setApiSchema(introspectionResponse.data.__schema);
+    } else {
       dispatch(setError({ errorMessage, errorResponse: '' }));
+      setApiSchema(null);
     }
   };
 
   const handleSendRequest = async (): Promise<void> => {
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
+    const response = await sendGraphQLRequest({
+      query: request,
+    });
+    const { data, errorMessage, isSuccess } = processApiResponse(response);
 
-    const abortController = new AbortController();
-
-    abortControllerRef.current = abortController;
-
-    try {
-      const response = await graphQLRequest<{ data: unknown }>({
-        endpoint,
-        headers: parseEditorCodeToObject(headers, 'GraphQL headers'),
-        query: request,
-        signal: abortController.signal,
-        variables: parseEditorCodeToObject(variables, 'GraphQL variables'),
-      });
-
-      const responseJSON = jsonPrettify(response.data);
-
-      dispatch(setResponse(responseJSON));
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-
-      if (isAxiosError(error)) {
-        const errorJSON = jsonPrettify(error.response?.data);
-
-        dispatch(setError({ errorMessage, errorResponse: errorJSON }));
-      } else {
-        dispatch(setError({ errorMessage, errorResponse: '' }));
-      }
+    if (isSuccess) {
+      dispatch(setResponse(jsonPrettify(data)));
+    } else {
+      dispatch(setError({ errorMessage, errorResponse: data ? jsonPrettify(data) : '' }));
     }
   };
 
@@ -177,7 +144,7 @@ export const MainPage = (): JSX.Element => {
                         onClick={() => {
                           const endpoint = endpointInputRef.current?.value ?? '';
                           dispatch(setEndpoint(endpoint));
-                          void getDocs(endpoint);
+                          void getDocs();
                         }}
                       >
                         <CheckCircleIcon />
@@ -185,6 +152,7 @@ export const MainPage = (): JSX.Element => {
                     </Tooltip>
                   ),
                 }}
+                defaultValue={endpoint}
                 inputRef={endpointInputRef}
                 label={translate('graphqlEndpoint')}
                 placeholder={translate('graphqlEndpoint')}
@@ -201,8 +169,10 @@ export const MainPage = (): JSX.Element => {
               </Tooltip>
               <Tooltip title={translate('sendRequest')}>
                 <Fab
+                  aria-disabled={isLoading}
                   aria-label={translate('sendRequest')}
                   color="primary"
+                  disabled={isLoading}
                   onClick={() => void handleSendRequest()}
                   size="small"
                 >
@@ -246,3 +216,5 @@ export const MainPage = (): JSX.Element => {
     </>
   );
 };
+
+export default MainPage;

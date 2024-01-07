@@ -7,7 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { I18NProvider } from '@/providers/i18n';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
-import { AuthPage } from './AuthPage';
+import AuthPage from './AuthPage';
 
 describe('AuthForm', () => {
   it('should render login form', () => {
