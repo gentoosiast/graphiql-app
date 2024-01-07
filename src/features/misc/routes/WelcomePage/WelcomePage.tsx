@@ -116,9 +116,9 @@ export const WelcomePage = (): JSX.Element => {
           padding={'3% 0'}
           width={'100%'}
         >
-          <PetCard nameToTranslate="varya" src="/varya.jpg" />
-          <PetCard nameToTranslate="fanya" src="/fanya.jpg" />
-          <PetCard nameToTranslate="murych" src="/murych.png" />
+          <PetCard name={translate('varya')} src="/varya.jpg" />
+          <PetCard name={translate('fanya')} src="/fanya.jpg" />
+          <PetCard name={translate('murych')} src="/murych.png" />
         </Box>
         <Stack alignItems="center" justifyContent="center">
           <Typography
