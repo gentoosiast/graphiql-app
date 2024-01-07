@@ -16,11 +16,11 @@ export default defineConfig({
       exclude: [
         'src/test/**/*',
         '**/types.ts',
+        '**/types/*',
         '**/*.d.ts',
         '**/index.ts',
         'src/main.tsx',
         'src/config/**/*',
-        'src/**/*/types/*',
         'src/**/*/enums.ts',
       ],
       extension: ['.ts', '.tsx'],
