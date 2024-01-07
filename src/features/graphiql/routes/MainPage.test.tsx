@@ -1,3 +1,5 @@
+import { MemoryRouter } from 'react-router-dom';
+
 import { screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -21,9 +23,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     const variablesTab = screen.getByText(/variables/i);
@@ -45,9 +49,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     const headersTab = screen.getByText(/headers/i);
@@ -69,9 +75,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     let tabPanels = screen.queryAllByRole('tabpanel');
@@ -97,9 +105,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
@@ -128,9 +138,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
@@ -165,9 +177,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
@@ -202,9 +216,11 @@ describe('MainPage', () => {
     const user = userEvent.setup();
 
     renderWithProviders(
-      <I18NProvider>
-        <MainPage />
-      </I18NProvider>,
+      <MemoryRouter>
+        <I18NProvider>
+          <MainPage />
+        </I18NProvider>
+      </MemoryRouter>,
     );
 
     const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);

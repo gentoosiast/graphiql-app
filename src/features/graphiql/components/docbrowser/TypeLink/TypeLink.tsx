@@ -1,15 +1,21 @@
 import type { JSX, ReactNode } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { Link } from '@mui/material';
 
 type Props = {
   children: ReactNode;
-  onClick: () => void;
+  to: string;
 };
 
-const TypeLink = ({ children, onClick }: Props): JSX.Element => {
+const TypeLink = ({ children, to }: Props): JSX.Element => {
   return (
-    <Link onClick={onClick} sx={{ cursor: 'pointer', fontWeight: 500 }} underline="hover">
+    <Link
+      component={RouterLink}
+      sx={{ cursor: 'pointer', fontWeight: 500 }}
+      to={to}
+      underline="hover"
+    >
       {children}
     </Link>
   );

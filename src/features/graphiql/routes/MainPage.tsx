@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
 import { lazy, useDeferredValue, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import DescriptionIcon from '@mui/icons-material/Description';
@@ -54,6 +55,8 @@ const MainPage = (): JSX.Element => {
 
   const endpointInputRef = useRef<HTMLInputElement | null>(null);
 
+  const [searchParams, setSearchParams] = useSearchParams();
+
   const getDocs = async (): Promise<void> => {
     setApiSchema(null);
 
@@ -91,6 +94,16 @@ const MainPage = (): JSX.Element => {
     dispatch(setRequest(graphqlPrettify(request)));
   };
 
+  const handleSetEndpointClick = (): void => {
+    const endpoint = endpointInputRef.current?.value ?? '';
+    dispatch(setEndpoint(endpoint));
+    void getDocs();
+
+    searchParams.delete('type');
+    searchParams.delete('field');
+    setSearchParams(searchParams);
+  };
+
   return (
     <>
       <Container maxWidth="xl" sx={{ paddingBlock: '2rem', position: 'relative' }}>
@@ -117,6 +130,7 @@ const MainPage = (): JSX.Element => {
               isOpen={isDocsOpen}
               onClose={() => setIsDocsOpen(false)}
               schema={deferredApiSchema}
+              searchParams={searchParams}
             />
           </>
         )}
@@ -141,11 +155,7 @@ const MainPage = (): JSX.Element => {
                     <Tooltip title={translate('changeEndpoint')}>
                       <IconButton
                         aria-label={translate('changeEndpoint')}
-                        onClick={() => {
-                          const endpoint = endpointInputRef.current?.value ?? '';
-                          dispatch(setEndpoint(endpoint));
-                          void getDocs();
-                        }}
+                        onClick={handleSetEndpointClick}
                       >
                         <CheckCircleIcon />
                       </IconButton>

@@ -9,13 +9,11 @@ import { IntrospectionType } from '../../../types';
 import { TypeLink } from '../TypeLink';
 
 type Props = {
-  findAndSetType: (typeName: string) => void;
   queryTypeName: string;
-  setType: (type: IntrospectionType) => void;
   types: ReadonlyArray<IntrospectionType>;
 };
 
-const TypesList = ({ findAndSetType, queryTypeName, setType, types = [] }: Props): JSX.Element => {
+const TypesList = ({ queryTypeName, types = [] }: Props): JSX.Element => {
   const { translate } = useI18NContext();
 
   return (
@@ -30,7 +28,7 @@ const TypesList = ({ findAndSetType, queryTypeName, setType, types = [] }: Props
         <Typography color="#007deb" fontWeight={500}>
           query:
         </Typography>
-        <TypeLink onClick={() => findAndSetType(queryTypeName)}>{queryTypeName}</TypeLink>
+        <TypeLink to={`/main?type=${queryTypeName}`}>{queryTypeName}</TypeLink>
       </Stack>
       <Typography component="h5" variant="subtitle2">
         {translate('docs.allTypes')}
@@ -42,7 +40,7 @@ const TypesList = ({ findAndSetType, queryTypeName, setType, types = [] }: Props
           )
           .map((type: IntrospectionType) => (
             <ListItem disablePadding key={type.name}>
-              <TypeLink onClick={() => setType(type)}>{type.name}</TypeLink>
+              <TypeLink to={`/main?type=${type.name}`}>{type.name}</TypeLink>
             </ListItem>
           ))}
       </List>
