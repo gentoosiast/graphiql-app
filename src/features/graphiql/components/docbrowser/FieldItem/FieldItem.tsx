@@ -1,32 +1,29 @@
 import type { JSX } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { Link, List, Typography } from '@mui/material';
 
-import { IntrospectionField, IntrospectionType } from '../../../types';
+import { IntrospectionField } from '../../../types';
 import { getTypeName } from '../../../utils/introspection';
 import { ArgItem } from '../ArgItem';
 import { TypeLink } from '../TypeLink';
 
 type Props = {
+  belongsToType: string;
   field: IntrospectionField;
-  findAndSetType: (typeName: string) => void;
-  setField: (field: IntrospectionField | null) => void;
-  setType: (type: IntrospectionType | null) => void;
 };
 
-const FieldItem = ({ field, findAndSetType, setField, setType }: Props): JSX.Element => {
+const FieldItem = ({ belongsToType, field }: Props): JSX.Element => {
   const fieldType = getTypeName(field.type);
 
   return (
     <>
       <Link
         color="#007deb"
+        component={RouterLink}
         gutterBottom
-        onClick={() => {
-          setField(field);
-          setType(null);
-        }}
         sx={{ cursor: 'pointer', fontWeight: 500 }}
+        to={`/main?type=${belongsToType}&field=${field.name}`}
         underline="hover"
       >
         {field.name}
@@ -36,14 +33,14 @@ const FieldItem = ({ field, findAndSetType, setField, setType }: Props): JSX.Ele
           {' ('}
           <List disablePadding>
             {field.args.map((arg) => (
-              <ArgItem arg={arg} findAndSetType={findAndSetType} key={arg.name} />
+              <ArgItem arg={arg} key={arg.name} />
             ))}
           </List>
           {')'}
         </>
       )}
       {': '}
-      <TypeLink onClick={() => findAndSetType(fieldType)}>{fieldType}</TypeLink>
+      <TypeLink to={`/main?type=${fieldType}`}>{fieldType}</TypeLink>
       {field.description && (
         <Typography mt={1} variant="body2">
           {field.description}

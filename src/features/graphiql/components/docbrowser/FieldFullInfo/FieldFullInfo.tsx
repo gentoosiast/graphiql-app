@@ -10,10 +10,9 @@ import { TypeLink } from '../TypeLink';
 
 type Props = {
   field: IntrospectionField;
-  findAndSetType: (typeName: string) => void;
 };
 
-const FieldFullInfo = ({ field, findAndSetType }: Props): JSX.Element => {
+const FieldFullInfo = ({ field }: Props): JSX.Element => {
   const { translate } = useI18NContext();
 
   const fieldType = getTypeName(field.type);
@@ -28,7 +27,7 @@ const FieldFullInfo = ({ field, findAndSetType }: Props): JSX.Element => {
       <Typography component="h5" mb={1} mt={2} variant="subtitle2">
         {translate('docs.type')}
       </Typography>
-      <TypeLink onClick={() => findAndSetType(fieldType)}>{fieldType}</TypeLink>
+      <TypeLink to={`/main?type=${fieldType}`}>{fieldType}</TypeLink>
     </>
   );
 };

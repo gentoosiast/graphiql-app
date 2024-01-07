@@ -17,4 +17,4 @@ const authStateFn = (auth: Auth, observerFn: NextFn<User | null>): (() => void) 
 };
 
 vi.mock('@/config/firebase', () => mockFirebase);
-vi.mock('firebase/auth', () => ({ onAuthStateChanged: authStateFn }));
+vi.mock('firebase/auth', () => ({ onAuthStateChanged: authStateFn, signOut: vi.fn() }));

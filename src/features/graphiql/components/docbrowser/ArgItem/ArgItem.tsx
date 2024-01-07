@@ -8,10 +8,9 @@ import { TypeLink } from '../TypeLink';
 
 type Props = {
   arg: IntrospectionInputValue;
-  findAndSetType: (typeName: string) => void;
 };
 
-const ArgItem = ({ arg, findAndSetType }: Props): JSX.Element => {
+const ArgItem = ({ arg }: Props): JSX.Element => {
   const argType = getTypeName(arg.type);
 
   return (
@@ -20,7 +19,7 @@ const ArgItem = ({ arg, findAndSetType }: Props): JSX.Element => {
         {arg.name}
       </Typography>
       <div style={{ marginRight: '5px' }}>{':'}</div>
-      <TypeLink onClick={() => findAndSetType(argType)}>{argType}</TypeLink>
+      <TypeLink to={`/main?type=${argType}`}>{argType}</TypeLink>
     </ListItem>
   );
 };

@@ -1,21 +1,30 @@
-import { Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
+
+import { Link } from '@mui/material';
 import { Box } from '@mui/system';
 
 import { useI18NContext } from '@/contexts/i18n';
 
 type Props = {
-  clearState: () => void;
+  backPath: string;
+  handleClick: () => void;
+  linkText: string;
 };
 
-const Nav = ({ clearState }: Props): JSX.Element => {
+const Nav = ({ backPath, handleClick, linkText }: Props): JSX.Element => {
   const { translate } = useI18NContext();
 
   return (
-    <Box onClick={clearState} sx={{ cursor: 'pointer' }}>
+    <Box
+      component={RouterLink}
+      onClick={handleClick}
+      sx={{ color: 'inherit', cursor: 'pointer', textDecoration: 'none' }}
+      to={backPath}
+    >
       {'<'}
-      <Typography component="span" sx={{ ':hover': { textDecoration: 'underline' }, ml: 1 }}>
-        {translate('docs.title')}
-      </Typography>
+      <Link color="#fff" component="span" ml={1}>
+        {backPath === '/main' ? translate('docs.title') : linkText}
+      </Link>
     </Box>
   );
 };
