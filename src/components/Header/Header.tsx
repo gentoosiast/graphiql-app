@@ -87,7 +87,7 @@ export const Header = (): JSX.Element => {
             aria-controls={isLanguageMenuOpen ? 'language-menu' : undefined}
             aria-expanded={isLanguageMenuOpen ? 'true' : undefined}
             aria-haspopup="true"
-            aria-label="select UI language"
+            aria-label={translate('selectLanguage')}
             id="language-button"
             onClick={handleLanguageButtonClick}
             startIcon={<TranslateOutlinedIcon />}
@@ -133,6 +133,7 @@ export const Header = (): JSX.Element => {
           </Menu>
           {authState === 'AUTHENTICATED' && (
             <Button
+              aria-label={translate('signOut')}
               color="inherit"
               onClick={() => void signOutUser()}
               sx={{
