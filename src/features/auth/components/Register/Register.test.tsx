@@ -2,14 +2,33 @@ import { MemoryRouter } from 'react-router-dom';
 
 import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { FirebaseError } from 'firebase/app';
+import { AuthErrorCodes } from 'firebase/auth';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { I18NProvider } from '@/providers/i18n';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
 import { Register } from './Register';
 
+const { mockCreateUser } = vi.hoisted(() => {
+  return { mockCreateUser: vi.fn() };
+});
+
+vi.mock('firebase/auth', async () => {
+  const actual = await vi.importActual('firebase/auth');
+
+  return {
+    ...actual,
+    createUserWithEmailAndPassword: mockCreateUser,
+  };
+});
+
 describe('Register', () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('should validate email', async () => {
     const user = userEvent.setup();
 
@@ -104,4 +123,114 @@ describe('Register', () => {
 
     expect(confirmPasswordInput.type).toBe('text');
   });
+
+  it('should submit correctly filled-in form and display notification', async () => {
+    const user = userEvent.setup();
+
+    mockCreateUser.mockImplementationOnce(() => Promise.resolve());
+
+    renderWithProviders(
+      <MemoryRouter>
+        <I18NProvider>
+          <Register setIsLogin={() => {}} />
+        </I18NProvider>
+      </MemoryRouter>,
+    );
+
+    const emailInput = screen.getByPlaceholderText(/email/i);
+    const passwordInput = screen.getByPlaceholderText(/^password$/i);
+    const confirmPasswordInput = screen.getByPlaceholderText(/^confirm password$/i);
+    const submitButton = screen.getByRole('button', { name: /sign up/i });
+
+    await user.clear(emailInput);
+    await user.type(emailInput, 'test@example.com');
+
+    await user.clear(passwordInput);
+    await user.type(passwordInput, 'abracadabra42$');
+
+    await user.clear(confirmPasswordInput);
+    await user.type(confirmPasswordInput, 'abracadabra42$');
+
+    await user.click(submitButton);
+
+    const successNotification = await screen.findByText(/account created successfully/i);
+
+    expect(mockCreateUser).toHaveBeenCalled();
+
+    expect(successNotification).toBeInTheDocument();
+  }, 10000);
+
+  it('should display notification when submitting the form and user already exists', async () => {
+    mockCreateUser.mockImplementationOnce(() =>
+      Promise.reject(new FirebaseError(AuthErrorCodes.EMAIL_EXISTS, 'User already exists')),
+    );
+
+    const user = userEvent.setup();
+
+    renderWithProviders(
+      <MemoryRouter>
+        <I18NProvider>
+          <Register setIsLogin={() => {}} />
+        </I18NProvider>
+      </MemoryRouter>,
+    );
+
+    const emailInput = screen.getByPlaceholderText(/email/i);
+    const passwordInput = screen.getByPlaceholderText(/^password$/i);
+    const confirmPasswordInput = screen.getByPlaceholderText(/^confirm password$/i);
+    const submitButton = screen.getByRole('button', { name: /sign up/i });
+
+    await user.clear(emailInput);
+    await user.clear(passwordInput);
+    await user.clear(confirmPasswordInput);
+
+    await user.type(emailInput, 'test@example.com');
+    await user.type(passwordInput, 'abracadabra42$');
+    await user.type(confirmPasswordInput, 'abracadabra42$');
+
+    await user.click(submitButton);
+
+    expect(mockCreateUser).toHaveBeenCalled();
+
+    const failureNotification = await screen.findByText(/account already exists/i);
+
+    expect(failureNotification).toBeInTheDocument();
+  }, 10000);
+
+  it('should display notification when submitting the form and unknown error happens', async () => {
+    mockCreateUser.mockImplementationOnce(() =>
+      Promise.reject(new FirebaseError(AuthErrorCodes.INVALID_API_KEY, 'Invalid API key')),
+    );
+
+    const user = userEvent.setup();
+
+    renderWithProviders(
+      <MemoryRouter>
+        <I18NProvider>
+          <Register setIsLogin={() => {}} />
+        </I18NProvider>
+      </MemoryRouter>,
+    );
+
+    const emailInput = screen.getByPlaceholderText(/email/i);
+    const passwordInput = screen.getByPlaceholderText(/^password$/i);
+    const confirmPasswordInput = screen.getByPlaceholderText(/^confirm password$/i);
+    const submitButton = screen.getByRole('button', { name: /sign up/i });
+
+    await user.clear(emailInput);
+    await user.clear(passwordInput);
+    await user.clear(confirmPasswordInput);
+
+    await user.type(emailInput, 'test@example.com');
+    await user.type(passwordInput, 'abracadabra42$');
+    await user.type(confirmPasswordInput, 'abracadabra42$');
+
+    await user.click(submitButton);
+
+    expect(mockCreateUser).toHaveBeenCalled();
+
+    const failureNotification = await screen.findByText(/something went wrong/i);
+
+    expect(failureNotification).toBeInTheDocument();
+  }, 10000);
 });
