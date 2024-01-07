@@ -123,4 +123,4 @@ const DocsSection = ({ isOpen, onClose, schema, searchParams }: Props): JSX.Elem
   );
 };
 
-export { DocsSection };
+export default DocsSection;

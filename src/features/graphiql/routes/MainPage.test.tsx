@@ -8,7 +8,7 @@ import { I18NProvider } from '@/providers';
 import { EditorMock } from '@/test/components';
 import { renderWithProviders } from '@/test/renderWithProviders';
 
-import { MainPage } from './MainPage';
+import MainPage from './MainPage';
 
 vi.mock('../components/Editor', () => ({
   Editor: vi.fn((props) => <EditorMock {...props} />),
@@ -112,11 +112,17 @@ describe('MainPage', () => {
       </MemoryRouter>,
     );
 
+    const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
+    const setEndpointButton = screen.getByRole('button', { name: /change endpoint/i });
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
     const sendButton = screen.getByRole('button', { name: /send request/i });
 
     expect(responseViewer).toHaveValue('');
+
+    await user.clear(endpointInput);
+    await user.keyboard('https://rickandmortyapi.com/graphql');
+    await user.click(setEndpointButton);
 
     await user.clear(graphQLQueryEditor);
     await user.keyboard(
@@ -139,12 +145,18 @@ describe('MainPage', () => {
       </MemoryRouter>,
     );
 
+    const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
+    const setEndpointButton = screen.getByRole('button', { name: /change endpoint/i });
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
     const sendButton = screen.getByRole('button', { name: /send request/i });
     const variablesTab = screen.getByText(/variables/i);
 
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
     expect(responseViewer).toHaveValue('');
+
+    await user.clear(endpointInput);
+    await user.keyboard('https://rickandmortyapi.com/graphql');
+    await user.click(setEndpointButton);
 
     await user.click(variablesTab);
     const variablesEditor = screen.getByPlaceholderText(/variables \(in json format\)/i);
@@ -172,12 +184,18 @@ describe('MainPage', () => {
       </MemoryRouter>,
     );
 
+    const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
+    const setEndpointButton = screen.getByRole('button', { name: /change endpoint/i });
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
     const sendButton = screen.getByRole('button', { name: /send request/i });
     const headersTab = screen.getByText(/headers/i);
 
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
     expect(responseViewer).toHaveValue('');
+
+    await user.clear(endpointInput);
+    await user.keyboard('https://rickandmortyapi.com/graphql');
+    await user.click(setEndpointButton);
 
     await user.click(headersTab);
     const headersEditor = screen.getByPlaceholderText(/headers \(in json format\)/i);
@@ -206,9 +224,9 @@ describe('MainPage', () => {
     );
 
     const endpointInput = screen.getByPlaceholderText(/graphql endpoint/i);
+    const setEndpointButton = screen.getByRole('button', { name: /change endpoint/i });
     const graphQLQueryEditor = screen.getByPlaceholderText(/graphql query/i);
     const sendButton = screen.getByRole('button', { name: /send request/i });
-    const setEndpointButton = screen.getByRole('button', { name: /change endpoint/i });
 
     const responseViewer = screen.getByPlaceholderText(/graphql api response/i);
     expect(responseViewer).toHaveValue('');

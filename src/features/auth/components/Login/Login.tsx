@@ -10,8 +10,6 @@ import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
 import { useI18NContext } from '@/contexts/i18n';
-import { setUser } from '@/features/users';
-import { useAppDispatch } from '@/store';
 
 import { type AuthFormData } from '../../types';
 import { AuthForm } from '../AuthForm';
@@ -21,7 +19,6 @@ type Props = {
 };
 
 const Login = ({ setIsLogin }: Props): JSX.Element => {
-  const dispach = useAppDispatch();
   const navigate = useNavigate();
 
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
@@ -56,7 +53,6 @@ const Login = ({ setIsLogin }: Props): JSX.Element => {
     try {
       await signInWithEmailAndPassword(auth, email, password);
 
-      dispach(setUser({ email }));
       setAlertType('success');
       setAlertText(translate('loginSuccess'));
       setTimeout(() => navigate('/main'), 2000);

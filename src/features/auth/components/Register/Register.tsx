@@ -10,8 +10,6 @@ import { AuthErrorCodes, createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { auth } from '@/config/firebase';
 import { useI18NContext } from '@/contexts/i18n';
-import { setUser } from '@/features/users';
-import { useAppDispatch } from '@/store';
 
 import { type AuthFormData } from '../../types';
 import { AuthForm } from '../AuthForm';
@@ -21,7 +19,6 @@ type Props = {
 };
 
 const Register = ({ setIsLogin }: Props): JSX.Element => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const [alertType, setAlertType] = useState<'error' | 'success' | null>(null);
@@ -57,7 +54,6 @@ const Register = ({ setIsLogin }: Props): JSX.Element => {
     try {
       await createUserWithEmailAndPassword(auth, email, password);
 
-      dispatch(setUser({ email }));
       setAlertType('success');
       setAlertText(translate('registerSuccess'));
       setTimeout(() => navigate('/main'), 2000);
