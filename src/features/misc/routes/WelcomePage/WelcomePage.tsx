@@ -40,12 +40,13 @@ export const WelcomePage = (): JSX.Element => {
         >
           {authState === 'UNAUTHENTICATED' && (
             <>
-              {NavButton({ formMode: 'login', textContent: translate('signIn'), to: '/auth' })}
-              {NavButton({ formMode: 'register', textContent: translate('signUp'), to: '/auth' })}
+              {<NavButton formMode="login" textContent={translate('signIn')} to="/auth" />}
+              {<NavButton formMode="register" textContent={translate('signUp')} to="/auth" />}
             </>
           )}
-          {authState === 'AUTHENTICATED' &&
-            NavButton({ textContent: translate('mainPage'), to: '/main' })}
+          {authState === 'AUTHENTICATED' && (
+            <NavButton textContent={translate('mainPage')} to="/main" />
+          )}
         </Box>
       </nav>
 
@@ -115,9 +116,9 @@ export const WelcomePage = (): JSX.Element => {
           padding={'3% 0'}
           width={'100%'}
         >
-          {PetCard('/varya.jpg', 'varya')}
-          {PetCard('/fanya.jpg', 'fanya')}
-          {PetCard('/murych.png', 'murych')}
+          {<PetCard nameToTranslate="varya" src="/varya.jpg" />}
+          {<PetCard nameToTranslate="fanya" src="/fanya.jpg" />}
+          {<PetCard nameToTranslate="murych" src="/murych.png" />}
         </Box>
         <Stack alignItems="center" justifyContent="center">
           <Typography

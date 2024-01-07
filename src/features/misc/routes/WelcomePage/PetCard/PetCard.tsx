@@ -3,7 +3,12 @@ import { Stack } from '@mui/system';
 
 import { useI18NContext } from '@/contexts/i18n';
 
-export const PetCard = (src: string, nameToTranslate: string): JSX.Element => {
+type PetCardProps = {
+  nameToTranslate: string;
+  src: string;
+};
+
+export const PetCard = ({ nameToTranslate, src }: PetCardProps): JSX.Element => {
   const { translate } = useI18NContext();
 
   return (
