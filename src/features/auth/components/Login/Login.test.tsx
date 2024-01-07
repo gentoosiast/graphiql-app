@@ -11,8 +11,8 @@ import { renderWithProviders } from '@/test/renderWithProviders';
 
 import { Login } from './Login';
 
-const { mockCreateUser } = vi.hoisted(() => {
-  return { mockCreateUser: vi.fn() };
+const { mockSignInUser } = vi.hoisted(() => {
+  return { mockSignInUser: vi.fn() };
 });
 
 vi.mock('firebase/auth', async () => {
@@ -20,7 +20,7 @@ vi.mock('firebase/auth', async () => {
 
   return {
     ...actual,
-    signInWithEmailAndPassword: mockCreateUser,
+    signInWithEmailAndPassword: mockSignInUser,
   };
 });
 
@@ -108,7 +108,7 @@ describe('Login', () => {
   it('should show an appropriate message upon successful login', async () => {
     const user = userEvent.setup();
 
-    mockCreateUser.mockImplementationOnce(() => Promise.resolve());
+    mockSignInUser.mockImplementationOnce(() => Promise.resolve());
 
     renderWithProviders(
       <MemoryRouter>
@@ -133,7 +133,7 @@ describe('Login', () => {
   it('should show an appropriate message when catching firebase error', async () => {
     const user = userEvent.setup();
 
-    mockCreateUser.mockImplementationOnce(() =>
+    mockSignInUser.mockImplementationOnce(() =>
       Promise.reject(new FirebaseError(AuthErrorCodes.INVALID_IDP_RESPONSE, 'Invalid-credential')),
     );
 
@@ -158,7 +158,7 @@ describe('Login', () => {
   }, 10000);
 
   it('should display notification when submitting the form and unknown error happens', async () => {
-    mockCreateUser.mockImplementationOnce(() =>
+    mockSignInUser.mockImplementationOnce(() =>
       Promise.reject(new FirebaseError(AuthErrorCodes.INVALID_API_KEY, 'Invalid API key')),
     );
 
@@ -184,7 +184,7 @@ describe('Login', () => {
 
     await user.click(submitButton);
 
-    expect(mockCreateUser).toHaveBeenCalled();
+    expect(mockSignInUser).toHaveBeenCalled();
 
     const failureNotification = await screen.findByText(/something went wrong/i);
 
