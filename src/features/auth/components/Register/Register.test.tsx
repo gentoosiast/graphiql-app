@@ -4,7 +4,7 @@ import { screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { FirebaseError } from 'firebase/app';
 import { AuthErrorCodes } from 'firebase/auth';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterAll, afterEach, describe, expect, it, vi } from 'vitest';
 
 import { I18NProvider } from '@/providers/i18n';
 import { renderWithProviders } from '@/test/renderWithProviders';
@@ -26,6 +26,10 @@ vi.mock('firebase/auth', async () => {
 
 describe('Register', () => {
   afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
+  afterAll(() => {
     vi.clearAllMocks();
   });
 
