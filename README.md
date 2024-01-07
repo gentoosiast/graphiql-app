@@ -116,18 +116,6 @@ npm run lint:fix
 Automatically fix all auto-fixable errors & warnings with `ESLint`
 
 ```sh
-npm run lint-styles
-```
-
-Check CSS stylesheets for potential problems with `Stylelint`. Exit with non-zero return code after the first found warning (useful for CI/CD)
-
-```sh
-npm run lint-styles:fix
-```
-
-Automatically fix all auto-fixable errors & warnings in CSS stylesheets with `Stylelint`
-
-```sh
 npm run typecheck
 ```
 
